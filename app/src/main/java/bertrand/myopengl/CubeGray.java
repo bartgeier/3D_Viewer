@@ -1,10 +1,10 @@
 package bertrand.myopengl;
 
 import bertrand.myopengl.OpenGL.ObjectModel;
-import bertrand.myopengl.OpenGL.Shader;
+import bertrand.myopengl.OpenGL.SimpleShader;
 
 public final class CubeGray extends ObjectModel {
-        CubeGray(final Shader shader) {
+        CubeGray(final SimpleShader shader) {
                  final float[] vectors = {
                         // Front
                         //Vertex      Color                    Normal
@@ -75,6 +75,7 @@ public final class CubeGray extends ObjectModel {
 
         double angle = 0;
         double rotationAngle = 0;
+        @Override
         public void updateWithDelta(float dt_ms) {
                 /*
                 double newPeriod_ms = 2000;

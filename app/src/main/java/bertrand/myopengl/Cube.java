@@ -1,47 +1,12 @@
 package bertrand.myopengl;
 
 import bertrand.myopengl.OpenGL.ObjectModel;
-import bertrand.myopengl.OpenGL.Shader;
+import bertrand.myopengl.OpenGL.SimpleShader;
 
 public final class Cube extends ObjectModel {
-        Cube(final Shader shader) {
-                /*
-                final float[] fragments = {
-                        //front
-                        1, -1, 1,     1, 0, 0, 1, //0
-                        1,  1, 1,     1, 0, 0, 1, //1
-                       -1,  1, 1,     0, 1, 0, 1, //2
-                       -1, -1, 1,     0, 1, 0, 1, //3
-                        //back
-                       -1, -1, -1,     1, 0, 0, 1, //4
-                       -1,  1, -1,     1, 0, 0, 1, //5
-                        1,  1, -1,     0, 1, 0, 1, //6
-                        1, -1, -1,     0, 1, 0, 1, //7
-                };
-                final byte[] indices  = {
-                        //front
-                        0,1,2,
-                        2,3,0,
-                        //back
-                        4,5,6,
-                        6,7,4,
-                        //left
-                        3,2,5,
-                        5,4,3,
-                        //right
-                        7,6,1,
-                        1,0,7,
-                        //top
-                        1,6,5,
-                        5,2,1,
-                        //bottom
-                        3,4,7,
-                        7,0,3
-                };
-                */
-
+        Cube(final SimpleShader shader) {
                 final float[] vectors = {
-                        // Front
+                        // Front       color          normal
                         1, -1,  1,    1, 0, 0, 1,     0, 0, 1, // 0
                         1,  1,  1,    0, 1, 0, 1,     0, 0, 1, // 1
                        -1,  1,  1,    0, 0, 1, 1,     0, 0, 1, // 2
@@ -78,46 +43,6 @@ public final class Cube extends ObjectModel {
                        -1, -1, -1,     0, 0, 0, 1,     0, -1, 0, // 23
                 };
 
-                /*
-                final float[] fragments = {
-                        // Front
-                        1, -1,  1,    1, 0, 0, 1,    // 0
-                        1,  1,  1,    0, 1, 0, 1,    // 1
-                       -1,  1,  1,    0, 0, 1, 1,    // 2
-                       -1,  -1, 1,    0, 0, 0, 1,    // 3
-
-                        // Back
-                       -1, -1, -1,    0, 0, 1, 1,    /// 4
-                       -1,  1, -1,    0, 1, 0, 1,    /// 5
-                        1,  1, -1,    1, 0, 0, 1,    /// 6
-                        1, -1, -1,    0, 0, 0, 1,    /// 7
-
-                        // Left
-                       -1, -1,  1,    1, 0, 0, 1,    // 8
-                       -1,  1,  1,    0, 1, 0, 1,    // 9
-                       -1,  1, -1,    0, 0, 1, 1,    // 10
-                       -1, -1, -1,    0, 0, 0, 1,    // 11
-
-                        // Right
-                        1, -1, -1,    1, 0, 0, 1,    // 12
-                        1,  1, -1,    0, 1, 0, 1,    // 13
-                        1,  1,  1,    0, 0, 1, 1,    // 14
-                        1, -1,  1,    0, 0, 0, 1,    // 15
-
-                        // Top
-                        1,  1,  1,    1, 0, 0, 1,    // 16
-                        1,  1, -1,    0, 1, 0, 1,    // 17
-                       -1,  1, -1,    0, 0, 1, 1,    // 18
-                       -1,  1,  1,    0, 0, 0, 1,    // 19
-
-                        // Bottom
-                        1, -1, -1,     1, 0, 0, 1,   // 20
-                        1, -1,  1,     0, 1, 0, 1,   // 21
-                       -1, -1,  1,     0, 0, 1, 1,   // 22
-                       -1, -1, -1,     0, 0, 0, 1,   // 23
-                };
-                */
-
                 final byte[] indices  = {
                         // Front
                         0, 1, 2,
@@ -149,6 +74,7 @@ public final class Cube extends ObjectModel {
 
         double angle = 0;
         double rotationAngle = 0;
+        @Override
         public void updateWithDelta(float dt_ms) {
                 /*
                 double newPeriod_ms = 2000;

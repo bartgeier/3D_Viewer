@@ -1,31 +1,22 @@
 package bertrand.myopengl;
 
-
 import android.opengl.GLSurfaceView.Renderer;
 import android.opengl.Matrix;
 import android.os.SystemClock;
-
 import java.util.ArrayList;
-
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
-
 import bertrand.myopengl.OpenGL.ObjectModel;
-import bertrand.myopengl.OpenGL.Presenter;
-import bertrand.myopengl.OpenGL.Shader;
-import bertrand.myopengl.OpenGL.ShaderFactory;
+import bertrand.myopengl.OpenGL.SimpleShader;
 
 public class MainRenderer implements Renderer {
         private ArrayList<ObjectModel> objects = new ArrayList<>();
-        private final float[] mProjectionMatrix = new float[16];
-        private Presenter presenter;
-        Shader shader;
 
         @Override
         public void onDrawFrame(GL10 gl) {
                 float dt = deltaTime();
 
-                presenter.renderBackground();
+                ObjectModel.renderBackground();
                 for(ObjectModel object : objects) {
                         object.updateWithDelta(dt);
                         float[] viewMatrix = new float[16];
@@ -40,7 +31,7 @@ public class MainRenderer implements Renderer {
         public void onSurfaceChanged(GL10 gl, int width, int height) {
                 float ratio = (float) width / height;
                 Matrix.perspectiveM(
-                        shader.projectionMatrix,
+                        ObjectModel.projectionMatrix,
                         0,
                         85,
                         ratio,
@@ -51,16 +42,13 @@ public class MainRenderer implements Renderer {
 
         @Override
         public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-                presenter = new Presenter();
-                shader = new ShaderFactory().simpleProgram();
-                //objects.add(presenter.bindVectors(new Triangle(shader)));
-                //objects.add(presenter.bindVectors(new Triangle1(shader)));
-                objects.add(presenter.bindVectors(new CubeGray(shader)));
-
-
+                SimpleShader shader = new SimpleShader();
+                objects.add(new Triangle(shader));
+                objects.add(new Triangle1(shader));
+                objects.add(new CubeGray(shader));
         }
 
-        double lasttime = 0;
+        private double lasttime = 0;
         private float deltaTime() {
                 final double time = SystemClock.elapsedRealtime();
                 float delta;

@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         ConfigurationInfo info = am.getDeviceConfigurationInfo();
         boolean supportES2 = (info.reqGlEsVersion >= 0x20000);
         if (supportES2) {
-            mainRenderer = new MainRenderer();
+            mainRenderer = new MainRenderer(this);
             mainGLView = (MainSurfaceView)this.findViewById(R.id.Id);
             //mainGLView = new MainSurfaceView(this);
             mainGLView.setEGLContextClientVersion(2);

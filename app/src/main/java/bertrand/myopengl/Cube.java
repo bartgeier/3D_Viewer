@@ -43,7 +43,7 @@ public final class Cube extends ObjectModel {
                        -1, -1, -1,     0, 0, 0, 1,     0, -1, 0, // 23
                 };
 
-                final byte[] indices  = {
+                final int[] indices  = {
                         // Front
                         0, 1, 2,
                         2, 3, 0,

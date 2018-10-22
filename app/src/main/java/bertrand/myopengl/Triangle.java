@@ -11,13 +11,13 @@ public final class Triangle extends ObjectModel {
                         0.5f,  0.5f, 0f,      0.0f, 1.0f, 0.0f, 1.0f,  0, 0, 1,
                         -0.5f,  0.5f, 0f,     0.0f, 0.0f, 1.0f, 1.0f,  0, 0, 1,
                 };
-                final byte[] indices  = {
+                final int[] indices  = {
                         0,1,2
                 };
                 super.init(vectors, indices, shader);
                 position.x = 0f;
                 position.y = 0f;
-                position.z = 0f;
+                position.z = -5f;
                 scale.x = 1f;
                 scale.y = 1f;
                 scale.z = 1f;

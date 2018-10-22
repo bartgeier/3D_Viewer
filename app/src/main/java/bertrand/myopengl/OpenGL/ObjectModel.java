@@ -1,44 +1,36 @@
 package bertrand.myopengl.OpenGL;
 
-
 import android.opengl.Matrix;
-import android.renderscript.Float3;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
+import bertrand.myopengl.Tool.Vec3;
 import bertrand.myopengl.Tool.VectorMath;
 
-public abstract class ObjectModel {
-        public class Position {
-                public float x = 0;
-                public float y = 0;
-                public float z = 0;
-        }
-
+public class ObjectModel {
         public ObjectModel() {
-                position = new Position();
-                rotation = new Position();
-                scale = new Position();
+                position = new Vec3(0,0,0);
+                rotation = new Vec3(0,0,0);
+                scale = new Vec3(1,1,1);
         }
 
-        public final void init(final float[] vectors ,  final byte[] indices, final AbstractShader s) {
-                this.fragments = ByteBuffer.allocateDirect(vectors.length * 4);
-                this.fragments.order(ByteOrder.nativeOrder());
-                this.fragments.asFloatBuffer().put(vectors);
-                this.fragments.position(0);
-
-                this.indices = ByteBuffer.allocateDirect(indices.length);
+        public final void init(final float[] vectors ,  final int[] indices, final AbstractShader s) {
+                fragments = ByteBuffer.allocateDirect(vectors.length * 4);
+                fragments.order(ByteOrder.nativeOrder());
+                fragments.asFloatBuffer().put(vectors);
+                fragments.position(0);
+                this.indices = ByteBuffer.allocateDirect(indices.length * 4);
                 this.indices.order(ByteOrder.nativeOrder());
-                this.indices.put(indices);
+                this.indices.asIntBuffer().put(indices);
                 this.indices.position(0);
+                shader = s;
 
-                this.shader = s;
-
-                gpu = shader.createVertexArrayObject();
-
-                shader.loadFragmentBuffer(this.fragments);
-                shader.loadIndecisBuffer(this.indices);
+                vao = GPU.createVertexArrayObject();
+                GPU.loadFragmentBuffer(this.fragments);
+                GPU.loadIndecisBuffer(this.indices);
                 shader.enableVertexAttribArray();
 
                 GLES.glBindVertexArray(0);
@@ -46,15 +38,15 @@ public abstract class ObjectModel {
                 GLES.glBindBuffer(GLES.GL_ELEMENT_ARRAY_BUFFER,0);
         }
 
-        public AbstractShader shader;
-        public int gpu = 0;
+        private AbstractShader shader;
+        private int vao = 0;
 
-        public ByteBuffer fragments;
-        public ByteBuffer indices;
+        private ByteBuffer fragments;
+        private ByteBuffer indices;
 
-        public Position position;
-        public Position rotation;
-        public Position scale;
+        public Vec3 position;
+        public Vec3 rotation;
+        public Vec3 scale;
 
         public static float[] projectionMatrix = new float[16];
 
@@ -69,12 +61,14 @@ public abstract class ObjectModel {
                 return matrix;
         }
 
-        public abstract void updateWithDelta(float dt_ms);
+        public void updateWithDelta(float dt_ms) {
+
+        }
 
         public static void renderBackground() {
                 GLES.glClearColor(0.8f,0.5f,0.0f,1.0f);
                 GLES.glClear(GLES.GL_COLOR_BUFFER_BIT |GLES.GL_DEPTH_BUFFER_BIT);
-                //GLES.glEnable(GLES.GL_DEPTH_TEST);
+                GLES.glEnable(GLES.GL_DEPTH_TEST);
                 GLES.glEnable(GLES.GL_CULL_FACE);
         }
 
@@ -89,10 +83,10 @@ public abstract class ObjectModel {
                         0
                 );
                 prepareToDraw(shader,modelVieMatrix);
-                shader.draw(gpu, indices.capacity());
+                GPU.draw(vao, indices.asIntBuffer().capacity());
         }
 
-        private void prepareToDraw(AbstractShader shader, float[] modelVieMatrix) {
+        private void prepareToDraw(@NotNull AbstractShader shader, float[] modelVieMatrix) {
                 GLES.glUseProgram(shader.program);
                 GLES.glUniformMatrix4fv(
                         shader.u.modelViewMatrix,
@@ -116,7 +110,7 @@ public abstract class ObjectModel {
                 GLES.glUniform3f(shader.u.lightAmbientColor, red, green, blue);
 
                 GLES.glUniform1f(shader.u.lightAmbientIntens,0.1f);
-                Float3 lightDirection = VectorMath.vector3Normalize(new Float3(0,1f,-1));
+                Vec3 lightDirection = VectorMath.vector3Normalize(new Vec3(0,1f,-1));
                 GLES.glUniform3f(
                         shader.u.lightDirection,
                         lightDirection.x,

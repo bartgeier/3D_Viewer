@@ -76,8 +76,8 @@ public class SimpleShader extends AbstractShader{
                 "}";
 
 
-                final int vertexShader = loadShader(GLES.GL_VERTEX_SHADER, vertexShaderCode);
-                final int fragmentShader = loadShader(GLES.GL_FRAGMENT_SHADER, fragmentShaderCode);
+                final int vertexShader = GPU.loadShader(GLES.GL_VERTEX_SHADER, vertexShaderCode);
+                final int fragmentShader = GPU.loadShader(GLES.GL_FRAGMENT_SHADER, fragmentShaderCode);
 
                 program = GLES.glCreateProgram();
                 GLES.glAttachShader(program, vertexShader);

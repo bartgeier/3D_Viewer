@@ -1,8 +1,12 @@
 package bertrand.myopengl;
 
+import android.content.Context;
 import android.opengl.GLSurfaceView.Renderer;
 import android.opengl.Matrix;
 import android.os.SystemClock;
+
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -10,7 +14,14 @@ import bertrand.myopengl.OpenGL.ObjectModel;
 import bertrand.myopengl.OpenGL.SimpleShader;
 
 public class MainRenderer implements Renderer {
+
+        private Context context;
+
         private ArrayList<ObjectModel> objects = new ArrayList<>();
+
+        MainRenderer (Context c) {
+                context = c;
+        }
 
         @Override
         public void onDrawFrame(GL10 gl) {
@@ -43,9 +54,10 @@ public class MainRenderer implements Renderer {
         @Override
         public void onSurfaceCreated(GL10 gl, EGLConfig config) {
                 SimpleShader shader = new SimpleShader();
-                objects.add(new Triangle(shader));
-                objects.add(new Triangle1(shader));
-                objects.add(new CubeGray(shader));
+                //objects.add(new Triangle(shader));
+                //objects.add(new Triangle1(shader));
+                //objects.add(new CubeGray(shader));
+                objects.add(OBJLoader.loadObjModel(stall()));
         }
 
         private double lasttime = 0;
@@ -59,5 +71,11 @@ public class MainRenderer implements Renderer {
                 }
                 lasttime = time;
                 return delta;
+        }
+
+        private InputStreamReader stall() {
+                InputStream s = context.getResources().openRawResource(R.raw.stall);
+                InputStreamReader streamReader = new InputStreamReader(s);
+                return streamReader;
         }
 }

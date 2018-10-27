@@ -1,6 +1,8 @@
 package bertrand.myopengl;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.opengl.GLSurfaceView.Renderer;
 import android.opengl.Matrix;
 import android.os.SystemClock;
@@ -74,6 +76,19 @@ public class MainRenderer implements Renderer {
         }
 
         private InputStreamReader stall() {
+                //http://www.learnopengles.com/android-lesson-four-introducing-basic-texturing/
+
+                //Resources res = getContext().getResources();
+                //int id = R.drawable.image;
+                //Bitmap b = BitmapFactory.decodeResource(res, id);
+
+                //final BitmapFactory.Options options = new BitmapFactory.Options();
+                //options.inScaled = false;   // No pre-scaling
+
+
+                //final Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.raw.stall);
+                //final Bitmap bitmap1 = BitmapFactory.decodeResource(context.getResources(), resourceId, options);
+
                 InputStream s = context.getResources().openRawResource(R.raw.stall);
                 InputStreamReader streamReader = new InputStreamReader(s);
                 return streamReader;

@@ -31,7 +31,7 @@ public abstract class AbstractShader {
                 u = new Uniform_Location();
         }
 
-        int program;
+        int programID;
         Attribute_Location a;
         Uniform_Location u;
 

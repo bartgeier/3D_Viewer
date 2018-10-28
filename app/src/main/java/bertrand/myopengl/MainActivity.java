@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
         ConfigurationInfo info = am.getDeviceConfigurationInfo();
         boolean supportES2 = (info.reqGlEsVersion >= 0x20000);
         if (supportES2) {

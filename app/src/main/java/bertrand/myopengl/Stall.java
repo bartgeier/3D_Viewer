@@ -1,8 +1,8 @@
 package bertrand.myopengl;
 
-import bertrand.myopengl.OpenGL.ObjectModel;
+import bertrand.myopengl.OpenGL.ColoredModel;
 
-public final class Stall extends ObjectModel {
+public final class Stall extends ColoredModel {
         double angle = 0;
         double rotationAngle = 0;
         @Override

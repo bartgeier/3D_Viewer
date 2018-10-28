@@ -76,42 +76,42 @@ public class SimpleShader extends AbstractShader{
                 "}";
 
 
-                final int vertexShader = GPU.loadShader(GLES.GL_VERTEX_SHADER, vertexShaderCode);
-                final int fragmentShader = GPU.loadShader(GLES.GL_FRAGMENT_SHADER, fragmentShaderCode);
+                final int vertexShaderID = GPU.loadShader(GLES.GL_VERTEX_SHADER, vertexShaderCode);
+                final int fragmentShaderID = GPU.loadShader(GLES.GL_FRAGMENT_SHADER, fragmentShaderCode);
 
-                program = GLES.glCreateProgram();
-                GLES.glAttachShader(program, vertexShader);
-                GLES.glAttachShader(program, fragmentShader);
-                GLES.glLinkProgram(program);
+                programID = GLES.glCreateProgram();
+                GLES.glAttachShader(programID, vertexShaderID);
+                GLES.glAttachShader(programID, fragmentShaderID);
+                GLES.glLinkProgram(programID);
 
-                a.position = GLES.glGetAttribLocation(program, "a_Position");
-                a.color = GLES.glGetAttribLocation(program, "a_Color");
-                a.normal = GLES.glGetAttribLocation(program, "a_Normal");
+                a.position = GLES.glGetAttribLocation(programID, "a_Position");
+                a.color = GLES.glGetAttribLocation(programID, "a_Color");
+                a.normal = GLES.glGetAttribLocation(programID, "a_Normal");
 
                 u.modelViewMatrix =
-                        GLES.glGetUniformLocation(program, "u_ModelViewMatrix");
+                        GLES.glGetUniformLocation(programID, "u_ModelViewMatrix");
                 u.projectionMatrix =
-                        GLES.glGetUniformLocation(program, "u_ProjectionMatrix");
+                        GLES.glGetUniformLocation(programID, "u_ProjectionMatrix");
 
                 u.lightAmbientIntens =
-                        GLES.glGetUniformLocation(program, "u_Light.AmbientIntensity");
+                        GLES.glGetUniformLocation(programID, "u_Light.AmbientIntensity");
                 u.lightAmbientColor =
-                        GLES.glGetUniformLocation(program, "u_Light.Color");
+                        GLES.glGetUniformLocation(programID, "u_Light.Color");
 
                 u.lightDiffuseIntens =
-                        GLES.glGetUniformLocation(program, "u_Light.DiffuseIntensity");
+                        GLES.glGetUniformLocation(programID, "u_Light.DiffuseIntensity");
                 u.lightDirection =
-                        GLES.glGetUniformLocation(program, "u_Light.Direction");
+                        GLES.glGetUniformLocation(programID, "u_Light.Direction");
 
                 u.matSpecularIntensity =
-                        GLES.glGetUniformLocation(program, "u_MatSpecularIntensity");
+                        GLES.glGetUniformLocation(programID, "u_MatSpecularIntensity");
                 u.shininess =
-                        GLES.glGetUniformLocation(program, "u_Shininess");
+                        GLES.glGetUniformLocation(programID, "u_Shininess");
 
                 IntBuffer linkSuccess = IntBuffer.allocate(1);
-                GLES.glGetProgramiv(program, GLES.GL_LINK_STATUS, linkSuccess);
+                GLES.glGetProgramiv(programID, GLES.GL_LINK_STATUS, linkSuccess);
                 if (linkSuccess.get(0) == GLES.GL_FALSE) {
-                        String s = GLES.glGetProgramInfoLog(program);
+                        String s = GLES.glGetProgramInfoLog(programID);
                         throw new AssertionError(s);
                 }
         }
@@ -146,7 +146,5 @@ public class SimpleShader extends AbstractShader{
                         NORMAL_OFFSET
                 );
         }
-
-
 
 }

@@ -1,40 +1,61 @@
 package bertrand.myopengl.OpenGL;
 
-import org.jetbrains.annotations.NotNull;
 
-import java.nio.ByteBuffer;
-
+import java.nio.IntBuffer;
 
 public abstract class AbstractShader {
         public class Uniform_Location {
-                int modelViewMatrix = 0;
-                int projectionMatrix = 0;
+                public int modelViewMatrix = 0;
+                public int projectionMatrix = 0;
 
-                int lightAmbientIntens = 0;
-                int lightAmbientColor = 0;
+                public int lightAmbientIntens = 0;
+                public int lightAmbientColor = 0;
 
-                int lightDiffuseIntens = 0;
-                int lightDirection = 0;
+                public int lightDiffuseIntens = 0;
+                public int lightDirection = 0;
 
-                int matSpecularIntensity = 0;
-                int shininess = 0;
+                public int matSpecularIntensity = 0;
+                public int shininess = 0;
         }
 
         public class Attribute_Location {
-                int position = 0;
-                int color = 0;
-                int normal = 0;
+                public int position = 0;
+                public int color = 0;
+                public int normal = 0;
         }
 
-        AbstractShader () {
-                a = new Attribute_Location();
+        protected AbstractShader () {
+                attributeID = new Attribute_Location();
                 u = new Uniform_Location();
         }
 
-        int programID;
-        Attribute_Location a;
-        Uniform_Location u;
+        public int programID;
+        public Attribute_Location attributeID;
+        public Uniform_Location u;
 
-        public abstract void enableVertexAttribArray();
+        static protected int loadSchader(final String vertexShaderCode, final String fragmentShaderCode) {
+                final int vertexShaderID = GPU.loadShader(GLES.GL_VERTEX_SHADER, vertexShaderCode);
+                final int fragmentShaderID = GPU.loadShader(GLES.GL_FRAGMENT_SHADER, fragmentShaderCode);
 
+                int programID = GLES.glCreateProgram();
+                GLES.glAttachShader(programID, vertexShaderID);
+                GLES.glAttachShader(programID, fragmentShaderID);
+                GLES.glLinkProgram(programID);
+
+                IntBuffer linkSuccess = IntBuffer.allocate(1);
+                GLES.glGetProgramiv(programID, GLES.GL_LINK_STATUS, linkSuccess);
+                if (linkSuccess.get(0) == GLES.GL_FALSE) {
+                        String s = GLES.glGetProgramInfoLog(programID);
+                        throw new AssertionError(s);
+                }
+                return programID;
+        }
+
+        static protected int attributeLocation(int programID, String name) {
+                return GLES.glGetAttribLocation(programID, name);
+        }
+
+        static protected int uniformLocation(int programID, String name) {
+                return GLES.glGetUniformLocation(programID, name);
+        }
 }

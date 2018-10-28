@@ -1,10 +1,12 @@
-package bertrand.myopengl;
+package bertrand.myopengl.Objects;
 
-import bertrand.myopengl.OpenGL.ColoredModel;
-import bertrand.myopengl.OpenGL.SimpleShader;
+import bertrand.myopengl.Models.ColoredModel;
+import bertrand.myopengl.OpenGL.Loader;
+import bertrand.myopengl.Shaders.ColoredShader;
 
-public final class Triangle extends ColoredModel  {
-        Triangle(final SimpleShader shader) {
+public final class Triangle1 extends ColoredModel {
+
+        public Triangle1(final ColoredShader shader) {
                 final float[] vectors = {
                         0.0f, -0.5f, 0f,
                         0.5f,  0.5f, 0f,
@@ -25,7 +27,10 @@ public final class Triangle extends ColoredModel  {
                 final int[] indices  = {
                         0,1,2
                 };
-                super.init(indices, vectors, colors, normals, shader);
+
+                Loader loader = new Loader();
+                loader.toVAO(this,indices, vectors, colors, normals, shader);
+                //super.init(indices, vectors, colors, normals, shader);
                 position.x = 0f;
                 position.y = 0f;
                 position.z = -5f;
@@ -33,7 +38,6 @@ public final class Triangle extends ColoredModel  {
                 scale.y = 1f;
                 scale.z = 1f;
         }
-
         double angle = 0;
         @Override
         public void updateWithDelta(float dt_ms) {
@@ -41,8 +45,7 @@ public final class Triangle extends ColoredModel  {
                 angle += dt_ms * 360/newPeriod_ms;
                 angle %= 360;
                 final double rad = Math.toRadians(angle);
-                final double x = 4 * Math.sin(rad);
-                this.position.x = (float)x;
-
+                final double y = 5* Math.sin(rad);
+                this.position.y = (float)y;
         }
 }

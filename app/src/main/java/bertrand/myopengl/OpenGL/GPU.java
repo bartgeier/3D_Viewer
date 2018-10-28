@@ -46,7 +46,7 @@ public class GPU {
                 return vboID;
         }
 
-        public static void draw(int gpuVaoName, int numOfIndecis) {
+        public static void render(int gpuVaoName, int numOfIndecis) {
                 GLES.glBindVertexArray(gpuVaoName);
                 GLES.glDrawElements(
                         GLES.GL_TRIANGLES,
@@ -55,6 +55,13 @@ public class GPU {
                         0
                 );
                 GLES.glBindVertexArray(0);
+        }
+
+        public static void renderBackground() {
+                GLES.glClearColor(0.8f,0.5f,0.0f,1.0f);
+                GLES.glClear(GLES.GL_COLOR_BUFFER_BIT |GLES.GL_DEPTH_BUFFER_BIT);
+                GLES.glEnable(GLES.GL_DEPTH_TEST);
+                GLES.glEnable(GLES.GL_CULL_FACE);
         }
 
         public static int generateVBO() {

@@ -1,10 +1,11 @@
-package bertrand.myopengl;
+package bertrand.myopengl.Objects;
 
-import bertrand.myopengl.OpenGL.ColoredModel;
-import bertrand.myopengl.OpenGL.SimpleShader;
+import bertrand.myopengl.Models.ColoredModel;
+import bertrand.myopengl.OpenGL.Loader;
+import bertrand.myopengl.Shaders.ColoredShader;
 
 public final class CubeGray extends ColoredModel {
-        CubeGray(final SimpleShader shader) {
+        public CubeGray(final ColoredShader shader) {
                  final float[] vectors = {
                         // Front
                         1, -1,  1,   // 0
@@ -118,7 +119,8 @@ public final class CubeGray extends ColoredModel {
                         20, 21, 22,
                         22, 23, 20
                 };
-                super.init(indices, vectors, colors, normals, shader);
+                Loader loader = new Loader();
+                loader.toVAO(this,indices, vectors, colors, normals, shader);
                 position.x = 0f;
                 position.y = 0f;
                 position.z = 0f;
@@ -144,7 +146,7 @@ public final class CubeGray extends ColoredModel {
 
                 double newRotationPeriod_ms = 16000;
 
-                rotationAngle += dt_ms * 360/newRotationPeriod_ms;
+                rotationAngle -= dt_ms * 360/newRotationPeriod_ms;
                 rotation.y = (float)rotationAngle;
 
                 rotation.x %= 360;

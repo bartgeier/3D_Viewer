@@ -10,8 +10,13 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
-import bertrand.myopengl.OpenGL.ColoredModel;
-import bertrand.myopengl.OpenGL.SimpleShader;
+
+import bertrand.myopengl.Objects.CubeGray;
+import bertrand.myopengl.Objects.Triangle;
+import bertrand.myopengl.Objects.Triangle1;
+import bertrand.myopengl.Models.ColoredModel;
+import bertrand.myopengl.OpenGL.GPU;
+import bertrand.myopengl.Shaders.ColoredShader;
 
 public class MainRenderer implements Renderer {
 
@@ -28,7 +33,7 @@ public class MainRenderer implements Renderer {
         public void onDrawFrame(GL10 gl) {
                 float dt = deltaTime();
 
-                ColoredModel.renderBackground();
+                GPU.renderBackground();
                 for(ColoredModel object : objects) {
                         object.updateWithDelta(dt);
                         float[] viewMatrix = new float[16];
@@ -55,7 +60,7 @@ public class MainRenderer implements Renderer {
         @Override
         public void onSurfaceCreated(GL10 gl, EGLConfig config) {
                 String extensions = gl.glGetString(GL10.GL_VERSION);
-                SimpleShader shader = new SimpleShader();
+                ColoredShader shader = new ColoredShader();
                 objects.add(new Triangle(shader));
                 objects.add(new Triangle1(shader));
                 objects.add(new CubeGray(shader));

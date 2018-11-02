@@ -5,8 +5,6 @@ import android.opengl.GLSurfaceView.Renderer;
 import android.opengl.Matrix;
 import android.os.SystemClock;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -17,16 +15,20 @@ import bertrand.myopengl.Objects.Triangle1;
 import bertrand.myopengl.Models.ColoredModel;
 import bertrand.myopengl.OpenGL.GPU;
 import bertrand.myopengl.Shaders.ColoredShader;
+import bertrand.myopengl.Tool.RFile.RFile;
 
 public class MainRenderer implements Renderer {
 
         private Context context;
+
 
         private ArrayList<ColoredModel> objects = new ArrayList<>();
 
 
         MainRenderer (Context c) {
                 context = c;
+                RFile f = new RFile(c);
+                f.inputStream(":raw/stall.obj");
         }
 
         @Override
@@ -64,7 +66,7 @@ public class MainRenderer implements Renderer {
                 objects.add(new Triangle(shader));
                 objects.add(new Triangle1(shader));
                 objects.add(new CubeGray(shader));
-                objects.add(OBJLoader.loadObjModel(stall()));
+                objects.add(OBJLoader.loadObjModel(new RFile(context), ":/raw/stall.obj"));
         }
 
         private double lasttime = 0;
@@ -80,22 +82,4 @@ public class MainRenderer implements Renderer {
                 return delta;
         }
 
-        private InputStreamReader stall() {
-                //http://www.learnopengles.com/android-lesson-four-introducing-basic-texturing/
-
-                //Resources res = getContext().getResources();
-                //int id = R.drawable.image;
-                //Bitmap b = BitmapFactory.decodeResource(res, id);
-
-                //final BitmapFactory.Options options = new BitmapFactory.Options();
-                //options.inScaled = false;   // No pre-scaling
-
-
-                //final Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.raw.stall);
-                //final Bitmap bitmap1 = BitmapFactory.decodeResource(context.getResources(), resourceId, options);
-
-                InputStream s = context.getResources().openRawResource(R.raw.stall);
-                InputStreamReader streamReader = new InputStreamReader(s);
-                return streamReader;
-        }
 }

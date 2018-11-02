@@ -1,20 +1,24 @@
 package bertrand.myopengl;
 
 import java.io.BufferedReader;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
 import bertrand.myopengl.Models.ColoredModel;
-import bertrand.myopengl.OpenGL.Loader;
-import bertrand.myopengl.Models.RawModel;
 import bertrand.myopengl.Shaders.ColoredShader;
+import bertrand.myopengl.Tool.RFile.RFile_IF;
 import bertrand.myopengl.Tool.Vec2;
 import bertrand.myopengl.Tool.Vec3;
 
 public class OBJLoader {
-        public static ColoredModel loadObjModel(InputStreamReader s) {
+        public static ColoredModel loadObjModel(RFile_IF file, String filePath) {
+                String path = file.path(filePath);
+                InputStream is = file.inputStream(filePath);
+                InputStreamReader s = new InputStreamReader(is);
                 BufferedReader reader = new BufferedReader(s);
+
                 String line;
                 ArrayList<Vec3> vertices = new ArrayList<>();
                 List<Vec2> textures = new ArrayList<>();
@@ -84,31 +88,32 @@ public class OBJLoader {
                         indicesArray[i] = indices.get(i);
                 }
                 float[]  colorsArray = color(verticesArray);
-                ColoredModel o = new ColoredModel();
-                o.update = new RawModel.UpdateListner() {
-                        double angle = 0;
-                        double rotationAngle = 0;
+                final class Model extends ColoredModel {
+                        Model(
+                                final ColoredShader s,
+                                final int[] indices,
+                                final float[] positions,
+                                final float[] colors,
+                                final float[] normals
+                        ){
+                                super(s, indices, positions, colors, normals);
+                                position.x = -0.5f;
+                                position.y = -3f;
+                                position.z = -10f;
+                        }
+                        private double rotationAngle = 0;
                         @Override
-                        public void withDelta(RawModel self, float dt_ms) {
+                        public void updateWithDelta(float dt_ms) {
                                 double newRotationPeriod_ms = 16000;
                                 rotationAngle += dt_ms * 360/newRotationPeriod_ms;
-                                self.rotation.y = (float)rotationAngle;
-                                self.rotation.x %= 360;
-                                self.rotation.y %= 360;
-                                self.rotation.z %= 360;
+                                rotation.y = (float)rotationAngle;
                         }
-                };
-                Loader.toVAO(
-                        o,
-                        indicesArray,
-                        verticesArray,
-                        colorsArray,
-                        normalsArray,
-                        new ColoredShader());
-                o.position.x = -0.5f;
-                o.position.y = -3f;
-                o.position.z = -10f;
-                return o;
+
+                }
+                return new Model(
+                        new ColoredShader(),
+                        indicesArray, verticesArray, colorsArray, normalsArray
+                );
         }
 
         private static float[] color(float[] vertices) {
@@ -134,7 +139,7 @@ public class OBJLoader {
 
                 /*
                 Float2 currentTex = textures.get(Integer.parseInt(vertexData[1]) - 1);
-                textureArray[currentVertexPointer * 2] = currentTex.x;
+                textureArray[currentVertexPointer * 2] = currentTex.inputStream;
                 textureArray[currentVertexPointer * 2 + 1] = 1 - currentTex.y;
                 */
 

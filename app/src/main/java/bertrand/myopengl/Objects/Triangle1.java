@@ -1,36 +1,32 @@
 package bertrand.myopengl.Objects;
 
 import bertrand.myopengl.Models.ColoredModel;
-import bertrand.myopengl.OpenGL.Loader;
 import bertrand.myopengl.Shaders.ColoredShader;
 
 public final class Triangle1 extends ColoredModel {
 
         public Triangle1(final ColoredShader shader) {
-                final float[] vectors = {
-                        0.0f, -0.5f, 0f,
-                        0.5f,  0.5f, 0f,
-                        -0.5f,  0.5f, 0f,
-                };
-                final float[] colors = {
-                        1.0f, 0.06f, 0.0f, 1.0f,
-                        0.0f, 1.0f, 0.0f, 1.0f,
-                        0.0f, 0.0f, 1.0f, 1.0f,
-
-                };
-                final float[] normals = {
-                        0, 0, 1,
-                        0, 0, 1,
-                        0, 0, 1,
-
-                };
-                final int[] indices  = {
-                        0,1,2
-                };
-
-                Loader loader = new Loader();
-                loader.toVAO(this,indices, vectors, colors, normals, shader);
-                //super.init(indices, vectors, colors, normals, shader);
+                super(
+                        shader,
+                        new int[] { //indices
+                                0,1,2
+                        },
+                        new float[] { //positions
+                                0.0f, -0.5f, 0f,
+                                0.5f,  0.5f, 0f,
+                                -0.5f,  0.5f, 0f,
+                        },
+                        new float[] { //colors
+                                1.0f, 0.06f, 0.0f, 1.0f,
+                                0.0f, 1.0f, 0.0f, 1.0f,
+                                0.0f, 0.0f, 1.0f, 1.0f,
+                        },
+                        new float[] { //normals
+                                0, 0, 1,
+                                0, 0, 1,
+                                0, 0, 1,
+                        }
+                );
                 position.x = 0f;
                 position.y = 0f;
                 position.z = -5f;

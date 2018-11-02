@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
             Point size = new Point();
             display.getSize(size);
             ViewGroup.LayoutParams layoutParams=mainGLView.getLayoutParams();
-            layoutParams.width = size.x;
+            layoutParams.width = size.inputStream;
             layoutParams.height = size.y;
             mainGLView.setLayoutParams(layoutParams);
 */

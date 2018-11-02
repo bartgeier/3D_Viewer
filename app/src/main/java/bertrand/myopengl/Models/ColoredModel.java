@@ -8,10 +8,31 @@ import bertrand.myopengl.OpenGL.AbstractShader;
 import bertrand.myopengl.OpenGL.GLES;
 import bertrand.myopengl.OpenGL.GPU;
 import bertrand.myopengl.Shaders.ColoredShader;
+import bertrand.myopengl.Tool.Arr;
 import bertrand.myopengl.Tool.Vec3;
 import bertrand.myopengl.Tool.VectorMath;
 
 public class ColoredModel extends RawModel {
+        public ColoredModel() {}
+        public ColoredModel(
+                final ColoredShader s,
+                final int[] indices,
+                final float[] positions,
+                final float[] colors,
+                final float[] normals
+        ) {
+                int vao = GPU.createVertexArrayObject();
+                int[] vbos = new int[4];
+                vbos[0] = GPU.loadIndecisBuffer(Arr.allocateBuffer(indices));
+                vbos[1] = GPU.loadFragmentBuffer(s.attributeID.position, 3, Arr.allocateBuffer(positions));
+                vbos[2] = GPU.loadFragmentBuffer(s.attributeID.color, 4, Arr.allocateBuffer(colors));
+                vbos[3] = GPU.loadFragmentBuffer(s.attributeID.normal, 3, Arr.allocateBuffer(normals));
+                GLES.glBindVertexArray(0);
+                shader = s;
+                this.vao = vao;
+                this.indicesCount = indices.length;
+        }
+
         public void setShader(ColoredShader shader) {
                 this.shader = shader;
         }

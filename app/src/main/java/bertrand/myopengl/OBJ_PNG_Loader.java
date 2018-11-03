@@ -1,5 +1,8 @@
 package bertrand.myopengl;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -7,13 +10,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bertrand.myopengl.Models.ColoredModel;
+import bertrand.myopengl.Models.TexturedModel;
 import bertrand.myopengl.Shaders.ColoredShader;
+import bertrand.myopengl.Shaders.TexturedShader;
 import bertrand.myopengl.Tool.RFile.RFile_IF;
 import bertrand.myopengl.Tool.Vec2;
 import bertrand.myopengl.Tool.Vec3;
 
-public class OBJLoader {
-        public static ColoredModel loadObjModel(RFile_IF file, String objFilePath){
+public class OBJ_PNG_Loader {
+        public static TexturedModel loadObjModel(
+                RFile_IF file,
+                String objFilePath,
+                String pngFilePath
+        ) {
+                final Bitmap bitmap = file.bitMap(pngFilePath);
                 String path = file.path(objFilePath);
                 InputStream is = file.inputStream(objFilePath);
                 InputStreamReader s = new InputStreamReader(is);
@@ -88,18 +98,19 @@ public class OBJLoader {
                         indicesArray[i] = indices.get(i);
                 }
                 float[]  colorsArray = color(verticesArray);
-                final class Model extends ColoredModel {
+                final class Model extends TexturedModel {
                         Model(
-                                final ColoredShader s,
+                                final TexturedShader s,
+                                final Bitmap bitMap,
                                 final int[] indices,
                                 final float[] positions,
-                                final float[] colors,
+                                final float[] texCoords,
                                 final float[] normals
                         ){
-                                super(s, indices, positions, colors, normals);
+                                super(s, bitMap, indices, positions, texCoords, normals);
                                 position.x = -0.5f;
                                 position.y = -3f;
-                                position.z = -10f;
+                                position.z = -3f;
                         }
                         private double rotationAngle = 0;
                         @Override
@@ -111,8 +122,9 @@ public class OBJLoader {
 
                 }
                 return new Model(
-                        new ColoredShader(),
-                        indicesArray, verticesArray, colorsArray, normalsArray
+                        new TexturedShader(),
+                        bitmap,
+                        indicesArray, verticesArray, textureArray, normalsArray
                 );
         }
 
@@ -126,22 +138,21 @@ public class OBJLoader {
                 }
                 return colors;
         }
-        private static void processVertex(
-        String[] vertexData,
-        List<Integer> indices,
-        List<Vec2> textures,
-        List<Vec3> normals,
-        float[] textureArray,
-        float[] normalsArray) {
 
+        private static void processVertex(
+                String[] vertexData,
+                List<Integer> indices,
+                List<Vec2> textures,
+                List<Vec3> normals,
+                float[] textureArray,
+                float[] normalsArray
+        ) {
                 int currentVertexPointer = Integer.parseInt(vertexData[0]) - 1;
                 indices.add(currentVertexPointer);
 
-                /*
-                Float2 currentTex = textures.get(Integer.parseInt(vertexData[1]) - 1);
-                textureArray[currentVertexPointer * 2] = currentTex.inputStream;
+                Vec2 currentTex = textures.get(Integer.parseInt(vertexData[1]) - 1);
+                textureArray[currentVertexPointer * 2] = currentTex.x;
                 textureArray[currentVertexPointer * 2 + 1] = 1 - currentTex.y;
-                */
 
                 Vec3 currentNorm = normals.get(Integer.parseInt(vertexData[2]) - 1);
                 normalsArray[currentVertexPointer * 3] = currentNorm.x;

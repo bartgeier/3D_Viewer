@@ -2,7 +2,7 @@ package bertrand.myopengl.Shaders;
 
 import bertrand.myopengl.OpenGL.AbstractShader;
 
-public class ColoredShader extends AbstractShader {
+public class TexturedShader extends AbstractShader {
         public class Uniform_Location {
                 public int modelViewMatrix = 0;
                 public int projectionMatrix = 0;
@@ -15,17 +15,19 @@ public class ColoredShader extends AbstractShader {
 
                 public int matSpecularIntensity = 0;
                 public int shininess = 0;
+
+                public int  texture = 0;
         }
 
         public class Attribute_Location {
                 public int position = 0;
-                public int color = 0;
+                public int texCoord = 0;
                 public int normal = 0;
         }
         public Attribute_Location attributeID;
         public Uniform_Location u;
 
-        public ColoredShader() {
+        public TexturedShader() {
                 attributeID = new Attribute_Location();
                 u = new Uniform_Location();
 
@@ -34,26 +36,27 @@ public class ColoredShader extends AbstractShader {
                 "uniform highp mat4 u_ProjectionMatrix;" +
 
                 "attribute vec4 a_Position;" +
-                "attribute vec4 a_Color;" +
                 "attribute vec3 a_Normal;" +
+                "attribute vec2 a_TexCoord;" +
 
-                "varying lowp vec4 frag_Color;" +
                 "varying lowp vec3 frag_Normal;" +
                 "varying lowp vec3 frag_Position;" +
+                "varying lowp vec2 frag_TexCoord;" +
                 "void main() {" +
-                        "frag_Color = a_Color;" +
                         "gl_Position = u_ProjectionMatrix * u_ModelViewMatrix * a_Position;" +
+                        "frag_TexCoord = a_TexCoord;" +
                         "frag_Normal = (u_ModelViewMatrix * vec4(a_Normal, 0.0)).xyz;" +
                         "frag_Position = (u_ModelViewMatrix * a_Position).xyz;" +
                 "}";
 
                 final String fragmentShaderCode =
-                "varying lowp vec4 frag_Color;" +
                 "varying lowp vec3 frag_Normal;" +
                 "varying lowp vec3 frag_Position;" +
+                "varying lowp vec2 frag_TexCoord;" +
 
                 "uniform highp float u_MatSpecularIntensity;" +
                 "uniform highp float u_Shininess;" +
+                "uniform sampler2D u_Texture;" +
 
                 "struct Light {" +
                         "lowp vec3 Color;" +
@@ -85,13 +88,13 @@ public class ColoredShader extends AbstractShader {
                         "SpecularFactor;" +
 
                         "gl_FragColor = " +
-                        "frag_Color * " +
+                        "texture2D(u_Texture, frag_TexCoord) *" +
                         "vec4((AmbientColor + DiffuseColor + SpecularColor), 1.0);" +
                 "}";
 
                 programID = loadSchader(vertexShaderCode,fragmentShaderCode);
                 attributeID.position = attributeLocation(programID, "a_Position");
-                attributeID.color = attributeLocation(programID, "a_Color");
+                attributeID.texCoord = attributeLocation(programID, "a_TexCoord");
                 attributeID.normal = attributeLocation(programID, "a_Normal");
 
                 u.modelViewMatrix = uniformLocation(programID, "u_ModelViewMatrix");
@@ -105,6 +108,8 @@ public class ColoredShader extends AbstractShader {
 
                 u.matSpecularIntensity = uniformLocation(programID, "u_MatSpecularIntensity");
                 u.shininess = uniformLocation(programID, "u_Shininess");
+
+                u.texture = uniformLocation(programID, "u_Texture");
         }
 
 

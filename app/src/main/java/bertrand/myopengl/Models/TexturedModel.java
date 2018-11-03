@@ -1,5 +1,6 @@
 package bertrand.myopengl.Models;
 
+import android.graphics.Bitmap;
 import android.opengl.Matrix;
 
 import org.jetbrains.annotations.NotNull;
@@ -8,25 +9,28 @@ import bertrand.myopengl.OpenGL.AbstractShader;
 import bertrand.myopengl.OpenGL.GLES;
 import bertrand.myopengl.OpenGL.GPU;
 import bertrand.myopengl.Shaders.ColoredShader;
+import bertrand.myopengl.Shaders.TexturedShader;
 import bertrand.myopengl.Tool.Arr;
 import bertrand.myopengl.Tool.Vec3;
 import bertrand.myopengl.Tool.VectorMath;
 
-public class ColoredModel extends RawModel {
-        public ColoredModel() {}
-        public ColoredModel(
-                final ColoredShader s,
+public class TexturedModel extends RawModel {
+        public TexturedModel() {}
+        public TexturedModel(
+                final TexturedShader s,
+                final Bitmap bitmap,
                 final int[] indices,
                 final float[] positions,
-                final float[] colors,
+                final float[] texCoords,
                 final float[] normals
         ) {
                 int vao = GPU.createVertexArrayObject();
                 int[] vbos = new int[4];
                 vbos[0] = GPU.loadIndecisBuffer(Arr.allocateBuffer(indices));
                 vbos[1] = GPU.loadFragmentBuffer(s.attributeID.position, 3, Arr.allocateBuffer(positions));
-                vbos[2] = GPU.loadFragmentBuffer(s.attributeID.color, 4, Arr.allocateBuffer(colors));
+                vbos[2] = GPU.loadFragmentBuffer(s.attributeID.texCoord, 2, Arr.allocateBuffer(texCoords));
                 vbos[3] = GPU.loadFragmentBuffer(s.attributeID.normal, 3, Arr.allocateBuffer(normals));
+                texId = GPU.loadTexture(bitmap);
                 GLES.glBindVertexArray(0);
                 shader = s;
                 this.vao = vao;
@@ -34,11 +38,13 @@ public class ColoredModel extends RawModel {
         }
 
         public void cleanUp() {
+                GPU.deleteTextureID(texId);
                 GPU.deleteVBOs(vbos);
                 GPU.deleteVertexArrayObject(vao);
         }
 
-        private ColoredShader shader;
+        private TexturedShader shader;
+        private int texId;
 
         public void render(float[] parentModelViewMatrix) {
                 float[] modelVieMatrix = new float[16];
@@ -54,7 +60,7 @@ public class ColoredModel extends RawModel {
                 GPU.render(vao, indicesCount);
         }
 
-        private void prepareToDraw(@NotNull ColoredShader shader, float[] modelVieMatrix) {
+        private void prepareToDraw(@NotNull TexturedShader shader, float[] modelVieMatrix) {
                 GLES.glUseProgram(shader.programID);
                 GLES.glUniformMatrix4fv(
                         shader.u.modelViewMatrix,
@@ -76,7 +82,7 @@ public class ColoredModel extends RawModel {
                 final float blue = 1;
                 GLES.glUniform3f(shader.u.lightAmbientColor, red, green, blue);
                 GLES.glUniform1f(shader.u.lightAmbientIntens,0.1f);
-                Vec3 lightDirection = VectorMath.vector3Normalize(new Vec3(0,1f,-1));
+                Vec3 lightDirection = VectorMath.vector3Normalize(new Vec3(0,-0.5f,-1));
                 GLES.glUniform3f(
                         shader.u.lightDirection,
                         lightDirection.x,
@@ -86,6 +92,8 @@ public class ColoredModel extends RawModel {
 
                 GLES.glUniform1f(shader.u.matSpecularIntensity,2.0f);
                 GLES.glUniform1f(shader.u.shininess,8.0f);
+
+                GLES.glUniform1i(shader.u.texture, 0);
         }
 
 }

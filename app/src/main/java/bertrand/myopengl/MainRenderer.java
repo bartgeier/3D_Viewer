@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
+import bertrand.myopengl.Models.TexturedModel;
 import bertrand.myopengl.Objects.CubeGray;
 import bertrand.myopengl.Objects.Triangle;
 import bertrand.myopengl.Objects.Triangle1;
@@ -22,13 +23,14 @@ public class MainRenderer implements Renderer {
         private Context context;
 
 
-        private ArrayList<ColoredModel> objects = new ArrayList<>();
+        private ArrayList<ColoredModel> coloredObjects = new ArrayList<>();
+        private ArrayList<TexturedModel> texturedObjects = new ArrayList<>();
 
 
         MainRenderer (Context c) {
                 context = c;
                 RFile f = new RFile(c);
-                f.inputStream(":raw/stall.obj");
+                f.inputStream(":raw/stall_obj_obj.obj");
         }
 
         @Override
@@ -36,7 +38,16 @@ public class MainRenderer implements Renderer {
                 float dt = deltaTime();
 
                 GPU.renderBackground();
-                for(ColoredModel object : objects) {
+                for(ColoredModel object : coloredObjects) {
+                        object.updateWithDelta(dt);
+                        float[] viewMatrix = new float[16];
+                        Matrix.setIdentityM(viewMatrix, 0);
+                        Matrix.translateM(viewMatrix,0,0, 0f, -5);
+                        Matrix.rotateM(viewMatrix,0, 20, 1, 0, 0);
+                        object.render(viewMatrix);
+                }
+
+                for(TexturedModel object : texturedObjects) {
                         object.updateWithDelta(dt);
                         float[] viewMatrix = new float[16];
                         Matrix.setIdentityM(viewMatrix, 0);
@@ -63,10 +74,11 @@ public class MainRenderer implements Renderer {
         public void onSurfaceCreated(GL10 gl, EGLConfig config) {
                 String extensions = gl.glGetString(GL10.GL_VERSION);
                 ColoredShader shader = new ColoredShader();
-                objects.add(new Triangle(shader));
-                objects.add(new Triangle1(shader));
-                objects.add(new CubeGray(shader));
-                objects.add(OBJLoader.loadObjModel(new RFile(context), ":/raw/stall.obj"));
+                //coloredObjects.add(new Triangle(shader));
+                //coloredObjects.add(new Triangle1(shader));
+                //coloredObjects.add(new CubeGray(shader));
+                //coloredObjects.add(OBJLoader.loadObjModel(new RFile(context), ":/raw/stall_obj.obj"));
+                texturedObjects.add(OBJ_PNG_Loader.loadObjModel(new RFile(context), ":/raw/stall_obj.obj", ":/raw/stall_png.png"));
         }
 
         private double lasttime = 0;

@@ -1,6 +1,8 @@
 package bertrand.myopengl.Tool.RFile;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -13,20 +15,19 @@ public class RFile implements RFile_IF{
         }
 
         public InputStream inputStream(String path) {
-                if (path.length() < 2) {
+                if (isResource(path)) {
+                        return resInputStream(resourceID(path));
+                } else {
                         return null;
                 }
-                if(path.charAt(0) == ':' && path.charAt(1) == '/') { // :/  a resource file
-                        String[] list = path.split(":/");
-                        if (list.length > 0) {
-                                return resource(list[1]);
-                        } else {
-                                return null;
-                        }
-                } else if(path.charAt(0) == ':') {
-                        return null;
-                }
-                return null;
+        }
+
+        public Bitmap bitMap(String path) {
+               if (isResource(path)) {
+                       return resBitmap(resourceID(path));
+               } else {
+                       return null;
+               }
         }
 
         public String path(final String filePath){
@@ -37,24 +38,9 @@ public class RFile implements RFile_IF{
                         s.add("/");
                 }
                 return s.toString();
-
         }
 
-        private InputStream resource(String path) {
-                if (path.length() == 0) {
-                        return null;
-                }
-                String[] list = path.split("/");
-                if (list.length != 2) {
-                        return null;
-                }
-                String resType = list[0];
-                String fileName = list[list.length - 1].split("\\.")[0];
-                int id = context.getResources().getIdentifier(
-                        fileName,
-                        resType,
-                        context.getPackageName()
-                );
+        private InputStream resInputStream(int id) {
                 if (id != 0) {
                         return context.getResources().openRawResource(id);
                 } else {
@@ -62,9 +48,43 @@ public class RFile implements RFile_IF{
                 }
         }
 
+        private final Bitmap resBitmap(int id) {
+                if (id != 0) {
+                        final BitmapFactory.Options options = new BitmapFactory.Options();
+                        options.inScaled = false;   // No pre-scaling
+                        return BitmapFactory.decodeResource(context.getResources(), id, options);
+                } else {
+                        return null;
+                }
+        }
+
+
+        private static boolean isResource(final String path) {
+                String[] list;
+                if (path.length() >= 2) {
+                        list = path.split("/");
+                } else {
+                        return false;
+                }
+
+                return ( list.length == 3 &&
+                        path.charAt(0) == ':' && path.charAt(1) == '/');
+        }
+
+        private int resourceID(final String resPath) {
+                String[] list = resPath.split("/");
+                String resType = list[1];
+                String fileName = list[list.length - 1].split("\\.")[0];
+                return context.getResources().getIdentifier(
+                        fileName,
+                        resType,
+                        context.getPackageName()
+                );
+        }
+
 
 }
 
 
-//int id = context.getResources().getIdentifier("stall","raw", context.getPackageName());
-//InputStream s = context.getResources().openRawResource(R.raw.stall);
+//int id = context.getResources().getIdentifier("stall_obj","raw", context.getPackageName());
+//InputStream s = context.getResources().openRawResource(R.raw.stall_obj);

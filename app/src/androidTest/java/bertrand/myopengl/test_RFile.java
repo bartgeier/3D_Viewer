@@ -1,6 +1,7 @@
 package bertrand.myopengl;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -10,6 +11,7 @@ import org.junit.runner.RunWith;
 import java.io.InputStream;
 
 import bertrand.myopengl.Tool.RFile.RFile;
+import bertrand.myopengl.Tool.RFile.RFile_IF;
 
 import static org.junit.Assert.*;
 
@@ -19,7 +21,7 @@ public class test_RFile {
         public void notRescource() {
                 Context appContext = InstrumentationRegistry.getTargetContext();
                 RFile f = new RFile(appContext);
-                InputStream s = f.inputStream("raw/stall.obj");
+                InputStream s = f.inputStream("raw/stall_obj.obj");
 
                 assertEquals(null, s);
         }
@@ -45,7 +47,7 @@ public class test_RFile {
         public void stall_0() {
                 Context appContext = InstrumentationRegistry.getTargetContext();
                 RFile f = new RFile(appContext);
-                InputStream s = f.inputStream(":/stall");
+                InputStream s = f.inputStream(":/stall_obj");
 
                 assertEquals(null, s);
         }
@@ -54,7 +56,7 @@ public class test_RFile {
         public void stall_1() {
                 Context appContext = InstrumentationRegistry.getTargetContext();
                 RFile f = new RFile(appContext);
-                InputStream s = f.inputStream(":raw/stall");
+                InputStream s = f.inputStream(":raw/stall_obj");
 
                 assertEquals(null, s);
         }
@@ -72,7 +74,7 @@ public class test_RFile {
         public void stall_2() {
                 Context appContext = InstrumentationRegistry.getTargetContext();
                 RFile f = new RFile(appContext);
-                InputStream s = f.inputStream(":/raw/stall");
+                InputStream s = f.inputStream(":/raw/stall_obj");
 
                 assertTrue(s != null);
         }
@@ -81,7 +83,16 @@ public class test_RFile {
         public void stall_3() {
                 Context appContext = InstrumentationRegistry.getTargetContext();
                 RFile f = new RFile(appContext);
-                InputStream s = f.inputStream(":/raw/stall.obj");
+                InputStream s = f.inputStream(":/raw/stall_obj.obj");
+
+                assertTrue(s != null);
+        }
+
+        @Test
+        public void stall_png() {
+                Context appContext = InstrumentationRegistry.getTargetContext();
+                RFile_IF f = new RFile(appContext);
+                Bitmap s = f.bitMap(":/raw/stall_png.png");
 
                 assertTrue(s != null);
         }

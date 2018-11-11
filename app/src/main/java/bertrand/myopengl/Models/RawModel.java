@@ -2,6 +2,7 @@ package bertrand.myopengl.Models;
 
 import android.opengl.Matrix;
 
+import bertrand.myopengl.OpenGL.GPU;
 import bertrand.myopengl.Tool.Vec3;
 
 public class RawModel {
@@ -32,10 +33,10 @@ public class RawModel {
                 scale = new Vec3(1,1,1);
         }
 
-        public void init(int vao, int[] vbos, int indicesCount) {
-                this.vao = vao;
-                this.vbos = vbos;
-                this.indicesCount = indicesCount;
+        public void cleanUp() {
+                GPU.deleteVBOs(vbos);
+                GPU.deleteVertexArrayObject(vao);
+                indicesCount = 0;
         }
 
         public interface UpdateListner {

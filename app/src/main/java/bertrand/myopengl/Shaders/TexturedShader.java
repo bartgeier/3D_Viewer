@@ -1,36 +1,29 @@
 package bertrand.myopengl.Shaders;
 
-import bertrand.myopengl.OpenGL.AbstractShader;
+import bertrand.myopengl.OpenGL.BaseShader;
 
-public class TexturedShader extends AbstractShader {
-        public class Uniform_Location {
-                public int modelViewMatrix = 0;
-                public int projectionMatrix = 0;
+public class TexturedShader extends BaseShader {
+        /* uniform locations */
+                public int u_ModelViewMatrix;
+                public int u_ProjectionMatrix;
 
-                public int lightAmbientIntens = 0;
-                public int lightAmbientColor = 0;
+                public int u_Light_AmbientIntens;
+                public int u_Light_AmbientColor;
 
-                public int lightDiffuseIntens = 0;
-                public int lightDirection = 0;
+                public int u_Light_DiffuseIntens;
+                public int u_Light_Direction;
 
-                public int matSpecularIntensity = 0;
-                public int shininess = 0;
+                public int u_MatSpecularIntensity;
+                public int u_Shininess;
 
-                public int  texture = 0;
-        }
+                public int u_Texture;
 
-        public class Attribute_Location {
-                public int position = 0;
-                public int texCoord = 0;
-                public int normal = 0;
-        }
-        public Attribute_Location attributeID;
-        public Uniform_Location u;
+        /* attribute locations */
+                public static final int a_Position = 0;
+                public static final int a_TexCoord = 1;
+                public static final int a_Normal = 2;
 
         public TexturedShader() {
-                attributeID = new Attribute_Location();
-                u = new Uniform_Location();
-
                 final String vertexShaderCode =
                 "uniform highp mat4 u_ModelViewMatrix;" +
                 "uniform highp mat4 u_ProjectionMatrix;" +
@@ -92,26 +85,23 @@ public class TexturedShader extends AbstractShader {
                         "vec4((AmbientColor + DiffuseColor + SpecularColor), 1.0);" +
                 "}";
 
-                programID = loadSchader(vertexShaderCode,fragmentShaderCode);
-                attributeID.position = attributeLocation(programID, "a_Position");
-                attributeID.texCoord = attributeLocation(programID, "a_TexCoord");
-                attributeID.normal = attributeLocation(programID, "a_Normal");
+                programID = createProgram(vertexShaderCode,fragmentShaderCode);
+                attributeLocation(programID, a_Position, "a_Position");
+                attributeLocation(programID, a_TexCoord, "a_TexCoord");
+                attributeLocation(programID, a_Normal,  "a_Normal");
+                linkProgram();
 
-                u.modelViewMatrix = uniformLocation(programID, "u_ModelViewMatrix");
-                u.projectionMatrix = uniformLocation(programID, "u_ProjectionMatrix");
+                u_ModelViewMatrix = uniformLocation(programID, "u_ModelViewMatrix");
+                u_ProjectionMatrix = uniformLocation(programID, "u_ProjectionMatrix");
 
-                u.lightAmbientIntens = uniformLocation(programID, "u_Light.AmbientIntensity");
-                u.lightAmbientColor = uniformLocation(programID, "u_Light.Color");
+                u_Light_AmbientIntens = uniformLocation(programID, "u_Light.AmbientIntensity");
+                u_Light_AmbientColor = uniformLocation(programID, "u_Light.Color");
+                u_Light_DiffuseIntens = uniformLocation(programID, "u_Light.DiffuseIntensity");
+                u_Light_Direction = uniformLocation(programID, "u_Light.Direction");
 
-                u.lightDiffuseIntens = uniformLocation(programID, "u_Light.DiffuseIntensity");
-                u.lightDirection = uniformLocation(programID, "u_Light.Direction");
+                u_MatSpecularIntensity = uniformLocation(programID, "u_MatSpecularIntensity");
+                u_Shininess = uniformLocation(programID, "u_Shininess");
 
-                u.matSpecularIntensity = uniformLocation(programID, "u_MatSpecularIntensity");
-                u.shininess = uniformLocation(programID, "u_Shininess");
-
-                u.texture = uniformLocation(programID, "u_Texture");
+                u_Texture = uniformLocation(programID, "u_Texture");
         }
-
-
-
 }

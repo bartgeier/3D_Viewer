@@ -9,9 +9,15 @@ public class Vec3 {
                 y = 0;
                 z = 0;
         }
+
         public Vec3(float ix, float iy, float iz) {
                 x = ix;
                 y = iy;
                 z = iz;
+        }
+
+        public static Vec3 normalize(float x, float y, float z) {
+                float length =  (float)Math.sqrt(x*x  + y*y + z*z);
+                return new Vec3(x/length, y/length, z/length );
         }
 }

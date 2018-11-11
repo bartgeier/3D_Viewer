@@ -7,6 +7,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.nio.ByteBuffer;
 
+import bertrand.myopengl.Tool.Vec3;
+
 public class GPU {
         public static int createVertexArrayObject() {
                 final int[] vaoID = new int[1];
@@ -15,13 +17,17 @@ public class GPU {
                 return vaoID[0];
         }
 
+        public static void vertexArray0() {
+                GLES.glBindVertexArray(0);
+        }
+
         public static void deleteVertexArrayObject(int vaoId) {
                 final int[] vaoID = new int[1];
                 vaoID[0] = vaoId;
                 GLES.glDeleteVertexArrays(1, vaoID,0);
         }
 
-        public static int loadFragmentBuffer(int attributeID, int coordinateSize, @NotNull final ByteBuffer b) {
+        public static int loadAttribute(int attributeID, int coordinateSize, @NotNull final ByteBuffer b) {
                 final int vboID = GPU.generateVBO();
                 GLES.glBindBuffer(GLES.GL_ARRAY_BUFFER, vboID);
                 GLES.glBufferData(
@@ -76,6 +82,31 @@ public class GPU {
                 return texID;
         }
 
+        public static void loadFloat(int uniformID, float f) {
+                GLES.glUniform1f(uniformID,f);
+        }
+
+        public static void load3Float(int uniformID, float f0, float f1, float f2) {
+                GLES.glUniform3f(uniformID, f0, f1, f2);
+        }
+
+        public static void loadVec3(int uniformID,@NotNull Vec3 vector) {
+                GLES.glUniform3f(uniformID, vector.x, vector.y, vector.z);
+        }
+
+        public static void loadMatrix(int uniformID,@NotNull float[] matrix) {
+                if (matrix.length != 16) {
+                        throw new AssertionError("Is not 4x4 matrix ");
+                }
+                GLES.glUniformMatrix4fv(
+                        uniformID,
+                        1,
+                        false,
+                        matrix,
+                        0
+                );
+        }
+
         public static void render(int gpuVaoName, int numOfIndecis) {
                 GLES.glBindVertexArray(gpuVaoName);
                 GLES.glDrawElements(
@@ -88,14 +119,13 @@ public class GPU {
         }
 
         public static void renderBackground() {
-                //GLES.glClearColor(0.8f,0.5f,0.0f,1.0f);
                 GLES.glClearColor(0.8f,0.8f,0.8f,1.0f);
                 GLES.glClear(GLES.GL_COLOR_BUFFER_BIT |GLES.GL_DEPTH_BUFFER_BIT);
                 GLES.glEnable(GLES.GL_DEPTH_TEST);
                 GLES.glEnable(GLES.GL_CULL_FACE);
         }
 
-        public static int generateVBO() {
+        private static int generateVBO() {
                 final int vboID[] = new int[1];
                 GLES.glGenBuffers(1, vboID,0);
                 return vboID[0];
@@ -105,7 +135,7 @@ public class GPU {
                 GLES.glDeleteBuffers(vboIDs.length, vboIDs,0);
         }
 
-        public static int generateTextureID() {
+        private static int generateTextureID() {
                 final int texID[] = new int[1];
                 GLES.glGenTextures(1, texID,0);
                 return texID[0];
@@ -117,13 +147,18 @@ public class GPU {
                 GLES.glDeleteBuffers(1, texID,0);
         }
 
-        public static int loadShader(int type, String shaderCode) {
+        static int loadShader(int type, String shaderCode) {
                 int shader = GLES.glCreateShader(type);
                 GLES.glShaderSource(shader, shaderCode);
                 GLES.glCompileShader(shader);
                 return shader;
         }
 
+        public static void useProgram(int programID) {
+                GLES.glUseProgram(programID);
+        }
+
+        /*
         public static void error() {
                 //GLES.GLenum err;
                 int err;
@@ -131,7 +166,6 @@ public class GPU {
                 while((err = GLES.glGetError()) != GLES.GL_NO_ERROR) {
                         i++;
                 }
-
-
         }
+        */
 }

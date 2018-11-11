@@ -11,4 +11,8 @@ public class Vec2 {
                 x = ix;
                 y = iy;
         }
+        public static Vec2 normalize(float x, float y) {
+                float length =  (float)Math.sqrt(x*x  + y*y);
+                return new Vec2(x/length, y/length);
+        }
 }

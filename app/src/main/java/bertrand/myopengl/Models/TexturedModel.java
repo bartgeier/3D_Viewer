@@ -5,19 +5,15 @@ import android.opengl.Matrix;
 
 import org.jetbrains.annotations.NotNull;
 
-import bertrand.myopengl.OpenGL.AbstractShader;
-import bertrand.myopengl.OpenGL.GLES;
 import bertrand.myopengl.OpenGL.GPU;
-import bertrand.myopengl.Shaders.ColoredShader;
 import bertrand.myopengl.Shaders.TexturedShader;
 import bertrand.myopengl.Tool.Arr;
 import bertrand.myopengl.Tool.Vec3;
-import bertrand.myopengl.Tool.VectorMath;
 
 public class TexturedModel extends RawModel {
         public TexturedModel() {}
         public TexturedModel(
-                final TexturedShader s,
+                @NotNull final TexturedShader s,
                 final Bitmap bitmap,
                 final int[] indices,
                 final float[] positions,
@@ -27,11 +23,11 @@ public class TexturedModel extends RawModel {
                 int vao = GPU.createVertexArrayObject();
                 int[] vbos = new int[4];
                 vbos[0] = GPU.loadIndecisBuffer(Arr.allocateBuffer(indices));
-                vbos[1] = GPU.loadFragmentBuffer(s.attributeID.position, 3, Arr.allocateBuffer(positions));
-                vbos[2] = GPU.loadFragmentBuffer(s.attributeID.texCoord, 2, Arr.allocateBuffer(texCoords));
-                vbos[3] = GPU.loadFragmentBuffer(s.attributeID.normal, 3, Arr.allocateBuffer(normals));
+                vbos[1] = GPU.loadAttribute(s.a_Position, 3, Arr.allocateBuffer(positions));
+                vbos[2] = GPU.loadAttribute(s.a_TexCoord, 2, Arr.allocateBuffer(texCoords));
+                vbos[3] = GPU.loadAttribute(s.a_Normal, 3, Arr.allocateBuffer(normals));
                 texId = GPU.loadTexture(bitmap);
-                GLES.glBindVertexArray(0);
+                GPU.vertexArray0();
                 shader = s;
                 this.vao = vao;
                 this.indicesCount = indices.length;
@@ -39,8 +35,8 @@ public class TexturedModel extends RawModel {
 
         public void cleanUp() {
                 GPU.deleteTextureID(texId);
-                GPU.deleteVBOs(vbos);
-                GPU.deleteVertexArrayObject(vao);
+                shader.cleanUp();
+                super.cleanUp();
         }
 
         private TexturedShader shader;
@@ -60,41 +56,24 @@ public class TexturedModel extends RawModel {
                 GPU.render(vao, indicesCount);
         }
 
-        private void prepareToDraw(@NotNull TexturedShader shader, float[] modelVieMatrix) {
-                GLES.glUseProgram(shader.programID);
-                GLES.glUniformMatrix4fv(
-                        shader.u.modelViewMatrix,
-                        1,
-                        false,
-                        modelVieMatrix,
-                        0
-                );
-                GLES.glUniformMatrix4fv(
-                        shader.u.projectionMatrix,
-                        1,
-                        false,
-                        projectionMatrix,
-                        0
-                );
+        private void prepareToDraw(@NotNull TexturedShader shader, float[] modelViewMatrix) {
+                GPU.useProgram(shader.programID);
+                GPU.loadMatrix(shader.u_ModelViewMatrix, modelViewMatrix);
+                GPU.loadMatrix(shader.u_ProjectionMatrix, projectionMatrix);
+
+                Vec3 lightDirection = Vec3.normalize(0,-0.5f,-1);
+                GPU.loadVec3(shader.u_Light_Direction, lightDirection);
 
                 final float red = 1;
                 final float green = 1;
                 final float blue = 1;
-                GLES.glUniform3f(shader.u.lightAmbientColor, red, green, blue);
-                GLES.glUniform1f(shader.u.lightAmbientIntens,0.1f);
-                Vec3 lightDirection = VectorMath.vector3Normalize(new Vec3(0,-0.5f,-1));
-                GLES.glUniform3f(
-                        shader.u.lightDirection,
-                        lightDirection.x,
-                        lightDirection.y,
-                        lightDirection.z);
-                GLES.glUniform1f(shader.u.lightDiffuseIntens,0.7f);
 
-                GLES.glUniform1f(shader.u.matSpecularIntensity,2.0f);
-                GLES.glUniform1f(shader.u.shininess,8.0f);
-
-                GLES.glUniform1i(shader.u.texture, 0);
+                GPU.load3Float(shader.u_Light_AmbientColor, red, green, blue);
+                GPU.loadFloat(shader.u_Light_AmbientIntens, 0.1f);
+                GPU.loadFloat(shader.u_Light_DiffuseIntens, 0.7f);
+                GPU.loadFloat(shader.u_MatSpecularIntensity, 2.0f);
+                GPU.loadFloat(shader.u_Shininess, 8.0f);
+                GPU.loadFloat(shader.u_Texture, 0);
         }
-
 }
 

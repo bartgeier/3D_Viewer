@@ -166,6 +166,6 @@ public class GPU {
                 while((err = GLES.glGetError()) != GLES.GL_NO_ERROR) {
                         i++;
                 }
-        }
+        }e
         */
 }

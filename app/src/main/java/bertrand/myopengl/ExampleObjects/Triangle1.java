@@ -1,4 +1,4 @@
-package bertrand.myopengl.Objects;
+package bertrand.myopengl.ExampleObjects;
 
 import bertrand.myopengl.Models.ColoredModel;
 import bertrand.myopengl.Shaders.ColoredShader;

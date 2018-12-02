@@ -10,9 +10,6 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 import bertrand.myopengl.Models.TexturedModel;
-import bertrand.myopengl.Objects.CubeGray;
-import bertrand.myopengl.Objects.Triangle;
-import bertrand.myopengl.Objects.Triangle1;
 import bertrand.myopengl.Models.ColoredModel;
 import bertrand.myopengl.OpenGL.GPU;
 import bertrand.myopengl.Shaders.ColoredShader;

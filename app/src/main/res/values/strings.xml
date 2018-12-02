@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MyOpenGL</string>
+    <string name="titel_examples">Choose an example</string>
 </resources>

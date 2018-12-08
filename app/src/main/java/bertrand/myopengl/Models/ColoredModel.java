@@ -27,6 +27,7 @@ public class ColoredModel extends RawModel {
                 GPU.vertexArray0();
                 shader = s;
                 this.vao = vao;
+                this.vbos = vbos;
                 this.indicesCount = indices.length;
         }
 
@@ -56,7 +57,8 @@ public class ColoredModel extends RawModel {
                 GPU.loadMatrix(shader.u_ModelViewMatrix, modelViewMatrix);
                 GPU.loadMatrix(shader.u_ProjectionMatrix, projectionMatrix);
 
-                Vec3 lightDirection = Vec3.normalize(0,-0.5f,-1);
+                //Vec3 lightDirection = Vec3.normalize(0,-0.5f,-1);
+                Vec3 lightDirection = Vec3.normalize(0,0.8f,-1);
                 GPU.loadVec3(shader.u_Light_Direction, lightDirection);
 
                 final float red = 1;

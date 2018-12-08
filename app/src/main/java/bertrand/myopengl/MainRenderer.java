@@ -9,23 +9,30 @@ import java.util.ArrayList;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
+import bertrand.myopengl.ExampleObjects.ExampleFactory;
+import bertrand.myopengl.Models.ModelOptions;
 import bertrand.myopengl.Models.TexturedModel;
 import bertrand.myopengl.Models.ColoredModel;
 import bertrand.myopengl.OpenGL.GPU;
-import bertrand.myopengl.Shaders.ColoredShader;
 import bertrand.myopengl.Tool.RFile.RFile;
 
 public class MainRenderer implements Renderer {
-
         private Context context;
-
+        private ExampleFactory exampleFactory;
 
         private ArrayList<ColoredModel> coloredObjects = new ArrayList<>();
         private ArrayList<TexturedModel> texturedObjects = new ArrayList<>();
 
+        private class Example {
+                boolean aNew = false;
+                int position = -1;
+        };
+
+        Example example = new Example();
 
         MainRenderer (Context c) {
                 context = c;
+                exampleFactory = new ExampleFactory(context);
                 RFile f = new RFile(c);
                 f.inputStream(":raw/stall_obj_obj.obj");
         }
@@ -33,6 +40,11 @@ public class MainRenderer implements Renderer {
         @Override
         public void onDrawFrame(GL10 gl) {
                 float dt = deltaTime();
+
+                if (example.aNew) {
+                        loadExample();
+                        example.aNew = false;
+                }
 
                 GPU.renderBackground();
                 for(ColoredModel object : coloredObjects) {
@@ -67,15 +79,39 @@ public class MainRenderer implements Renderer {
                 );
         }
 
+        private void loadExample() {
+                cleanUp();
+                ModelOptions m = exampleFactory.createExample(example.position);
+                if( m.coloredModel != null) {
+                        coloredObjects.add(m.coloredModel);
+                }
+                if(m.texturedModel != null) {
+                        texturedObjects.add(m.texturedModel);
+                }
+        }
+
+        private void cleanUp() {
+                for(ColoredModel object : coloredObjects) {
+                        object.cleanUp();
+                }
+                coloredObjects.clear();
+                for(TexturedModel object : texturedObjects) {
+                        object.cleanUp();
+                }
+                texturedObjects.clear();
+        }
+
         @Override
         public void onSurfaceCreated(GL10 gl, EGLConfig config) {
                 String extensions = gl.glGetString(GL10.GL_VERSION);
-                ColoredShader shader = new ColoredShader();
-                //coloredObjects.add(new Triangle(shader));
-                //coloredObjects.add(new Triangle1(shader));
-                //coloredObjects.add(new CubeGray(shader));
-                //coloredObjects.add(OBJLoader.loadObjModel(new RFile(context), ":/raw/stall_obj.obj"));
-                texturedObjects.add(OBJ_PNG_Loader.loadObjModel(new RFile(context), ":/raw/stall_obj.obj", ":/raw/stall_png.png"));
+                example.aNew = true;
+                example.position = 3;
+
+        }
+
+        public void setExample(final int position) {
+                example.aNew = true;
+                example.position = position;
         }
 
         private double lasttime = 0;

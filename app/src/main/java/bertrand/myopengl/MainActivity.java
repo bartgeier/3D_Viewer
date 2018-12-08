@@ -15,16 +15,13 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.lang.reflect.Method;
-
-import bertrand.myopengl.ExampleObjects.ExampleInfos;
+import bertrand.myopengl.ExampleObjects.ExampleFactory;
 import bertrand.myopengl.Tool.TextChooser.TextChooserActivity;
 
 public class MainActivity extends AppCompatActivity {
         MainSurfaceView mainGLView;
-        MainRenderer mainRenderer;
+        ExampleFactory exampleFactory;
 
-        ExampleInfos exampleInfos;
         public class UI{
                 ConstraintLayout layout;
                 ActionBar actionBar;
@@ -46,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
                         ui.actionBar = getSupportActionBar();
                         ui.layout = this.findViewById(R.id.layout);
                         ui.textView = this.findViewById(R.id.label);
-                        exampleInfos = new ExampleInfos();
+                        exampleFactory = new ExampleFactory(this);
 
                         String s = Integer.toHexString(info.reqGlEsVersion);
                         Toast.makeText(
@@ -54,10 +51,11 @@ public class MainActivity extends AppCompatActivity {
                                 "OpenGL ES " + s,
                                 Toast.LENGTH_SHORT
                         ).show();
-                        mainRenderer = new MainRenderer(this);
+                        //mainRenderer = new MainRenderer(this);
                         mainGLView = this.findViewById(R.id.mainSurfaceView);
                         mainGLView.setEGLContextClientVersion(2);
-                        mainGLView.setRenderer(mainRenderer);
+                        mainGLView.start();
+                        //mainGLView.setRenderer(mainRenderer);
                 } else {
                         Toast.makeText(
                                 MainActivity.this,
@@ -102,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                         case R.id.action_examples:
                                 Intent intent = new Intent(MainActivity.this, TextChooserActivity.class);
-                                intent.putExtra("ArrayList_names", exampleInfos.names);
+                                intent.putExtra("ArrayList_names", exampleFactory.names);
                                 intent.putExtra("Titel", getResources().getString(R.string.titel_examples));
                                 startActivityForResult(intent, EXAMPLE_ACTIVITY_ID);
                                 return true;
@@ -121,6 +119,8 @@ public class MainActivity extends AppCompatActivity {
                                 Bundle b = intent.getBundleExtra("activity_textchooser");
                                 ui.textView.setText(b.getString("name"));
                                 ui.textView.setText(b.getString("name"));
+                                //exampleFactory.createExample(b.getInt("position"));
+                                mainGLView.setExample(b.getInt("position"));
                         }
                 }
         }

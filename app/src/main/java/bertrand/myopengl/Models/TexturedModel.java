@@ -30,6 +30,7 @@ public class TexturedModel extends RawModel {
                 GPU.vertexArray0();
                 shader = s;
                 this.vao = vao;
+                this.vbos = vbos;
                 this.indicesCount = indices.length;
         }
 

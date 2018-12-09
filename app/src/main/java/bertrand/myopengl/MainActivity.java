@@ -94,7 +94,6 @@ public class MainActivity extends AppCompatActivity {
         }
         */
 
-
         @Override
         public boolean onOptionsItemSelected(MenuItem item) {
                 switch (item.getItemId()) {
@@ -104,8 +103,9 @@ public class MainActivity extends AppCompatActivity {
                                 intent.putExtra("Titel", getResources().getString(R.string.titel_examples));
                                 startActivityForResult(intent, EXAMPLE_ACTIVITY_ID);
                                 return true;
-                        case R.id.action_closeApp:
-                                this.finish();
+                        case R.id.action_cleanUp:
+                                ui.textView.setText("");
+                                mainGLView.cleanUp();
                                 return true;
                         default:
                                 return super.onOptionsItemSelected(item);
@@ -119,7 +119,6 @@ public class MainActivity extends AppCompatActivity {
                                 Bundle b = intent.getBundleExtra("activity_textchooser");
                                 ui.textView.setText(b.getString("name"));
                                 ui.textView.setText(b.getString("name"));
-                                //exampleFactory.createExample(b.getInt("position"));
                                 mainGLView.setExample(b.getInt("position"));
                         }
                 }

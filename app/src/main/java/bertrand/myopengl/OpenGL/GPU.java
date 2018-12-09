@@ -1,6 +1,7 @@
 package bertrand.myopengl.OpenGL;
 
 import android.graphics.Bitmap;
+import android.opengl.GLES10;
 import android.opengl.GLUtils;
 
 import org.jetbrains.annotations.NotNull;
@@ -149,6 +150,7 @@ public class GPU {
 
         static int loadShader(int type, String shaderCode) {
                 int shader = GLES.glCreateShader(type);
+                error();
                 GLES.glShaderSource(shader, shaderCode);
                 GLES.glCompileShader(shader);
                 return shader;
@@ -158,7 +160,7 @@ public class GPU {
                 GLES.glUseProgram(programID);
         }
 
-        /*
+
         public static void error() {
                 //GLES.GLenum err;
                 int err;
@@ -166,6 +168,6 @@ public class GPU {
                 while((err = GLES.glGetError()) != GLES.GL_NO_ERROR) {
                         i++;
                 }
-        }e
-        */
+        }
+
 }

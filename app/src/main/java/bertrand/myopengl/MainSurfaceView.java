@@ -1,11 +1,8 @@
 package bertrand.myopengl;
 
 import android.content.Context;
-import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.util.AttributeSet;
-
-import bertrand.myopengl.Models.ModelOptions;
 
 
 public class MainSurfaceView extends GLSurfaceView {//GLTextureView {//GLSurfaceView {
@@ -28,40 +25,21 @@ public class MainSurfaceView extends GLSurfaceView {//GLTextureView {//GLSurface
 
         }
 
-        public void setExample(final int position) {
+        public void setExample(final int idx) {
                 queueEvent(new Runnable() {
                         @Override
                         public void run() {
-                                renderer.setExample(position);
+                                renderer.onNewExample(idx);
                         }
                 });
-
         }
 
-/*
-        public  void queueEvent(new Runnable(){
-
-                @Override
-                public void run() {
-                       // mRenderer.method();
-                }
-        });
-
-
-            @Override
-        public boolean onTouch(View v, MotionEvent event) {
-
-                ...
-                // Calculate normalized value and everything
-                ...
-
-                glSurfaceView.queueEvent(new Runnable() {
-                    @Override
-                    public void run() {
-                        mainRenderer.handleOnTouch(action, normalizedX, normalizedY);
-                    }
+        public void cleanUp(){
+                queueEvent(new Runnable() {
+                        @Override
+                        public void run() {
+                                renderer.onCleanUp();
+                        }
                 });
-            }
-*/
-
+        }
 }

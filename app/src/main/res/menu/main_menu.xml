@@ -6,9 +6,9 @@
     <item
         android:id="@+id/action_examples"
         android:orderInCategory="0"
-        android:title="Examples" />
+        android:title="@string/examples" />
     <item
-        android:id="@+id/action_closeApp"
+        android:id="@+id/action_cleanUp"
         android:orderInCategory="1"
-        android:title="Close App" />
+        android:title="@string/clean_up" />
 </menu>

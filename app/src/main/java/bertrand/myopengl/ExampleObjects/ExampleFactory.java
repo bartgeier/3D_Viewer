@@ -1,15 +1,18 @@
 package bertrand.myopengl.ExampleObjects;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 
 import java.util.ArrayList;
 
 
 import bertrand.myopengl.Models.ModelOptions;
-import bertrand.myopengl.OBJ_PNG_Loader;
 import bertrand.myopengl.Shaders.ColoredShader;
 import bertrand.myopengl.Shaders.TexturedShader;
+import bertrand.myopengl.Tool.OBJ_FILE.OBJ_Data;
+import bertrand.myopengl.Tool.OBJ_FILE.OBJ_File_Loader;
 import bertrand.myopengl.Tool.RFile.RFile;
+import bertrand.myopengl.Tool.Texture_File_Loader;
 
 public class ExampleFactory {
         public ArrayList<String> names = new ArrayList<>();
@@ -50,11 +53,24 @@ public class ExampleFactory {
                         modelOptions.coloredModel = new Triangle1(coloredShader);
                         break;
                 case 3:
-                        //texturedShader = new TexturedShader();
-                        modelOptions.texturedModel = OBJ_PNG_Loader.loadObjModel(
+
+                        texturedShader = new TexturedShader();
+                        OBJ_Data obj = OBJ_File_Loader.loadObjModel(
                                 new RFile(context),
-                                ":/raw/stall_obj.obj",
-                                ":/raw/stall_png.png");
+                                ":/raw/stall_obj.obj"
+                        );
+                        Bitmap bitmap =  Texture_File_Loader.getBitmap(
+                                new RFile(context),
+                                ":/raw/stall_png.png"
+                        );
+                        modelOptions.texturedModel = new Stall(
+                                texturedShader,
+                                bitmap,
+                                obj.indices,
+                                obj.positions,
+                                obj.texCoords,
+                                obj.normals
+                        );
                         break;
                 default:
                         /* do nothing */

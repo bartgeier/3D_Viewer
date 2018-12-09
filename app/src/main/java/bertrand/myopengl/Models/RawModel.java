@@ -44,7 +44,9 @@ public class RawModel {
         }
         public UpdateListner update;
         public void updateWithDelta(float dt_ms) {
-                update.withDelta(this,dt_ms);
+                if(update != null) {
+                        update.withDelta(this, dt_ms);
+                }
 
         }
 

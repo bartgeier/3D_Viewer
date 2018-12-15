@@ -5,21 +5,25 @@ import android.opengl.GLSurfaceView.Renderer;
 import android.opengl.Matrix;
 import android.os.SystemClock;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
+import bertrand.myopengl.Camera.Camera;
 import bertrand.myopengl.ExampleObjects.ExampleFactory;
 import bertrand.myopengl.Models.ModelOptions;
 import bertrand.myopengl.Models.TexturedModel;
 import bertrand.myopengl.Models.ColoredModel;
 import bertrand.myopengl.OpenGL.GPU;
-
+import bertrand.myopengl.Shaders.ShaderRepo;
 
 
 public class MainRenderer implements Renderer {
         private Context context;
         private ExampleFactory exampleFactory;
+        private ShaderRepo shaderRepo;
 
         private ArrayList<ColoredModel> coloredObjects = new ArrayList<>();
         private ArrayList<TexturedModel> texturedObjects = new ArrayList<>();
@@ -28,18 +32,18 @@ public class MainRenderer implements Renderer {
         enum WorkTodo {
                 DONE,
                 NEW_EXAMPLE,
-                CLEAN_UP
+                CLEAR_SCREEN_UP
         }
         class Admin {
                 WorkTodo workTodo = WorkTodo.DONE;
                 int exampleIdx = -1;
         };
 
-        Admin admin = new Admin();
+        private Admin admin = new Admin();
 
         MainRenderer (Context c) {
                 context = c;
-                exampleFactory = new ExampleFactory(context);
+
         }
 
         @Override
@@ -49,48 +53,36 @@ public class MainRenderer implements Renderer {
                 if (admin.workTodo != WorkTodo.DONE) {
                         admin.workTodo = admin(admin);
                 }
-
                 GPU.renderBackground();
                 for(ColoredModel object : coloredObjects) {
                         object.updateWithDelta(dt);
-                        float[] viewMatrix = new float[16];
-                        Matrix.setIdentityM(viewMatrix, 0);
-                        Matrix.translateM(viewMatrix,0,0, 0f, -5);
-                        Matrix.rotateM(viewMatrix,0, 20, 1, 0, 0);
-                        object.render(viewMatrix);
+                        object.render(Camera.position());
                 }
-
                 for(TexturedModel object : texturedObjects) {
                         object.updateWithDelta(dt);
-                        float[] viewMatrix = new float[16];
-                        Matrix.setIdentityM(viewMatrix, 0);
-                        Matrix.translateM(viewMatrix,0,0, 0f, -5);
-                        Matrix.rotateM(viewMatrix,0, 20, 1, 0, 0);
-                        object.render(viewMatrix);
+                        object.render(Camera.position());
                 }
         }
 
+
         @Override
         public void onSurfaceChanged(GL10 gl, int width, int height) {
-                float ratio = (float) width / height;
-                Matrix.perspectiveM(
-                        ColoredModel.projectionMatrix,
-                        0,
-                        85,
-                        ratio,
-                        0.1f,  //zNear should be never zero
-                        150f
-                );
+                float r = (float) width / height;
+                Camera.aspectRatio(r);
+                shaderRepo.setProjectionMatrix(Camera.projectionMatrix());
         }
 
         @Override
         public void onSurfaceCreated(GL10 gl, EGLConfig config) {
                 String extensions = gl.glGetString(GL10.GL_VERSION);
-                loadExample(3);
+                        Camera.init();
+                        shaderRepo = new ShaderRepo();
+                        exampleFactory = new ExampleFactory(context, shaderRepo);
+                        loadExample(3);
         }
 
-        public void onCleanUp() {
-                admin.workTodo = WorkTodo.CLEAN_UP;
+        public void onClearScreen() {
+                admin.workTodo = WorkTodo.CLEAR_SCREEN_UP;
         }
 
         public void onNewExample(final int idx) {
@@ -111,14 +103,14 @@ public class MainRenderer implements Renderer {
                 return delta;
         }
 
-        private WorkTodo admin(Admin admin) {
+        private WorkTodo admin(@NotNull final Admin admin) {
                 switch(admin.workTodo) {
                         case NEW_EXAMPLE:
-                                cleanUp();
+                                clearScreen();
                                 loadExample(admin.exampleIdx);
                                 break;
-                        case CLEAN_UP:
-                                cleanUp();
+                        case CLEAR_SCREEN_UP:
+                                clearScreen();
                                 break;
                         default:
                                 break;
@@ -136,7 +128,7 @@ public class MainRenderer implements Renderer {
                 }
         }
 
-        private void cleanUp() {
+        private void clearScreen() {
                 for(ColoredModel object : coloredObjects) {
                         object.cleanUp();
                 }

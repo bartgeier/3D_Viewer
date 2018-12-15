@@ -14,18 +14,18 @@ public class TexturedModel extends RawModel {
         public TexturedModel() {}
         public TexturedModel(
                 @NotNull final TexturedShader s,
-                final Bitmap bitmap,
-                final int[] indices,
-                final float[] positions,
-                final float[] texCoords,
-                final float[] normals
+                @NotNull final Bitmap bitmap,
+                @NotNull final int[] indices,
+                @NotNull final float[] positions,
+                @NotNull final float[] texCoords,
+                @NotNull final float[] normals
         ) {
                 int vao = GPU.createVertexArrayObject();
                 int[] vbos = new int[4];
                 vbos[0] = GPU.loadIndecisBuffer(Arr.allocateBuffer(indices));
-                vbos[1] = GPU.loadAttribute(s.a_Position, 3, Arr.allocateBuffer(positions));
-                vbos[2] = GPU.loadAttribute(s.a_TexCoord, 2, Arr.allocateBuffer(texCoords));
-                vbos[3] = GPU.loadAttribute(s.a_Normal, 3, Arr.allocateBuffer(normals));
+                vbos[1] = GPU.loadAttribute(TexturedShader.a_Position, 3, Arr.allocateBuffer(positions));
+                vbos[2] = GPU.loadAttribute(TexturedShader.a_TexCoord, 2, Arr.allocateBuffer(texCoords));
+                vbos[3] = GPU.loadAttribute(TexturedShader.a_Normal, 3, Arr.allocateBuffer(normals));
                 texId = GPU.loadTexture(bitmap);
                 GPU.vertexArray0();
                 shader = s;
@@ -36,14 +36,13 @@ public class TexturedModel extends RawModel {
 
         public void cleanUp() {
                 GPU.deleteTextureID(texId);
-                shader.cleanUp();
                 super.cleanUp();
         }
 
         private TexturedShader shader;
         private int texId;
 
-        public void render(float[] parentModelViewMatrix) {
+        public void render(@NotNull final float[] parentModelViewMatrix) {
                 float[] modelVieMatrix = new float[16];
                 Matrix.multiplyMM(
                         modelVieMatrix,
@@ -57,10 +56,12 @@ public class TexturedModel extends RawModel {
                 GPU.render(vao, indicesCount);
         }
 
-        private void prepareToDraw(@NotNull TexturedShader shader, float[] modelViewMatrix) {
+        private static void prepareToDraw(
+                @NotNull final TexturedShader shader,
+                @NotNull final float[] modelViewMatrix)
+        {
                 GPU.useProgram(shader.programID);
                 GPU.loadMatrix(shader.u_ModelViewMatrix, modelViewMatrix);
-                GPU.loadMatrix(shader.u_ProjectionMatrix, projectionMatrix);
 
                 Vec3 lightDirection = Vec3.normalize(0,-0.5f,-1);
                 GPU.loadVec3(shader.u_Light_Direction, lightDirection);

@@ -5,7 +5,8 @@ import bertrand.myopengl.OpenGL.BaseShader;
 public class ColoredShader extends BaseShader {
         /* uniform locations */
                 public int u_ModelViewMatrix;
-                public int u_ProjectionMatrix;
+                //public int u_ProjectionMatrix; see super
+
 
                 public int u_Light_AmbientIntens;
                 public int u_Light_Color;

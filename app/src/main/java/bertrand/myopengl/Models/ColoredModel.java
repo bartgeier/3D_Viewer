@@ -21,9 +21,9 @@ public class ColoredModel extends RawModel {
                 int vao = GPU.createVertexArrayObject();
                 int[] vbos = new int[4];
                 vbos[0] = GPU.loadIndecisBuffer(Arr.allocateBuffer(indices));
-                vbos[1] = GPU.loadAttribute(s.a_Position, 3, Arr.allocateBuffer(positions));
-                vbos[2] = GPU.loadAttribute(s.a_Color, 4, Arr.allocateBuffer(colors));
-                vbos[3] = GPU.loadAttribute(s.a_Normal, 3, Arr.allocateBuffer(normals));
+                vbos[1] = GPU.loadAttribute(ColoredShader.a_Position, 3, Arr.allocateBuffer(positions));
+                vbos[2] = GPU.loadAttribute(ColoredShader.a_Color, 4, Arr.allocateBuffer(colors));
+                vbos[3] = GPU.loadAttribute(ColoredShader.a_Normal, 3, Arr.allocateBuffer(normals));
                 GPU.vertexArray0();
                 shader = s;
                 this.vao = vao;
@@ -32,13 +32,12 @@ public class ColoredModel extends RawModel {
         }
 
         public void cleanUp() {
-                shader.cleanUp();
                 super.cleanUp();
         }
 
         private ColoredShader shader;
 
-        public void render(float[] parentModelViewMatrix) {
+        public void render(@NotNull final float[] parentModelViewMatrix) {
                 float[] modelVieMatrix = new float[16];
                 Matrix.multiplyMM(
                         modelVieMatrix,
@@ -52,10 +51,12 @@ public class ColoredModel extends RawModel {
                 GPU.render(vao, indicesCount);
         }
 
-        private void prepareToDraw(@NotNull ColoredShader shader, float[] modelViewMatrix) {
+        private static void prepareToDraw(
+                @NotNull final ColoredShader shader,
+                @NotNull final float[] modelViewMatrix)
+        {
                 GPU.useProgram(shader.programID);
                 GPU.loadMatrix(shader.u_ModelViewMatrix, modelViewMatrix);
-                GPU.loadMatrix(shader.u_ProjectionMatrix, projectionMatrix);
 
                 //Vec3 lightDirection = Vec3.normalize(0,-0.5f,-1);
                 Vec3 lightDirection = Vec3.normalize(0,0.8f,-1);

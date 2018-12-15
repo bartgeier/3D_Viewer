@@ -32,7 +32,9 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
+
                 super.onCreate(savedInstanceState);
+
                 ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
                 ConfigurationInfo info = am.getDeviceConfigurationInfo();
                 boolean supportES2 = (info.reqGlEsVersion >= 0x20000);
@@ -41,9 +43,10 @@ public class MainActivity extends AppCompatActivity {
                         Toolbar t = (Toolbar)findViewById(R.id.toolbar);
                         setSupportActionBar(t);
                         ui.actionBar = getSupportActionBar();
+                        //ui.actionBar.hide();
                         ui.layout = this.findViewById(R.id.layout);
                         ui.textView = this.findViewById(R.id.label);
-                        exampleFactory = new ExampleFactory(this);
+                        exampleFactory = new ExampleFactory();
 
                         String s = Integer.toHexString(info.reqGlEsVersion);
                         Toast.makeText(
@@ -51,11 +54,9 @@ public class MainActivity extends AppCompatActivity {
                                 "OpenGL ES " + s,
                                 Toast.LENGTH_SHORT
                         ).show();
-                        //mainRenderer = new MainRenderer(this);
                         mainGLView = this.findViewById(R.id.mainSurfaceView);
                         mainGLView.setEGLContextClientVersion(2);
                         mainGLView.start();
-                        //mainGLView.setRenderer(mainRenderer);
                 } else {
                         Toast.makeText(
                                 MainActivity.this,
@@ -103,9 +104,9 @@ public class MainActivity extends AppCompatActivity {
                                 intent.putExtra("Titel", getResources().getString(R.string.titel_examples));
                                 startActivityForResult(intent, EXAMPLE_ACTIVITY_ID);
                                 return true;
-                        case R.id.action_cleanUp:
+                        case R.id.action_clearScreen:
                                 ui.textView.setText("");
-                                mainGLView.cleanUp();
+                                mainGLView.clearScreen();
                                 return true;
                         default:
                                 return super.onOptionsItemSelected(item);

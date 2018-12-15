@@ -3,11 +3,14 @@ package bertrand.myopengl.ExampleObjects;
 import android.content.Context;
 import android.graphics.Bitmap;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 
 import bertrand.myopengl.Models.ModelOptions;
 import bertrand.myopengl.Shaders.ColoredShader;
+import bertrand.myopengl.Shaders.ShaderRepo;
 import bertrand.myopengl.Shaders.TexturedShader;
 import bertrand.myopengl.Tool.OBJ_FILE.OBJ_Data;
 import bertrand.myopengl.Tool.OBJ_FILE.OBJ_File_Loader;
@@ -16,10 +19,20 @@ import bertrand.myopengl.Tool.Texture_File_Loader;
 
 public class ExampleFactory {
         public ArrayList<String> names = new ArrayList<>();
-        private Context context;
+        private Context context = null;
+        private ShaderRepo shaderRepo = null;
 
-        public ExampleFactory(Context c) {
+        public ExampleFactory() {
+                intNames();
+        }
+
+        public ExampleFactory(@NotNull Context c, @NotNull ShaderRepo repo) {
                 context = c;
+                shaderRepo = repo;
+                intNames();
+
+        }
+        private void intNames() {
                 names.add("Cube");
                 names.add("Triangle");
                 names.add("Triangle1");
@@ -36,25 +49,25 @@ public class ExampleFactory {
         }
 
         public ModelOptions createExample(int position) {
-                ColoredShader coloredShader;
-                TexturedShader texturedShader;
+                if(shaderRepo == null) {
+                        throw new AssertionError("ExampleFactory shaderRepo == null");
+                }
+                if(context == null) {
+                        throw new AssertionError("ExampleFactory context == null");
+                }
+
                 ModelOptions modelOptions = new ModelOptions();
                 switch(position) {
                 case 0:
-                        coloredShader = new ColoredShader();
-                        modelOptions.coloredModel  = new CubeGray(coloredShader);
+                        modelOptions.coloredModel  = new CubeGray(shaderRepo.coloredShader);
                         break;
                 case 1:
-                        coloredShader = new ColoredShader();
-                        modelOptions.coloredModel = new Triangle(coloredShader);
+                        modelOptions.coloredModel = new Triangle(shaderRepo.coloredShader);
                         break;
                 case 2:
-                        coloredShader = new ColoredShader();
-                        modelOptions.coloredModel = new Triangle1(coloredShader);
+                        modelOptions.coloredModel = new Triangle1(shaderRepo.coloredShader);
                         break;
                 case 3:
-
-                        texturedShader = new TexturedShader();
                         OBJ_Data obj = OBJ_File_Loader.loadObjModel(
                                 new RFile(context),
                                 ":/raw/stall_obj.obj"
@@ -64,7 +77,7 @@ public class ExampleFactory {
                                 ":/raw/stall_png.png"
                         );
                         modelOptions.texturedModel = new Stall(
-                                texturedShader,
+                                shaderRepo.texturedShader,
                                 bitmap,
                                 obj.indices,
                                 obj.positions,

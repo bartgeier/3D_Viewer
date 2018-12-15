@@ -12,6 +12,7 @@ public abstract class BaseShader {
         public int programID;
         private  int vertexShaderID;
         private  int fragmentShaderID;
+        public int u_ProjectionMatrix;
 
         protected int createProgram(final String vertexShaderCode, final String fragmentShaderCode) {
                 vertexShaderID = GPU.loadShader(GLES.GL_VERTEX_SHADER, vertexShaderCode);
@@ -35,12 +36,8 @@ public abstract class BaseShader {
                 }
         }
 
-        public static void stop() {
-                GLES.glUseProgram(0);
-        }
-
         public void cleanUp() {
-                stop();
+                GLES.glUseProgram(0);
                 GLES.glDetachShader(programID, vertexShaderID);
                 GLES.glDetachShader(programID, fragmentShaderID);
                 GLES.glDeleteShader(vertexShaderID);

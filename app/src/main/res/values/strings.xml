@@ -2,5 +2,5 @@
     <string name="app_name">MyOpenGL</string>
     <string name="titel_examples">Choose an example</string>
     <string name="examples">Examples</string>
-    <string name="clean_up">Clean up</string>
+    <string name="clear_screen">Clear screen</string>
 </resources>

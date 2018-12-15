@@ -34,11 +34,11 @@ public class MainSurfaceView extends GLSurfaceView {//GLTextureView {//GLSurface
                 });
         }
 
-        public void cleanUp(){
+        public void clearScreen(){
                 queueEvent(new Runnable() {
                         @Override
                         public void run() {
-                                renderer.onCleanUp();
+                                renderer.onClearScreen();
                         }
                 });
         }

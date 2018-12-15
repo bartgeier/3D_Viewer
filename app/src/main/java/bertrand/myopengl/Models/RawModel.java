@@ -14,8 +14,6 @@ public class RawModel {
         public Vec3 rotation;
         public Vec3 scale;
 
-        public static float[] projectionMatrix = new float[16];
-
         protected float[] modelMatrix() {
                 float[] matrix = new float[16];
                 Matrix.setIdentityM(matrix, 0);
@@ -43,7 +41,7 @@ public class RawModel {
                 public void withDelta(RawModel self, float dt_ms);
         }
         public UpdateListner update;
-        public void updateWithDelta(float dt_ms) {
+        public void updateWithDelta(final float dt_ms) {
                 if(update != null) {
                         update.withDelta(this, dt_ms);
                 }

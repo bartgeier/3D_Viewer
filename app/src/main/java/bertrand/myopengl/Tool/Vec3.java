@@ -20,4 +20,9 @@ public class Vec3 {
                 float length =  (float)Math.sqrt(x*x  + y*y + z*z);
                 return new Vec3(x/length, y/length, z/length );
         }
+
+        public Vec3 normalize() {
+                float length =  (float)Math.sqrt(x*x  + y*y + z*z);
+                return new Vec3(x/length, y/length, z/length );
+        }
 }

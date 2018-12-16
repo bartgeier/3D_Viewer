@@ -4,14 +4,13 @@ import android.content.Context;
 import android.graphics.Bitmap;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 
 
-import bertrand.myopengl.Models.ModelOptions;
-import bertrand.myopengl.Shaders.ColoredShader;
+import bertrand.myopengl.Models.RawModel;
 import bertrand.myopengl.Shaders.ShaderRepo;
-import bertrand.myopengl.Shaders.TexturedShader;
 import bertrand.myopengl.Tool.OBJ_FILE.OBJ_Data;
 import bertrand.myopengl.Tool.OBJ_FILE.OBJ_File_Loader;
 import bertrand.myopengl.Tool.RFile.RFile;
@@ -48,7 +47,8 @@ public class ExampleFactory {
                 names.add("Test_10");
         }
 
-        public ModelOptions createExample(int position) {
+        @Nullable
+        public RawModel createExample(int position) {
                 if(shaderRepo == null) {
                         throw new AssertionError("ExampleFactory shaderRepo == null");
                 }
@@ -56,16 +56,16 @@ public class ExampleFactory {
                         throw new AssertionError("ExampleFactory context == null");
                 }
 
-                ModelOptions modelOptions = new ModelOptions();
+                RawModel rawModel = null;
                 switch(position) {
                 case 0:
-                        modelOptions.coloredModel  = new CubeGray(shaderRepo.coloredShader);
+                        rawModel  = new CubeGray(shaderRepo.coloredShader);
                         break;
                 case 1:
-                        modelOptions.coloredModel = new Triangle(shaderRepo.coloredShader);
+                        rawModel = new Triangle(shaderRepo.coloredShader);
                         break;
                 case 2:
-                        modelOptions.coloredModel = new Triangle1(shaderRepo.coloredShader);
+                        rawModel = new Triangle1(shaderRepo.coloredShader);
                         break;
                 case 3:
                         OBJ_Data obj = OBJ_File_Loader.loadObjModel(
@@ -76,7 +76,7 @@ public class ExampleFactory {
                                 new RFile(context),
                                 ":/raw/stall_png.png"
                         );
-                        modelOptions.texturedModel = new Stall(
+                        rawModel = new Stall(
                                 shaderRepo.texturedShader,
                                 bitmap,
                                 obj.indices,
@@ -89,6 +89,6 @@ public class ExampleFactory {
                         /* do nothing */
                         break;
                 }
-                return modelOptions;
+                return rawModel;
         }
 }

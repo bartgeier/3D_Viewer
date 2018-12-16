@@ -2,7 +2,6 @@ package bertrand.myopengl;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView.Renderer;
-import android.opengl.Matrix;
 import android.os.SystemClock;
 
 import org.jetbrains.annotations.NotNull;
@@ -13,9 +12,8 @@ import javax.microedition.khronos.opengles.GL10;
 
 import bertrand.myopengl.Camera.Camera;
 import bertrand.myopengl.ExampleObjects.ExampleFactory;
-import bertrand.myopengl.Models.ModelOptions;
-import bertrand.myopengl.Models.TexturedModel;
-import bertrand.myopengl.Models.ColoredModel;
+import bertrand.myopengl.Light.Light;
+import bertrand.myopengl.Models.RawModel;
 import bertrand.myopengl.OpenGL.GPU;
 import bertrand.myopengl.Shaders.ShaderRepo;
 
@@ -24,10 +22,9 @@ public class MainRenderer implements Renderer {
         private Context context;
         private ExampleFactory exampleFactory;
         private ShaderRepo shaderRepo;
+        private Light light;
 
-        private ArrayList<ColoredModel> coloredObjects = new ArrayList<>();
-        private ArrayList<TexturedModel> texturedObjects = new ArrayList<>();
-
+        private ArrayList<RawModel> rawModels = new ArrayList<>();
 
         enum WorkTodo {
                 DONE,
@@ -37,12 +34,16 @@ public class MainRenderer implements Renderer {
         class Admin {
                 WorkTodo workTodo = WorkTodo.DONE;
                 int exampleIdx = -1;
-        };
+        }
 
         private Admin admin = new Admin();
 
         MainRenderer (Context c) {
                 context = c;
+                light = new Light(
+                        0f,0.8f,-1f,
+                        1,1,1
+                );
 
         }
 
@@ -54,13 +55,10 @@ public class MainRenderer implements Renderer {
                         admin.workTodo = admin(admin);
                 }
                 GPU.renderBackground();
-                for(ColoredModel object : coloredObjects) {
+
+                for(RawModel object : rawModels) {
                         object.updateWithDelta(dt);
-                        object.render(Camera.position());
-                }
-                for(TexturedModel object : texturedObjects) {
-                        object.updateWithDelta(dt);
-                        object.render(Camera.position());
+                        object.render(Camera.position(),light);
                 }
         }
 
@@ -74,11 +72,11 @@ public class MainRenderer implements Renderer {
 
         @Override
         public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-                String extensions = gl.glGetString(GL10.GL_VERSION);
-                        Camera.init();
-                        shaderRepo = new ShaderRepo();
-                        exampleFactory = new ExampleFactory(context, shaderRepo);
-                        loadExample(3);
+                //String extensions = gl.glGetString(GL10.GL_VERSION);
+                Camera.init();
+                shaderRepo = new ShaderRepo();
+                exampleFactory = new ExampleFactory(context, shaderRepo);
+                loadExample(3);
         }
 
         public void onClearScreen() {
@@ -119,24 +117,17 @@ public class MainRenderer implements Renderer {
         }
 
         private void loadExample(int idx) {
-                ModelOptions m = exampleFactory.createExample(idx);
-                if( m.coloredModel != null) {
-                        coloredObjects.add(m.coloredModel);
-                }
-                if(m.texturedModel != null) {
-                        texturedObjects.add(m.texturedModel);
+                RawModel m = exampleFactory.createExample(idx);
+                if( m != null) {
+                        rawModels.add(m);
                 }
         }
 
         private void clearScreen() {
-                for(ColoredModel object : coloredObjects) {
+                for(RawModel object : rawModels) {
                         object.cleanUp();
                 }
-                coloredObjects.clear();
-                for(TexturedModel object : texturedObjects) {
-                        object.cleanUp();
-                }
-                texturedObjects.clear();
+                rawModels.clear();
         }
 
 

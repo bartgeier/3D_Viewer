@@ -124,6 +124,7 @@ public class GPU {
                 GLES.glClear(GLES.GL_COLOR_BUFFER_BIT |GLES.GL_DEPTH_BUFFER_BIT);
                 GLES.glEnable(GLES.GL_DEPTH_TEST);
                 GLES.glEnable(GLES.GL_CULL_FACE);
+                GLES.glCullFace(GLES.GL_BACK);
         }
 
         private static int generateVBO() {

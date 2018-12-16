@@ -15,4 +15,9 @@ public class Vec2 {
                 float length =  (float)Math.sqrt(x*x  + y*y);
                 return new Vec2(x/length, y/length);
         }
+
+        public Vec2 normalize() {
+                float length =  (float)Math.sqrt(x*x  + y*y);
+                return new Vec2(x/length, y/length);
+        }
 }

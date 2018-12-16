@@ -2,10 +2,13 @@ package bertrand.myopengl.Models;
 
 import android.opengl.Matrix;
 
+import org.jetbrains.annotations.NotNull;
+
+import bertrand.myopengl.Light.Light;
 import bertrand.myopengl.OpenGL.GPU;
 import bertrand.myopengl.Tool.Vec3;
 
-public class RawModel {
+public abstract class RawModel {
         protected int vao = 0;
         protected int[] vbos;
         protected int indicesCount;
@@ -47,5 +50,10 @@ public class RawModel {
                 }
 
         }
+
+        public abstract void render(
+                @NotNull final float[] parentModelViewMatrix,
+                @NotNull Light light
+        );
 
 }

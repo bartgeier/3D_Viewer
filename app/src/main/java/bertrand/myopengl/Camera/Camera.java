@@ -9,14 +9,14 @@ import bertrand.myopengl.Tool.Vec3;
 public class Camera {
         static private float[] projectionMatrix = new float[16];
         static private float[] position = new float[16];
-        static boolean isInit = false;
+        static private boolean isInit = false;
 
-        static float fovyZoomAngle = 85f;
-        static float aspectRatio = 1f;
-        static float near = 0.1f;
-        static float far = 150f;
-        static Vec3 pos = new Vec3(0,0,0);
-        static Vec3 rotation = new Vec3(0,0,0);
+        static private float fovyZoomAngle = 85f;
+        static private float aspectRatio = 1f;
+        static private float near = 0.1f;
+        static private float far = 150f;
+        static private Vec3 pos = new Vec3(0,0,0);
+        static private Vec3 rotation = new Vec3(0,0,0);
 
         public static void init() {
                 if(isInit) {
@@ -59,6 +59,19 @@ public class Camera {
         @NotNull
         public static float[] position() {
                 return position;
+        }
+
+        public static void position(float x, float y, float z) {
+                pos.x = x;
+                pos.y = y;
+                pos.z = z;
+                calculatePosition();
+        }
+        public static void rotation(float x, float y, float z) {
+                rotation.x = x;
+                rotation.y = y;
+                rotation.z = z;
+                calculatePosition();
         }
 
         public static void aspectRatio(float r) {

@@ -1,10 +1,11 @@
-package bertrand.myopengl.Tool.TextChooser;
+package bertrand.myopengl.Tool;
 
-public class Color3f {
+public class Color4f {
         public float r;
         public float g;
         public float b;
-        public Color3f(float red, float green, float blue) {
+        public float a = 1.0f;
+        public Color4f(float red, float green, float blue) {
                 r = red;
                 g = green;
                 b = blue;

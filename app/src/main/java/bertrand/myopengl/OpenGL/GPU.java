@@ -8,6 +8,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.nio.ByteBuffer;
 
+import bertrand.myopengl.Tool.Color4f;
 import bertrand.myopengl.Tool.Vec3;
 
 public class GPU {
@@ -119,8 +120,9 @@ public class GPU {
                 GLES.glBindVertexArray(0);
         }
 
-        public static void renderBackground() {
-                GLES.glClearColor(0.8f,0.8f,0.8f,1.0f);
+        public static void renderBackground(Color4f color) {
+                //GLES.glClearColor(0.8f,0.8f,0.8f,1.0f);
+                GLES.glClearColor(color.r, color.g, color.b,color.a);
                 GLES.glClear(GLES.GL_COLOR_BUFFER_BIT |GLES.GL_DEPTH_BUFFER_BIT);
                 GLES.glEnable(GLES.GL_DEPTH_TEST);
                 GLES.glEnable(GLES.GL_CULL_FACE);

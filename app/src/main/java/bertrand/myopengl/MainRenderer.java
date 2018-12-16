@@ -12,10 +12,12 @@ import javax.microedition.khronos.opengles.GL10;
 
 import bertrand.myopengl.Camera.Camera;
 import bertrand.myopengl.ExampleObjects.ExampleFactory;
+import bertrand.myopengl.ExampleObjects.Scene;
 import bertrand.myopengl.Light.Light;
 import bertrand.myopengl.Models.RawModel;
 import bertrand.myopengl.OpenGL.GPU;
 import bertrand.myopengl.Shaders.ShaderRepo;
+import bertrand.myopengl.Tool.Color4f;
 
 
 public class MainRenderer implements Renderer {
@@ -23,6 +25,7 @@ public class MainRenderer implements Renderer {
         private ExampleFactory exampleFactory;
         private ShaderRepo shaderRepo;
         private Light light;
+        private Color4f backGroundColor;
 
         private ArrayList<RawModel> rawModels = new ArrayList<>();
 
@@ -54,7 +57,7 @@ public class MainRenderer implements Renderer {
                 if (admin.workTodo != WorkTodo.DONE) {
                         admin.workTodo = admin(admin);
                 }
-                GPU.renderBackground();
+                GPU.renderBackground(backGroundColor);
 
                 for(RawModel object : rawModels) {
                         object.updateWithDelta(dt);
@@ -117,9 +120,11 @@ public class MainRenderer implements Renderer {
         }
 
         private void loadExample(int idx) {
-                RawModel m = exampleFactory.createExample(idx);
-                if( m != null) {
-                        rawModels.add(m);
+                Scene s = exampleFactory.createExample(idx);
+                if( s != null) {
+                        rawModels.add(s.rawModel);
+                        light = s.light;
+                        backGroundColor = s.backGroundColor;
                 }
         }
 

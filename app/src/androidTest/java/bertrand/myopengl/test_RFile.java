@@ -23,7 +23,7 @@ public class test_RFile {
                 RFile f = new RFile(appContext);
                 InputStream s = f.inputStream("raw/stall_obj.obj");
 
-                assertEquals(null, s);
+                assertNull(s);
         }
 
         @Test
@@ -32,7 +32,7 @@ public class test_RFile {
                 RFile f = new RFile(appContext);
                 InputStream s = f.inputStream(":");
 
-                assertEquals(null, s);
+                assertNull(s);
         }
 
         @Test
@@ -41,7 +41,7 @@ public class test_RFile {
                 RFile f = new RFile(appContext);
                 InputStream s = f.inputStream(":/");
 
-                assertEquals(null, s);
+                assertNull(s);
         }
 
         public void stall_0() {
@@ -49,7 +49,7 @@ public class test_RFile {
                 RFile f = new RFile(appContext);
                 InputStream s = f.inputStream(":/stall_obj");
 
-                assertEquals(null, s);
+                assertNull(s);
         }
 
         @Test
@@ -58,7 +58,7 @@ public class test_RFile {
                 RFile f = new RFile(appContext);
                 InputStream s = f.inputStream(":raw/stall_obj");
 
-                assertEquals(null, s);
+                assertNull(s);
         }
 
         @Test
@@ -67,7 +67,7 @@ public class test_RFile {
                 RFile f = new RFile(appContext);
                 InputStream s = f.inputStream(":/raw/autsch");
 
-                assertEquals(null, s);
+                assertNull(s);
         }
 
         @Test
@@ -76,7 +76,7 @@ public class test_RFile {
                 RFile f = new RFile(appContext);
                 InputStream s = f.inputStream(":/raw/stall_obj");
 
-                assertTrue(s != null);
+                assertNotNull(s);
         }
 
         @Test
@@ -85,7 +85,7 @@ public class test_RFile {
                 RFile f = new RFile(appContext);
                 InputStream s = f.inputStream(":/raw/stall_obj.obj");
 
-                assertTrue(s != null);
+                assertNotNull(s);
         }
 
         @Test
@@ -94,6 +94,7 @@ public class test_RFile {
                 RFile_IF f = new RFile(appContext);
                 Bitmap s = f.bitMap(":/raw/stall_png.png");
 
-                assertTrue(s != null);
+                assertNotNull(s);
         }
+
 }

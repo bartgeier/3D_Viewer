@@ -15,7 +15,6 @@ import bertrand.myopengl.Tool.Vec3;
 public class OBJ_File_Loader {
 
         public static OBJ_Data loadObjModel(@NotNull RFile_IF file, final String objFilePath) {
-                String path = file.path(objFilePath);
                 InputStream is = file.inputStream(objFilePath);
                 InputStreamReader s = new InputStreamReader(is);
                 BufferedReader reader = new BufferedReader(s);

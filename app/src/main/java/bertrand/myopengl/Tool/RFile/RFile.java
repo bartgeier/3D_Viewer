@@ -7,11 +7,17 @@ import android.graphics.BitmapFactory;
 import java.io.InputStream;
 import java.util.ArrayList;
 
+import bertrand.myopengl.Tool.Str;
+
 public class RFile implements RFile_IF{
         private Context context;
 
         public RFile(Context c) {
                 context = c;
+        }
+
+        public String string(String path) {
+                return Str.inputStreamToString(inputStream(path));
         }
 
         public InputStream inputStream(String path) {

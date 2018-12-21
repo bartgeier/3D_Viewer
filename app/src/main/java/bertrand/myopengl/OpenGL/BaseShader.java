@@ -1,27 +1,27 @@
 package bertrand.myopengl.OpenGL;
 
 
+import org.jetbrains.annotations.NotNull;
+
 import java.nio.IntBuffer;
 
 public abstract class BaseShader {
+        public final int programID;
+        private final int vertexShaderID;
+        private final int fragmentShaderID;
 
-        protected BaseShader() {
+        public abstract int u_PojectionMatrix();
 
-        }
-
-        public int programID;
-        private  int vertexShaderID;
-        private  int fragmentShaderID;
-        public int u_ProjectionMatrix;
-
-        protected int createProgram(final String vertexShaderCode, final String fragmentShaderCode) {
+        protected BaseShader(
+                @NotNull final String vertexShaderCode,
+                @NotNull final String fragmentShaderCode
+        ) {
                 vertexShaderID = GPU.loadShader(GLES.GL_VERTEX_SHADER, vertexShaderCode);
                 fragmentShaderID = GPU.loadShader(GLES.GL_FRAGMENT_SHADER, fragmentShaderCode);
 
-                int programID = GLES.glCreateProgram();
+                programID = GLES.glCreateProgram();
                 GLES.glAttachShader(programID, vertexShaderID);
                 GLES.glAttachShader(programID, fragmentShaderID);
-                return programID;
         }
 
         protected void linkProgram() {

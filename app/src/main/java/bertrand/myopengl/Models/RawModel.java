@@ -8,7 +8,7 @@ import bertrand.myopengl.Light.Light;
 import bertrand.myopengl.OpenGL.GPU;
 import bertrand.myopengl.Tool.Vec3;
 
-public abstract class RawModel {
+public abstract class RawModel implements Cloneable {
         protected int vao = 0;
         protected int[] vbos;
         protected int indicesCount;
@@ -33,6 +33,12 @@ public abstract class RawModel {
                 rotation = new Vec3(0,0,0);
                 scale = new Vec3(1,1,1);
         }
+/*
+        public Object clone() {
+                Object x = null;
+                try {x = super.clone();} catch (CloneNotSupportedException e) {}
+                return x;
+        }*/
 
         public void cleanUp() {
                 GPU.deleteVBOs(vbos);

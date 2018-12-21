@@ -4,7 +4,6 @@ import org.junit.Test;
 
 import bertrand.myopengl.Tool.Vec2;
 
-
 import static org.junit.Assert.*;
 
 public class test_Vec2 {

@@ -11,6 +11,8 @@ import bertrand.myopengl.Tool.Arr;
 import bertrand.myopengl.Tool.Vec3;
 
 public class ColoredModel extends RawModel {
+        private ColoredShader shader;
+
         public ColoredModel() {}
         public ColoredModel(
                 final ColoredShader s,
@@ -35,8 +37,6 @@ public class ColoredModel extends RawModel {
         public void cleanUp() {
                 super.cleanUp();
         }
-
-        private ColoredShader shader;
 
         @Override
         public void render(@NotNull final float[] parentModelViewMatrix, @NotNull Light light) {

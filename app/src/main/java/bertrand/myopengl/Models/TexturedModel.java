@@ -12,6 +12,9 @@ import bertrand.myopengl.Tool.Arr;
 import bertrand.myopengl.Tool.Vec3;
 
 public class TexturedModel extends RawModel {
+        private TexturedShader shader;
+        private int texId;
+
         public TexturedModel() {}
         public TexturedModel(
                 @NotNull final TexturedShader s,
@@ -39,9 +42,6 @@ public class TexturedModel extends RawModel {
                 GPU.deleteTextureID(texId);
                 super.cleanUp();
         }
-
-        private TexturedShader shader;
-        private int texId;
 
         public void render(@NotNull final float[] parentModelViewMatrix, @NotNull Light light) {
                 float[] modelVieMatrix = new float[16];

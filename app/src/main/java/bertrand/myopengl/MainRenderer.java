@@ -53,12 +53,10 @@ public class MainRenderer implements Renderer {
         @Override
         public void onDrawFrame(GL10 gl) {
                 float dt = deltaTime();
-
                 if (admin.workTodo != WorkTodo.DONE) {
                         admin.workTodo = admin(admin);
                 }
                 GPU.renderBackground(backGroundColor);
-
                 for(RawModel object : rawModels) {
                         object.updateWithDelta(dt);
                         object.render(Camera.position(),light);
@@ -75,9 +73,8 @@ public class MainRenderer implements Renderer {
 
         @Override
         public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-                //String extensions = gl.glGetString(GL10.GL_VERSION);
                 Camera.init();
-                shaderRepo = new ShaderRepo();
+                shaderRepo = new ShaderRepo(context);
                 exampleFactory = new ExampleFactory(context, shaderRepo);
                 loadExample(3);
         }

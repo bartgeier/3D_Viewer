@@ -23,7 +23,7 @@ public class GPU {
                 GLES.glBindVertexArray(0);
         }
 
-        public static void deleteVertexArrayObject(int vaoId) {
+        public static void deleteVertexArrayObject(final int vaoId) {
                 final int[] vaoID = new int[1];
                 vaoID[0] = vaoId;
                 GLES.glDeleteVertexArrays(1, vaoID,0);

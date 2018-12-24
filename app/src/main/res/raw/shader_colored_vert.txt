@@ -1,0 +1,16 @@
+uniform highp mat4 u_ModelViewMatrix;
+uniform highp mat4 u_ProjectionMatrix;
+
+attribute vec4 a_Position;
+attribute vec4 a_Color;
+attribute vec3 a_Normal;
+
+varying lowp vec4 frag_Color;
+varying lowp vec3 frag_Normal;
+varying lowp vec3 frag_Position;
+void main() {
+        frag_Color = a_Color;
+        gl_Position = u_ProjectionMatrix * u_ModelViewMatrix * a_Position;
+        frag_Normal = (u_ModelViewMatrix * vec4(a_Normal, 0.0)).xyz;
+        frag_Position = (u_ModelViewMatrix * a_Position).xyz;
+}

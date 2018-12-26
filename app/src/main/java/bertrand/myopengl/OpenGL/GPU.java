@@ -7,6 +7,7 @@ import android.opengl.GLUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.nio.ByteBuffer;
+import java.nio.IntBuffer;
 
 import bertrand.myopengl.Tool.Color4f;
 import bertrand.myopengl.Tool.Vec3;
@@ -151,13 +152,7 @@ public class GPU {
                 GLES.glDeleteBuffers(1, texID,0);
         }
 
-        static int loadShader(int type, String shaderCode) {
-                int shader = GLES.glCreateShader(type);
-                error();
-                GLES.glShaderSource(shader, shaderCode);
-                GLES.glCompileShader(shader);
-                return shader;
-        }
+
 
         public static void useProgram(int programID) {
                 GLES.glUseProgram(programID);
@@ -172,5 +167,55 @@ public class GPU {
                         i++;
                 }
         }
+
+/////////// shader program ///////////////////////
+        public static int loadShader(int type, String shaderCode) {
+                int shader = GLES.glCreateShader(type);
+                error();
+                GLES.glShaderSource(shader, shaderCode);
+                GLES.glCompileShader(shader);
+                return shader;
+        }
+
+        public static int createShaderProgram(final int vertexShaderID, final int fragmentShaderID) {
+                int programID = GLES.glCreateProgram();
+                GLES.glAttachShader(programID, vertexShaderID);
+                GLES.glAttachShader(programID, fragmentShaderID);
+                return programID;
+        }
+
+        public static void linkProgram(final int programID) {
+                GLES.glLinkProgram(programID);
+                //GLES.glValidateProgram(programID); // Todo
+
+                IntBuffer linkSuccess = IntBuffer.allocate(1);
+                GLES.glGetProgramiv(programID, GLES.GL_LINK_STATUS, linkSuccess);
+                if (linkSuccess.get(0) == GLES.GL_FALSE) {
+                        String s = GLES.glGetProgramInfoLog(programID);
+                        throw new AssertionError(s);
+                }
+        }
+
+        public static void attributeLocation(int programID, int attributeID, String name) {
+                GLES.glBindAttribLocation(programID, attributeID, name);
+        }
+
+        public static int uniformLocation(int programID, String name) {
+                return GLES.glGetUniformLocation(programID, name);
+        }
+
+        public static void cleanUp(
+                final int programID,
+                final int vertexShaderID,
+                final int fragmentShaderID
+        ) {
+                GLES.glUseProgram(0);
+                GLES.glDetachShader(programID, vertexShaderID);
+                GLES.glDetachShader(programID, fragmentShaderID);
+                GLES.glDeleteShader(vertexShaderID);
+                GLES.glDeleteShader(fragmentShaderID);
+                GLES.glDeleteProgram(programID);
+        }
+
 
 }

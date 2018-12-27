@@ -6,7 +6,7 @@ import bertrand.myopengl.Models.TexturedModel;
 import bertrand.myopengl.Shaders.TexturedShader;
 
 public class Stall extends TexturedModel {
-        Stall(
+        public Stall(
                 final TexturedShader s,
                 final Bitmap bitMap,
                 final int[] indices,

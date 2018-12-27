@@ -1,10 +1,14 @@
 package bertrand.myopengl.Entitys;
 
+import android.graphics.Bitmap;
+import android.util.SparseArray;
+
 import org.jetbrains.annotations.NotNull;
 
 import bertrand.myopengl.OpenGL.GLES;
 import bertrand.myopengl.OpenGL.GPU;
 import bertrand.myopengl.Shaders.ColoredShader;
+import bertrand.myopengl.Shaders.TexturedShader;
 import bertrand.myopengl.Tool.Arr;
 
 public class Load {
@@ -19,10 +23,10 @@ public class Load {
                 }
         }
         public static Info coloredModel(
-                final int[] indices,
-                final float[] positions,
-                final float[] colors,
-                final float[] normals
+                @NotNull final int[] indices,
+                @NotNull final float[] positions,
+                @NotNull final float[] colors,
+                @NotNull final float[] normals
         ) {
                 int vao = GPU.createVertexArrayObject();
                 int[] vbos = new int[4];
@@ -34,7 +38,27 @@ public class Load {
                 return new Info(Type.ColoredShader.shader_type_ID, vao, indices.length);
         }
 
+        public static Info texturedModel(
+                @NotNull final TexturedShader s,
+                @NotNull final Bitmap bitmap,
+                @NotNull final int[] indices,
+                @NotNull final float[] positions,
+                @NotNull final float[] texCoords,
+                @NotNull final float[] normals
+        ) {
+                int vao = GPU.createVertexArrayObject();
+                int[] vbos = new int[4];
+                vbos[0] = GPU.loadIndecisBuffer(Arr.allocateBuffer(indices));
+                vbos[1] = GPU.loadAttribute(TexturedShader.a_Position, 3, Arr.allocateBuffer(positions));
+                vbos[2] = GPU.loadAttribute(TexturedShader.a_TexCoord, 2, Arr.allocateBuffer(texCoords));
+                vbos[3] = GPU.loadAttribute(TexturedShader.a_Normal, 3, Arr.allocateBuffer(normals));
+                int texId = GPU.loadTexture(bitmap);
+                GPU.vertexArray0();
+                return new Info(Type.TexturedShader.shader_type_ID, vao, indices.length);
+        }
+
         public static void coloredShader(
+                @NotNull final SparseArray<Box.ShaderUniforms> shaders,
                 @NotNull final String vertexShaderCode,
                 @NotNull final String fragmentShaderCode
         ) {
@@ -71,9 +95,11 @@ public class Load {
                         u_Shininess,
                         0
                 );
+                shaders.append(shader.shader_type_ID, shader);
         }
 
         public static void texturedShader(
+                @NotNull final SparseArray<Box.ShaderUniforms> shaders,
                 @NotNull final String vertexShaderCode,
                 @NotNull final String fragmentShaderCode
         ) {
@@ -111,5 +137,6 @@ public class Load {
                         u_Shininess,
                         u_Texture
                 );
+                shaders.append(shader.shader_type_ID, shader);
         }
 }

@@ -10,7 +10,7 @@ import bertrand.myopengl.OpenGL.GPU;
 import bertrand.myopengl.Tool.Vec3;
 
 public class update {
-        public void locations(
+        public static void locations(
                 @NotNull final SparseArray<Box.Location> outputs,
                 @NotNull final SparseArray<Box.Periode> ios,
                 final float dt_ms
@@ -64,6 +64,20 @@ public class update {
                                 0
                         );
                 }
+        }
+
+        /* curring partially applied function */
+        public static void gpu_shader_projectionMatrix(
+                @NotNull final SparseArray<Box.ShaderUniforms> shaders,
+                @NotNull final float[] projectionMatrix
+        ) {
+                int size = shaders.size();
+                for (int i = 0; i < size; i++) {
+                        Box.ShaderUniforms shader = shaders.valueAt(i);
+                        GPU.useProgram(shader.programID);
+                        GPU.loadMatrix(shader.u_ProjectionMatrix, projectionMatrix);
+                }
+                GPU.useProgram(0);
         }
 
         public static void gpu(

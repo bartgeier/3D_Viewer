@@ -5,7 +5,7 @@ import android.util.SparseArray;
 import bertrand.myopengl.Tool.Vec3;
 
 public class Box {
-        static class ShaderUniforms {
+        public static class ShaderUniforms {
                 public final int shader_type_ID;
                 //public float[] matrix;
                 public final int programID;
@@ -84,7 +84,7 @@ public class Box {
         }
         public static SparseArray<Location> locations = new SparseArray<>();
 
-        static class Periode {
+        public static class Periode {
                 public enum Type {
                         UNDEF,
                         ROTATE,
@@ -94,11 +94,11 @@ public class Box {
                 public Type type;
                 public double period_ms;
                 public double angle;
-                public Periode(int entity_ID, Type type, double period_ms, double angle) {
+                public Periode(int entity_ID, Type type, double period_ms, double start_angle) {
                         this.entity_ID = entity_ID;
                         this.type = type;
                         this.period_ms = period_ms;
-                        this.angle = angle;
+                        this.angle = start_angle;
                 }
 
         }

@@ -10,7 +10,11 @@ import java.util.ArrayList;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
+import bertrand.myopengl.AExamples.AExampleFactory;
 import bertrand.myopengl.Camera.Camera;
+import bertrand.myopengl.Entitys.Box;
+import bertrand.myopengl.Entitys.Load;
+import bertrand.myopengl.Entitys.update;
 import bertrand.myopengl.ExampleObjects.ExampleFactory;
 import bertrand.myopengl.ExampleObjects.Scene;
 import bertrand.myopengl.Light.Light;
@@ -18,11 +22,13 @@ import bertrand.myopengl.Models.RawModel;
 import bertrand.myopengl.OpenGL.GPU;
 import bertrand.myopengl.Shaders.ShaderRepo;
 import bertrand.myopengl.Tool.Color4f;
+import bertrand.myopengl.Tool.RFile.RFile;
+import bertrand.myopengl.Tool.RFile.RFile_IF;
 
 
 public class MainRenderer implements Renderer {
         private Context context;
-        private ExampleFactory exampleFactory;
+        private AExampleFactory exampleFactory;
         private ShaderRepo shaderRepo;
         private Light light;
         private Color4f backGroundColor;
@@ -57,10 +63,15 @@ public class MainRenderer implements Renderer {
                         admin.workTodo = admin(admin);
                 }
                 GPU.renderBackground(backGroundColor);
+                /*
                 for(RawModel object : rawModels) {
                         object.updateWithDelta(dt);
                         object.render(Camera.position(),light);
                 }
+                */
+                update.locations(Box.locations, Box.periods, dt);
+                update.bodys(Box.bodys, Camera.position(), Box.locations);
+                update.gpu(light, Box.bodys, Box.shadersUniforms);
         }
 
 
@@ -68,14 +79,21 @@ public class MainRenderer implements Renderer {
         public void onSurfaceChanged(GL10 gl, int width, int height) {
                 float r = (float) width / height;
                 Camera.aspectRatio(r);
-                shaderRepo.setProjectionMatrix(Camera.projectionMatrix());
+                //shaderRepo.setProjectionMatrix(Camera.projectionMatrix());
+                update.gpu_shader_projectionMatrix(Box.shadersUniforms, Camera.projectionMatrix());
         }
 
         @Override
         public void onSurfaceCreated(GL10 gl, EGLConfig config) {
                 Camera.init();
+                RFile_IF file = new RFile(context);
                 shaderRepo = new ShaderRepo(context);
-                exampleFactory = new ExampleFactory(context, shaderRepo);
+                Load.texturedShader(
+                        Box.shadersUniforms,
+                        file.string(":/raw/shader_textured_vert.txt"),
+                        file.string(":/raw/shader_textured_frag.txt")
+                );
+                exampleFactory = new AExampleFactory(context, shaderRepo);
                 loadExample(3);
         }
 
@@ -119,7 +137,7 @@ public class MainRenderer implements Renderer {
         private void loadExample(int idx) {
                 Scene s = exampleFactory.createExample(idx);
                 if( s != null) {
-                        rawModels.add(s.rawModel);
+                        //rawModels.add(s.rawModel);
                         light = s.light;
                         backGroundColor = s.backGroundColor;
                 }

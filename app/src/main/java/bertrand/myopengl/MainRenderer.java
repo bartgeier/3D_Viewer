@@ -4,23 +4,22 @@ import android.content.Context;
 import android.opengl.GLSurfaceView.Renderer;
 import android.os.SystemClock;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-import bertrand.myopengl.AExamples.AExampleFactory;
 import bertrand.myopengl.Camera.Camera;
 import bertrand.myopengl.Entitys.Box;
 import bertrand.myopengl.Entitys.Load;
-import bertrand.myopengl.Entitys.update;
-import bertrand.myopengl.ExampleObjects.ExampleFactory;
-import bertrand.myopengl.ExampleObjects.Scene;
+import bertrand.myopengl.Entitys.Update;
+import bertrand.myopengl.ExampleScenes.CubeGray;
+import bertrand.myopengl.ExampleScenes.Empty;
+import bertrand.myopengl.ExampleScenes.ExampleNames;
+import bertrand.myopengl.ExampleScenes.Scene;
+import bertrand.myopengl.ExampleScenes.Stall;
+import bertrand.myopengl.ExampleScenes.Triangle;
+import bertrand.myopengl.ExampleScenes.Triangle1;
 import bertrand.myopengl.Light.Light;
-import bertrand.myopengl.Models.RawModel;
 import bertrand.myopengl.OpenGL.GPU;
-import bertrand.myopengl.Shaders.ShaderRepo;
 import bertrand.myopengl.Tool.Color4f;
 import bertrand.myopengl.Tool.RFile.RFile;
 import bertrand.myopengl.Tool.RFile.RFile_IF;
@@ -28,24 +27,11 @@ import bertrand.myopengl.Tool.RFile.RFile_IF;
 
 public class MainRenderer implements Renderer {
         private Context context;
-        private AExampleFactory exampleFactory;
-        private ShaderRepo shaderRepo;
         private Light light;
         private Color4f backGroundColor;
 
-        private ArrayList<RawModel> rawModels = new ArrayList<>();
-
-        enum WorkTodo {
-                DONE,
-                NEW_EXAMPLE,
-                CLEAR_SCREEN_UP
-        }
-        class Admin {
-                WorkTodo workTodo = WorkTodo.DONE;
-                int exampleIdx = -1;
-        }
-
-        private Admin admin = new Admin();
+        ExampleNames.Index lastExampleIndex = ExampleNames.Index.EMPTY;
+        ExampleNames.Index newExampleIndex = ExampleNames.Index.EMPTY;
 
         MainRenderer (Context c) {
                 context = c;
@@ -53,57 +39,69 @@ public class MainRenderer implements Renderer {
                         0f,0.8f,-1f,
                         1,1,1
                 );
-
         }
 
         @Override
         public void onDrawFrame(GL10 gl) {
                 float dt = deltaTime();
-                if (admin.workTodo != WorkTodo.DONE) {
-                        admin.workTodo = admin(admin);
+                if(lastExampleIndex != newExampleIndex) {
+                        Scene s = Empty.createScene();
+                        switch(newExampleIndex) {
+                        case CUBE:
+                                s = CubeGray.createScene();
+                                break;
+                        case TRIANGLE:
+                                s = Triangle.createScene();
+                                break;
+                        case TRIANGLE_1:
+                                s = Triangle1.createScene();
+                                break;
+                        case STALL:
+                                s = Stall.createScene(context);
+                                break;
+                        default:
+                                break;
+                        }
+                        light = s.light;
+                        backGroundColor = s.backGroundColor;
+                        lastExampleIndex = newExampleIndex;
                 }
                 GPU.renderBackground(backGroundColor);
-                /*
-                for(RawModel object : rawModels) {
-                        object.updateWithDelta(dt);
-                        object.render(Camera.position(),light);
-                }
-                */
-                update.locations(Box.locations, Box.periods, dt);
-                update.bodys(Box.bodys, Camera.position(), Box.locations);
-                update.gpu(light, Box.bodys, Box.shadersUniforms);
+                Update.locations(Box.locations, Box.periods, dt);
+                Update.bodys(Box.bodys, Camera.position(), Box.locations);
+                Update.gpu(light, Box.bodys, Box.shadersUniforms);
         }
-
 
         @Override
         public void onSurfaceChanged(GL10 gl, int width, int height) {
                 float r = (float) width / height;
                 Camera.aspectRatio(r);
-                //shaderRepo.setProjectionMatrix(Camera.projectionMatrix());
-                update.gpu_shader_projectionMatrix(Box.shadersUniforms, Camera.projectionMatrix());
+                Update.gpu_shader_projectionMatrix(Box.shadersUniforms, Camera.projectionMatrix());
         }
 
         @Override
         public void onSurfaceCreated(GL10 gl, EGLConfig config) {
                 Camera.init();
                 RFile_IF file = new RFile(context);
-                shaderRepo = new ShaderRepo(context);
                 Load.texturedShader(
                         Box.shadersUniforms,
                         file.string(":/raw/shader_textured_vert.txt"),
                         file.string(":/raw/shader_textured_frag.txt")
                 );
-                exampleFactory = new AExampleFactory(context, shaderRepo);
-                loadExample(3);
+                Load.coloredShader(
+                        Box.shadersUniforms,
+                        file.string(":/raw/shader_colored_vert.txt"),
+                        file.string(":/raw/shader_colored_frag.txt")
+                );
+                newExampleIndex = ExampleNames.Index.STALL;
         }
 
         public void onClearScreen() {
-                admin.workTodo = WorkTodo.CLEAR_SCREEN_UP;
+                newExampleIndex = ExampleNames.Index.EMPTY;
         }
 
         public void onNewExample(final int idx) {
-                admin.workTodo = WorkTodo.NEW_EXAMPLE;
-                admin.exampleIdx = idx;
+                newExampleIndex = ExampleNames.Index.values()[idx];
         }
 
         private double lasttime = 0;
@@ -118,37 +116,5 @@ public class MainRenderer implements Renderer {
                 lasttime = time;
                 return delta;
         }
-
-        private WorkTodo admin(@NotNull final Admin admin) {
-                switch(admin.workTodo) {
-                        case NEW_EXAMPLE:
-                                clearScreen();
-                                loadExample(admin.exampleIdx);
-                                break;
-                        case CLEAR_SCREEN_UP:
-                                clearScreen();
-                                break;
-                        default:
-                                break;
-                }
-                return WorkTodo.DONE;
-        }
-
-        private void loadExample(int idx) {
-                Scene s = exampleFactory.createExample(idx);
-                if( s != null) {
-                        //rawModels.add(s.rawModel);
-                        light = s.light;
-                        backGroundColor = s.backGroundColor;
-                }
-        }
-
-        private void clearScreen() {
-                for(RawModel object : rawModels) {
-                        object.cleanUp();
-                }
-                rawModels.clear();
-        }
-
 
 }

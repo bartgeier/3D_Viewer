@@ -4,7 +4,7 @@ import android.util.SparseArray;
 
 import org.jetbrains.annotations.NotNull;
 
-public class constructor {
+public class Constructor {
         public static void body(
                 int entity_ID,
                 @NotNull final SparseArray<Box.Body> bodys,

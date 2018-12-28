@@ -9,7 +9,7 @@ import bertrand.myopengl.Light.Light;
 import bertrand.myopengl.OpenGL.GPU;
 import bertrand.myopengl.Tool.Vec3;
 
-public class update {
+public class Update {
         public static void locations(
                 @NotNull final SparseArray<Box.Location> outputs,
                 @NotNull final SparseArray<Box.Periode> ios,

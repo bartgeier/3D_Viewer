@@ -7,8 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 import bertrand.myopengl.OpenGL.GLES;
 import bertrand.myopengl.OpenGL.GPU;
-import bertrand.myopengl.Shaders.ColoredShader;
-import bertrand.myopengl.Shaders.TexturedShader;
+import bertrand.myopengl.ShaderTypes.ShaderType;
 import bertrand.myopengl.Tool.Arr;
 
 public class Load {
@@ -31,15 +30,14 @@ public class Load {
                 int vao = GPU.createVertexArrayObject();
                 int[] vbos = new int[4];
                 vbos[0] = GPU.loadIndecisBuffer(Arr.allocateBuffer(indices));
-                vbos[1] = GPU.loadAttribute(ColoredShader.a_Position, 3, Arr.allocateBuffer(positions));
-                vbos[2] = GPU.loadAttribute(ColoredShader.a_Color, 4, Arr.allocateBuffer(colors));
-                vbos[3] = GPU.loadAttribute(ColoredShader.a_Normal, 3, Arr.allocateBuffer(normals));
+                vbos[1] = GPU.loadAttribute(ShaderType.Colored.a_Position, 3, Arr.allocateBuffer(positions));
+                vbos[2] = GPU.loadAttribute(ShaderType.Colored.a_Color, 4, Arr.allocateBuffer(colors));
+                vbos[3] = GPU.loadAttribute(ShaderType.Colored.a_Normal, 3, Arr.allocateBuffer(normals));
                 GPU.vertexArray0();
-                return new Info(Type.ColoredShader.shader_type_ID, vao, indices.length);
+                return new Info(ShaderType.Colored.shader_type_ID, vao, indices.length);
         }
 
         public static Info texturedModel(
-                @NotNull final TexturedShader s,
                 @NotNull final Bitmap bitmap,
                 @NotNull final int[] indices,
                 @NotNull final float[] positions,
@@ -49,12 +47,12 @@ public class Load {
                 int vao = GPU.createVertexArrayObject();
                 int[] vbos = new int[4];
                 vbos[0] = GPU.loadIndecisBuffer(Arr.allocateBuffer(indices));
-                vbos[1] = GPU.loadAttribute(TexturedShader.a_Position, 3, Arr.allocateBuffer(positions));
-                vbos[2] = GPU.loadAttribute(TexturedShader.a_TexCoord, 2, Arr.allocateBuffer(texCoords));
-                vbos[3] = GPU.loadAttribute(TexturedShader.a_Normal, 3, Arr.allocateBuffer(normals));
+                vbos[1] = GPU.loadAttribute(ShaderType.Textured.a_Position, 3, Arr.allocateBuffer(positions));
+                vbos[2] = GPU.loadAttribute(ShaderType.Textured.a_TexCoord, 2, Arr.allocateBuffer(texCoords));
+                vbos[3] = GPU.loadAttribute(ShaderType.Textured.a_Normal, 3, Arr.allocateBuffer(normals));
                 int texId = GPU.loadTexture(bitmap);
                 GPU.vertexArray0();
-                return new Info(Type.TexturedShader.shader_type_ID, vao, indices.length);
+                return new Info(ShaderType.Textured.shader_type_ID, vao, indices.length);
         }
 
         public static void coloredShader(
@@ -66,9 +64,9 @@ public class Load {
                 final int fragmentID = GPU.loadShader(GLES.GL_FRAGMENT_SHADER, fragmentShaderCode);
                 final int programID = GPU.createShaderProgram(vertexID, fragmentID);
 
-                GPU.attributeLocation(programID, Type.ColoredShader.a_Position, "a_Position");
-                GPU.attributeLocation(programID, Type.ColoredShader.a_Color, "a_Color");
-                GPU.attributeLocation(programID, Type.ColoredShader.a_Normal,  "a_Normal");
+                GPU.attributeLocation(programID, ShaderType.Colored.a_Position, "a_Position");
+                GPU.attributeLocation(programID, ShaderType.Colored.a_Color, "a_Color");
+                GPU.attributeLocation(programID, ShaderType.Colored.a_Normal,  "a_Normal");
                 GPU.linkProgram(programID);
 
                 final int u_ModelViewMatrix = GPU.uniformLocation(programID, "u_ModelViewMatrix");
@@ -83,7 +81,7 @@ public class Load {
                 final int u_Shininess = GPU.uniformLocation(programID, "u_Shininess");
 
                 Box.ShaderUniforms shader = new Box.ShaderUniforms(
-                        Type.ColoredShader.shader_type_ID,
+                        ShaderType.Colored.shader_type_ID,
                         programID,
                         u_ModelViewMatrix,
                         u_ProjectionMatrix,
@@ -107,9 +105,9 @@ public class Load {
                 final int fragmentID = GPU.loadShader(GLES.GL_FRAGMENT_SHADER, fragmentShaderCode);
                 final int programID = GPU.createShaderProgram(vertexID, fragmentID);
 
-                GPU.attributeLocation(programID, Type.TexturedShader.a_Position, "a_Position");
-                GPU.attributeLocation(programID, Type.TexturedShader.a_TexCoord, "a_TexCoord");
-                GPU.attributeLocation(programID, Type.TexturedShader.a_Normal,  "a_Normal");
+                GPU.attributeLocation(programID, ShaderType.Textured.a_Position, "a_Position");
+                GPU.attributeLocation(programID, ShaderType.Textured.a_TexCoord, "a_TexCoord");
+                GPU.attributeLocation(programID, ShaderType.Textured.a_Normal,  "a_Normal");
                 GPU.linkProgram(programID);
 
                 final int u_ModelViewMatrix = GPU.uniformLocation(programID, "u_ModelViewMatrix");
@@ -125,7 +123,7 @@ public class Load {
                 final int u_Texture = GPU.uniformLocation(programID, "u_Texture");
 
                 Box.ShaderUniforms shader = new Box.ShaderUniforms(
-                        Type.TexturedShader.shader_type_ID,
+                        ShaderType.Textured.shader_type_ID,
                         programID,
                         u_ModelViewMatrix,
                         u_ProjectionMatrix,

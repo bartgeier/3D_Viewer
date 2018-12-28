@@ -15,12 +15,12 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import bertrand.myopengl.ExampleObjects.ExampleFactory;
+import bertrand.myopengl.ExampleScenes.ExampleNames;
 import bertrand.myopengl.Tool.TextChooser.TextChooserActivity;
 
 public class MainActivity extends AppCompatActivity {
         MainSurfaceView mainGLView;
-        ExampleFactory exampleFactory;
+        ExampleNames exampleFactory;
 
         public class UI{
                 ConstraintLayout layout;
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
                         //ui.actionBar.hide();
                         ui.layout = this.findViewById(R.id.layout);
                         ui.textView = this.findViewById(R.id.label);
-                        exampleFactory = new ExampleFactory();
+                        exampleFactory = new ExampleNames();
 
                         String s = Integer.toHexString(info.reqGlEsVersion);
                         Toast.makeText(

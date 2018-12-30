@@ -2,12 +2,51 @@ package bertrand.myopengl.Entitys;
 
 import android.util.SparseArray;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+
+import bertrand.myopengl.Tool.Color4f;
+import bertrand.myopengl.Tool.IDGenerator;
 import bertrand.myopengl.Tool.Vec3;
 
 public class Box {
-        public static class ShaderUniforms {
+        public static IDGenerator entity_ID_Generator = new IDGenerator();
+        public static IDGenerator light_ID_Generator = new IDGenerator();
+
+        public static class BackGround {
+                public Color4f color = null;
+        }
+        public static BackGround backGround = new BackGround();
+
+
+        public static class Light {
+                public final int light_ID;
+                public Vec3 position;
+                public Color4f color;
+                public Vec3 attenuation = new Vec3(1, 0, 0);
+
+                public Light(
+                        final int light_ID,
+                        float x, float y, float z,
+                        float red, float green, float blue
+                ) {
+                        this.light_ID = light_ID;
+                        position = new Vec3(x, y, z);
+                        color = new Color4f(red, green, blue);
+                }
+
+                public Light(final int light_ID, Vec3 position, float red, float green, float blue){
+                        this.light_ID = light_ID;
+                        color = new Color4f(red, green, blue);
+                        this.position = position;
+                }
+        }
+        public static SparseArray<Light> lights = new SparseArray<>();
+
+
+        public static class ShaderProgam {
                 public final int shader_type_ID;
-                //public float[] matrix;
                 public final int programID;
                 public final int u_ModelViewMatrix;
                 public final int u_ProjectionMatrix;
@@ -19,7 +58,7 @@ public class Box {
                 public final int u_Shininess;
                 public final int u_Texture;
 
-                public ShaderUniforms(
+                public ShaderProgam(
                         int shader_type_ID,
                         int programID,
                         int u_ModelViewMatrix,
@@ -45,7 +84,27 @@ public class Box {
                         this.u_Texture = u_Texture;
                 }
         }
-        public static SparseArray<ShaderUniforms> shadersUniforms = new SparseArray<>();
+        public static SparseArray<ShaderProgam> shadersPrograms = new SparseArray<>();
+
+
+        public static class ShaderDeleteInfo {
+                public final int programID;
+                public final int vertexShaderID;
+                public final int fragmentShaderID;
+
+                public ShaderDeleteInfo(
+                        final int programID,
+                        final int vertexShaderID,
+                        final int fragmentShaderID
+
+                ) {
+                        this.programID = programID;
+                        this.vertexShaderID = vertexShaderID;
+                        this.fragmentShaderID = fragmentShaderID;
+                }
+        }
+        public static SparseArray<ShaderDeleteInfo> shadersDeleteInfos = new SparseArray<>();
+
 
         static class Body{
                 public int entity_ID;
@@ -61,6 +120,24 @@ public class Box {
                 }
         }
         public static SparseArray<Body> bodys = new SparseArray<>();
+
+
+        public static class BodyDeleteInfo {
+                public final int vao;
+                public int[] vbos;
+                public final int texId;
+                public BodyDeleteInfo(
+                        final int vao,
+                        @NotNull final int[] vbos,
+                        final int texId
+                ) {
+                        this.vao = vao;
+                        this.vbos = vbos;
+                        this.texId = texId;
+                }
+        }
+        public static ArrayList<BodyDeleteInfo> bodyDeleteInfos = new ArrayList<>();
+
 
         static class Location {
                 public int entity_ID;
@@ -84,6 +161,7 @@ public class Box {
         }
         public static SparseArray<Location> locations = new SparseArray<>();
 
+
         public static class Periode {
                 public enum Type {
                         UNDEF,
@@ -103,6 +181,4 @@ public class Box {
 
         }
         public static SparseArray<Periode> periods = new SparseArray<>();
-
-
 }

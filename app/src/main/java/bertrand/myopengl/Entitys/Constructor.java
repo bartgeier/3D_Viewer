@@ -4,22 +4,25 @@ import android.util.SparseArray;
 
 import org.jetbrains.annotations.NotNull;
 
+import bertrand.myopengl.Tool.Color4f;
+
+
 public class Constructor {
-        public static void body(
-                int entity_ID,
-                @NotNull final SparseArray<Box.Body> bodys,
-                @NotNull final Load.Info i
+        public static void backGroundColor(
+                Box.BackGround backGround,
+                float red, float green, float blue
         ) {
-                Box.Body b = new Box.Body(entity_ID, i.shader_type_ID, i.vao, i.indicesCount);
-                bodys.append(entity_ID,b);
+                backGround.color = new Color4f(red, green, blue);
         }
 
-        public static void location(
-                int entity_ID,
-                @NotNull final SparseArray<Box.Location> locations
+        public static void light(
+                int light_ID,
+                @NotNull final SparseArray<Box.Light> lights,
+                float x, float y, float z,
+                float red, float green, float blue
         ) {
-                Box.Location l = new Box.Location(entity_ID);
-                locations.append(entity_ID, l);
+                Box.Light l = new Box.Light(light_ID, x, y, z, red, green, blue);
+                lights.append(light_ID, l);
         }
 
         public static void location(

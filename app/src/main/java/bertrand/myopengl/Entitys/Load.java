@@ -5,23 +5,18 @@ import android.util.SparseArray;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+
 import bertrand.myopengl.OpenGL.GLES;
 import bertrand.myopengl.OpenGL.GPU;
 import bertrand.myopengl.ShaderTypes.ShaderType;
 import bertrand.myopengl.Tool.Arr;
 
 public class Load {
-        public static class Info {
-                int shader_type_ID;
-                int vao;
-                int indicesCount;
-                public Info(int shader_type_ID, int vao, int indicesCount) {
-                        this.shader_type_ID = shader_type_ID;
-                        this.vao = vao;
-                        this.indicesCount = indicesCount;
-                }
-        }
-        public static Info coloredModel(
+        public static void coloredModel(
+                final int entity_ID,
+                @NotNull final SparseArray<Box.Body> bodys,
+                @NotNull final ArrayList<Box.BodyDeleteInfo> bodyDeleteInfos,
                 @NotNull final int[] indices,
                 @NotNull final float[] positions,
                 @NotNull final float[] colors,
@@ -34,10 +29,27 @@ public class Load {
                 vbos[2] = GPU.loadAttribute(ShaderType.Colored.a_Color, 4, Arr.allocateBuffer(colors));
                 vbos[3] = GPU.loadAttribute(ShaderType.Colored.a_Normal, 3, Arr.allocateBuffer(normals));
                 GPU.vertexArray0();
-                return new Info(ShaderType.Colored.shader_type_ID, vao, indices.length);
+
+                Box.Body body = new Box.Body(
+                        entity_ID,
+                        ShaderType.Colored.shader_type_ID,
+                        vao,
+                        indices.length
+                );
+                bodys.append(entity_ID, body);
+
+                Box.BodyDeleteInfo bDelete = new Box.BodyDeleteInfo(
+                        vao,
+                        vbos,
+                        0
+                );
+                bodyDeleteInfos.add(bDelete);
         }
 
-        public static Info texturedModel(
+        public static void texturedModel(
+                final int entity_ID,
+                @NotNull final SparseArray<Box.Body> bodys,
+                @NotNull final ArrayList<Box.BodyDeleteInfo> bodyDeleteInfos,
                 @NotNull final Bitmap bitmap,
                 @NotNull final int[] indices,
                 @NotNull final float[] positions,
@@ -52,11 +64,27 @@ public class Load {
                 vbos[3] = GPU.loadAttribute(ShaderType.Textured.a_Normal, 3, Arr.allocateBuffer(normals));
                 int texId = GPU.loadTexture(bitmap);
                 GPU.vertexArray0();
-                return new Info(ShaderType.Textured.shader_type_ID, vao, indices.length);
+
+                Box.Body body = new Box.Body(
+                        entity_ID,
+                        ShaderType.Textured.shader_type_ID,
+                        vao,
+                        indices.length
+                );
+                bodys.append(entity_ID, body);
+
+                Box.BodyDeleteInfo bDelete = new Box.BodyDeleteInfo(
+                        vao,
+                        vbos,
+                        texId
+                );
+                bodyDeleteInfos.add(bDelete);
         }
 
+
         public static void coloredShader(
-                @NotNull final SparseArray<Box.ShaderUniforms> shaders,
+                @NotNull final SparseArray<Box.ShaderProgam> shaderProgams,
+                @NotNull final SparseArray<Box.ShaderDeleteInfo> shaderDeleteInfos,
                 @NotNull final String vertexShaderCode,
                 @NotNull final String fragmentShaderCode
         ) {
@@ -80,7 +108,7 @@ public class Load {
                 final int u_MatSpecularIntensity = GPU.uniformLocation(programID, "u_MatSpecularIntensity");
                 final int u_Shininess = GPU.uniformLocation(programID, "u_Shininess");
 
-                Box.ShaderUniforms shader = new Box.ShaderUniforms(
+                Box.ShaderProgam sProg = new Box.ShaderProgam(
                         ShaderType.Colored.shader_type_ID,
                         programID,
                         u_ModelViewMatrix,
@@ -93,11 +121,19 @@ public class Load {
                         u_Shininess,
                         0
                 );
-                shaders.append(shader.shader_type_ID, shader);
+                shaderProgams.append(sProg.shader_type_ID, sProg);
+
+                Box.ShaderDeleteInfo sDelete = new Box.ShaderDeleteInfo(
+                        programID,
+                        vertexID,
+                        fragmentID
+                );
+                shaderDeleteInfos.append(sProg.shader_type_ID, sDelete);
         }
 
         public static void texturedShader(
-                @NotNull final SparseArray<Box.ShaderUniforms> shaders,
+                @NotNull final SparseArray<Box.ShaderProgam> shaders,
+                @NotNull final SparseArray<Box.ShaderDeleteInfo> shaderDeleteInfos,
                 @NotNull final String vertexShaderCode,
                 @NotNull final String fragmentShaderCode
         ) {
@@ -122,7 +158,7 @@ public class Load {
                 final int u_Shininess = GPU.uniformLocation(programID, "u_Shininess");
                 final int u_Texture = GPU.uniformLocation(programID, "u_Texture");
 
-                Box.ShaderUniforms shader = new Box.ShaderUniforms(
+                Box.ShaderProgam sProg = new Box.ShaderProgam(
                         ShaderType.Textured.shader_type_ID,
                         programID,
                         u_ModelViewMatrix,
@@ -135,6 +171,13 @@ public class Load {
                         u_Shininess,
                         u_Texture
                 );
-                shaders.append(shader.shader_type_ID, shader);
+                shaders.append(sProg.shader_type_ID, sProg);
+
+                Box.ShaderDeleteInfo sDelete = new Box.ShaderDeleteInfo(
+                        programID,
+                        vertexID,
+                        fragmentID
+                );
+                shaderDeleteInfos.append(sProg.shader_type_ID, sDelete);
         }
 }

@@ -17,7 +17,7 @@ public class ExampleNames {
                 TEST_7,
                 TEST_8,
                 TEST_9,
-                EMPTY,
+                CLEAR_SCREEN,
         }
         public ArrayList<String> names = new ArrayList<>();
 
@@ -28,7 +28,7 @@ public class ExampleNames {
         private void intNames() {
                 names.add(Index.CUBE.ordinal() , "Cube");
                 names.add(Index.TRIANGLE.ordinal(), "Triangle");
-                names.add(Index.TRIANGLE_1.ordinal(), "Triangle1");
+                names.add(Index.TRIANGLE_1.ordinal(), "Triangle_1");
                 names.add(Index.STALL.ordinal(),"Stall");
                 names.add(Index.TEST_1.ordinal(),"Test_1");
                 names.add(Index.TEST_2.ordinal(),"Test_2");

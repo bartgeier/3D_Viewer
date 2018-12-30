@@ -6,16 +6,28 @@ import bertrand.myopengl.Camera.Camera;
 import bertrand.myopengl.Entitys.Box;
 import bertrand.myopengl.Entitys.Load;
 import bertrand.myopengl.Entitys.Constructor;
-import bertrand.myopengl.Light.Light;
 import bertrand.myopengl.Tool.Color4f;
+import bertrand.myopengl.Tool.RFile.RFile;
 
 import static bertrand.myopengl.Entitys.Box.Periode.Type.ROTATE;
 
-public final class CubeGray {
+public final class Cube {
         @NotNull
-        public static Scene createScene() {
-                final int entity_ID = 1;
-                Load.Info i = Load.coloredModel(
+        public static void createScene(@NotNull RFile file) {
+                final int entity_ID = Box.entity_ID_Generator.getID();
+                final int light_ID = Box.light_ID_Generator.getID();
+
+                Load.coloredShader(
+                        Box.shadersPrograms,
+                        Box.shadersDeleteInfos,
+                        file.string(":/raw/shader_colored_vert.txt"),
+                        file.string(":/raw/shader_colored_frag.txt")
+                );
+
+                Load.coloredModel(
+                        entity_ID,
+                        Box.bodys,
+                        Box.bodyDeleteInfos,
                         new int[] { // indices
                                 // Front
                                 0, 1, 2,
@@ -126,7 +138,6 @@ public final class CubeGray {
                                 0, -1, 0,    // 23
                         }
                 );
-                Constructor.body(entity_ID, Box.bodys, i);
                 Constructor.location(
                         entity_ID,
                         Box.locations,
@@ -147,14 +158,14 @@ public final class CubeGray {
                         8000,
                         0
                 );
-                Scene scene = new Scene();
-                scene.light = new Light(
+                Constructor.light(
+                        light_ID,
+                        Box.lights,
                         0f,0.8f,-1f,
                         1,1,1
                 );
-                scene.backGroundColor = new Color4f(0.8f,0.8f,0.8f);
+                Constructor.backGroundColor(Box.backGround,0.8f,0.8f,0.8f);
                 Camera.position(0,-0f,-4);
                 Camera.rotation(20,0,0);
-                return scene;
         }
 }

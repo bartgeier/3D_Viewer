@@ -9,7 +9,6 @@ import bertrand.myopengl.Camera.Camera;
 import bertrand.myopengl.Entitys.Box;
 import bertrand.myopengl.Entitys.Load;
 import bertrand.myopengl.Entitys.Constructor;
-import bertrand.myopengl.Light.Light;
 import bertrand.myopengl.Tool.Color4f;
 import bertrand.myopengl.Tool.OBJ_FILE.OBJ_Data;
 import bertrand.myopengl.Tool.OBJ_FILE.OBJ_File_Loader;
@@ -20,27 +19,34 @@ import static bertrand.myopengl.Entitys.Box.Periode.Type.ROTATE;
 
 public final class Stall {
         @NotNull
-        public static Scene createScene(@NotNull Context context) {
-                final int entity_ID = 0;
+        public static void createScene(@NotNull RFile file) {
+                final int entity_ID = Box.entity_ID_Generator.getID();
+                final int light_ID = Box.light_ID_Generator.getID();
+
+                Load.texturedShader(
+                        Box.shadersPrograms,
+                        Box.shadersDeleteInfos,
+                        file.string(":/raw/shader_textured_vert.txt"),
+                        file.string(":/raw/shader_textured_frag.txt")
+                );
+
                 OBJ_Data obj = OBJ_File_Loader.loadObjModel(
-                        new RFile(context),
+                        file,
                         ":/raw/stall_obj.obj"
                 );
                 Bitmap bitmap = Texture_File_Loader.getBitmap(
-                        new RFile(context),
+                        file,
                         ":/raw/stall_png.png"
                 );
-                Load.Info i = Load.texturedModel(
+                Load.texturedModel(
+                        entity_ID,
+                        Box.bodys,
+                        Box.bodyDeleteInfos,
                         bitmap,
                         obj.indices,
                         obj.positions,
                         obj.texCoords,
                         obj.normals
-                );
-                Constructor.body(
-                        entity_ID,
-                        Box.bodys,
-                        i
                 );
                 Constructor.location(
                         entity_ID,
@@ -62,16 +68,15 @@ public final class Stall {
                         16000,
                         0
                 );
-                Scene scene = new Scene();
-                scene.light = new Light(
+                Constructor.light(
+                        light_ID,
+                        Box.lights,
                         0f,-0.5f,-1f,
                         1,1,1
                 );
-                scene.backGroundColor = new Color4f(0.8f,0.8f,0.8f);
+                Constructor.backGroundColor(Box.backGround,0.8f,0.8f,0.8f);
                 Camera.position(0,0,-5);
                 Camera.rotation(20,0,0);
-                return scene;
         }
-
 }
 

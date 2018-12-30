@@ -22,7 +22,7 @@ public class VertexModel {
         float alpha;
     }
     ArrayList<Vertex> vertices = new ArrayList<Vertex>();
-//    public void test() {
+//    public void test_nextID() {
 //        vertices.add(new Vertex(1,2,3,1,0,0,1));
 //    }
 

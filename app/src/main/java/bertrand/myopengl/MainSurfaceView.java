@@ -42,4 +42,13 @@ public class MainSurfaceView extends GLSurfaceView {//GLTextureView {//GLSurface
                         }
                 });
         }
+
+        public void setOrientation(final float pitch, final float roll, final float azimut) {
+                queueEvent(new Runnable() {
+                        @Override
+                        public void run() {
+                                renderer.onOrientationChanged(pitch, roll, azimut);
+                        }
+                });
+        }
 }

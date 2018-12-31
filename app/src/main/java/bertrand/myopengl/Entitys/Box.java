@@ -142,7 +142,7 @@ public class Box {
         static class Location {
                 public int entity_ID;
                 public Vec3 position;
-                public Vec3 rotation;
+                public Vec3 rotation; // degrees
                 public Vec3 scale;
                 
                 public Location(int entity_ID, Vec3 position, Vec3 rotation, Vec3 scale) {

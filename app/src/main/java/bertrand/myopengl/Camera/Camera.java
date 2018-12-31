@@ -11,12 +11,12 @@ public class Camera {
         static private float[] position = new float[16];
         static private boolean isInit = false;
 
-        static private float fovyZoomAngle = 85f;
+        static private float fovyZoomAngle = 85f; // degrees
         static private float aspectRatio = 1f;
         static private float near = 0.1f;
         static private float far = 150f;
         static private Vec3 pos = new Vec3(0,0,0);
-        static private Vec3 rotation = new Vec3(0,0,0);
+        static private Vec3 rotation = new Vec3(0,0,0); // degrees
 
         public static void init() {
                 if(isInit) {

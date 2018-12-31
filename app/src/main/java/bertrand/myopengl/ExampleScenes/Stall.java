@@ -16,6 +16,7 @@ import bertrand.myopengl.Tool.RFile.RFile;
 import bertrand.myopengl.Tool.Texture_File_Loader;
 
 import static bertrand.myopengl.Entitys.Box.Periode.Type.ROTATE;
+import static bertrand.myopengl.Entitys.Box.Periode.Type.UNDEF;
 
 public final class Stall {
         @NotNull
@@ -48,6 +49,7 @@ public final class Stall {
                         obj.texCoords,
                         obj.normals
                 );
+                /*
                 Constructor.location(
                         entity_ID,
                         Box.locations,
@@ -61,10 +63,25 @@ public final class Stall {
                         1f,
                         1f
                 );
+                */
+                Constructor.location(
+                        entity_ID,
+                        Box.locations,
+                        0f,
+                        0f,
+                        0f,
+                        0f,
+                        0f,
+                        0f,
+                        0.5f,
+                        0.5f,
+                        0.5f
+                );
+
                 Constructor.period(
                         entity_ID,
                         Box.periods,
-                        ROTATE,
+                        UNDEF,
                         16000,
                         0
                 );
@@ -76,7 +93,8 @@ public final class Stall {
                 );
                 Constructor.backGroundColor(Box.backGround,0.8f,0.8f,0.8f);
                 Camera.position(0,0,-5);
-                Camera.rotation(20,0,0);
+                //Camera.rotation(20,0,0);
+                Camera.rotation(0,0,0);
         }
 }
 

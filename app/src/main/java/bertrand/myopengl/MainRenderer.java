@@ -18,6 +18,7 @@ import bertrand.myopengl.ExampleScenes.Triangle;
 import bertrand.myopengl.ExampleScenes.Triangle_1;
 import bertrand.myopengl.Tool.RFile.RFile;
 import bertrand.myopengl.Tool.Time.DeltaTime;
+import bertrand.myopengl.Tool.Vec3;
 
 
 public final class MainRenderer implements Renderer {
@@ -81,5 +82,9 @@ public final class MainRenderer implements Renderer {
 
         public void onNewExample(final int idx) {
                 newExampleIndex = ExampleNames.Index.values()[idx];
+        }
+
+        public void onOrientationChanged(final float pitch, final float roll, final float azimut) {
+                Camera.rotation(pitch, -roll, azimut);
         }
 }

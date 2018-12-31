@@ -10,6 +10,7 @@ import bertrand.myopengl.Tool.Color4f;
 import bertrand.myopengl.Tool.RFile.RFile;
 
 import static bertrand.myopengl.Entitys.Box.Periode.Type.ROTATE;
+import static bertrand.myopengl.Entitys.Box.Periode.Type.UNDEF;
 
 public final class Cube {
         @NotNull
@@ -154,7 +155,8 @@ public final class Cube {
                 Constructor.period(
                         entity_ID,
                         Box.periods,
-                        ROTATE,
+                        //ROTATE,
+                        UNDEF,
                         8000,
                         0
                 );
@@ -166,6 +168,7 @@ public final class Cube {
                 );
                 Constructor.backGroundColor(Box.backGround,0.8f,0.8f,0.8f);
                 Camera.position(0,-0f,-4);
-                Camera.rotation(20,0,0);
+                //Camera.rotation(20,0,0);
+                Camera.rotation(0,0,0);
         }
 }

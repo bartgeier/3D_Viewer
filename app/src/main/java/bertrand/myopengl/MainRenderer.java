@@ -87,4 +87,8 @@ public final class MainRenderer implements Renderer {
         public void onOrientationChanged(final float pitch, final float roll, final float azimut) {
                 Camera.rotation(pitch, -roll, azimut);
         }
+
+        public void onOrientationChanged(final float[] rotationMatrix) {
+                Camera.rotation(rotationMatrix);
+        }
 }

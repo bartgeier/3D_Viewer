@@ -20,24 +20,19 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import bertrand.myopengl.DeviceOrientation.DeviceOrientation;
+import bertrand.myopengl.DeviceOrientation.DeviceOrientationEvent;
+import bertrand.myopengl.DeviceOrientation.DeviceOrientationListner;
 import bertrand.myopengl.ExampleScenes.ExampleNames;
 import bertrand.myopengl.Tool.TextChooser.TextChooserActivity;
 
-public class MainActivity extends AppCompatActivity implements SensorEventListener {
+public class MainActivity extends AppCompatActivity implements DeviceOrientationListner {
         private static final String TAG = "MainActivity";
         private static final int EXAMPLE_ACTIVITY_ID = 1;
         MainSurfaceView mainGLView;
+        DeviceOrientation deviceOrientation;
 
-        private SensorManager sensorManager;
-        Sensor accelerometer;
-        Sensor magnetometer;
-        Sensor rotationVector;
-        private float[] mLastAccelerometer = new float[3];
-        private float[] mLastMagnetometer = new float[3];
-        private boolean mLastAccelerometerSet = false;
-        private boolean mLastMagnetometerSet = false;
-        private float[] mR = new float[9];
-        private float[] mOrientation = new float[3];
+
 
 
 
@@ -74,15 +69,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                         mainGLView.setEGLContextClientVersion(2);
                         mainGLView.start();
 
-                        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-                        accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-                        magnetometer = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
-                        rotationVector = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
-                        sensorManager.registerListener(MainActivity.this,accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
-                        sensorManager.registerListener(this, magnetometer, SensorManager.SENSOR_DELAY_NORMAL);
-                        sensorManager.registerListener(this, rotationVector, SensorManager.SENSOR_DELAY_NORMAL);
-
-                        Log.d(TAG, "onCreate: Registered accelerometer listener");
+                        deviceOrientation = new DeviceOrientation(this,this);
                 } else {
                         Toast.makeText(
                                 MainActivity.this,
@@ -91,7 +78,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                         ).show();
                 }
         }
-
 
         @Override
         public boolean onCreateOptionsMenu(Menu menu) {
@@ -142,93 +128,15 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         }
 
-        private float[] mMatrixR = new float[9];
-        private float[] mMatrixValues = new float[3];
         @Override
-        public void onSensorChanged(SensorEvent event) {
-                switch(event.sensor.getType()) {
-                case Sensor.TYPE_ROTATION_VECTOR:
-                        // Get rotation matrix
-                        SensorManager.getRotationMatrixFromVector(mR, event.values);
-
-                        SensorManager.getOrientation(mR, mOrientation);
-
-                        float azimut = (float) Math.toDegrees(mOrientation[0]); // +-Pi
-                        float pitch = (float) Math.toDegrees(mOrientation[1]);  // +-Pi/2
-                        float roll = (float) Math.toDegrees(mOrientation[2]);   // +-Pi/2
-
-                        String s =
-                                "Azimut: " + azimut + "   " + mOrientation[0] + "\n" +
-                                "Pitch: " + pitch + "   " + mOrientation[1] + "\n" +
-                                "Roll: " + roll + "   " + mOrientation[2];
-                        ui.textView.setText(s);
-                        mainGLView.setOrientation(pitch, roll, azimut);
-                        break;
-                case Sensor.TYPE_ACCELEROMETER:
-                       // System.arraycopy(event.values, 0, mLastAccelerometer, 0, event.values.length);
-                       // mLastAccelerometerSet = true;
-                        break;
-                case Sensor.TYPE_MAGNETIC_FIELD:
-                       // System.arraycopy(event.values, 0, mLastMagnetometer, 0, event.values.length);
-                       // mLastMagnetometerSet = true;
-                        break;
-                default:
-                        break;
-                }
-                /*
-                if (event.sensor == accelerometer) {
-                        System.arraycopy(event.values, 0, mLastAccelerometer, 0, event.values.length);
-                        mLastAccelerometerSet = true;
-                } else if (event.sensor == magnetometer) {
-                        System.arraycopy(event.values, 0, mLastMagnetometer, 0, event.values.length);
-                        mLastMagnetometerSet = true;
-                }
-                */
-                /*
-                if (mLastAccelerometerSet && mLastMagnetometerSet) {
-                        SensorManager.getRotationMatrix(mR, null, mLastAccelerometer, mLastMagnetometer);
-                        SensorManager.getOrientation(mR, mOrientation);
-
-                        float azimut = (float) Math.toDegrees(mOrientation[0]); // +-Pi
-                        float pitch = (float) Math.toDegrees(mOrientation[1]);  // +-Pi/2
-                        float roll = (float) Math.toDegrees(mOrientation[2]);   // +-Pi/2
-
-                        String s =
-                                "Azimut: " + azimut + "   " + mOrientation[0] + "\n" +
-                                "Pitch: " + pitch + "   " + mOrientation[1] + "\n" +
-                                "Roll: " + roll + "   " + mOrientation[2];
-                        ui.textView.setText(s);
-                        mainGLView.setOrientation(pitch, roll, azimut);
-                       // Log.d("OrientationTestActivity", String.format("Orientation: %f, %f, %f",
-                       //         mOrientation[0], mOrientation[1], mOrientation[2]));
-                }
-                */
-        }
-
-/*
-        @Override
-        public void onSensorChanged(SensorEvent event) {
-
-                ui.textView.setText(String.format("Orientation: %f, %f, %f",
-                        event.values[0],  event.values[1],  event.values[2]));
-
-
-                Log.d(
-                        TAG,
-                        "onSensorChanged: X: " +
-                                event.values[0] +
-                                " Y: " +
-                                event.values[1] +
-                                " Z: " +
-                                event.values[2]
-                );
-        }
-*/
-
-
-        @Override
-        public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
+        public void onSensorChanged(DeviceOrientationEvent event) {
+                String s =
+                        "Azimut: " + event.azimut + "\n" +
+                        "Pitch: " + event.pitch + "\n" +
+                        "Roll: " + event.roll;
+                ui.textView.setText(s);
+                //mainGLView.setOrientation(event.pitch, event.roll, event.azimut);
+                mainGLView.setOrientation(event.rotationMatrix);
         }
 
 }

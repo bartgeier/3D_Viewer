@@ -9,6 +9,8 @@ import bertrand.myopengl.Tool.Vec3;
 public class Camera {
         static private float[] projectionMatrix = new float[16];
         static private float[] position = new float[16];
+        static private float[] location = new float[16];
+        static private float[] orientationMatrix = new float[16];
         static private boolean isInit = false;
 
         static private float fovyZoomAngle = 85f; // degrees
@@ -44,11 +46,21 @@ public class Camera {
 
         private static void calculatePosition() {
                 /* calculate ModelViewMatrix */
-                Matrix.setIdentityM(position, 0);
-                Matrix.translateM(position,0,pos.x, pos.y, pos.z);
+                Matrix.setIdentityM(location, 0);
+                Matrix.translateM(location,0,pos.x, pos.y, pos.z);
+                Matrix.multiplyMM(
+                        position,
+                        0,
+                        location ,
+                        0,
+                        orientationMatrix,
+                        0
+                );
+                /*
                 Matrix.rotateM(position,0, rotation.x, 1, 0, 0);
                 Matrix.rotateM(position,0, rotation.y, 0, 1, 0);
                 Matrix.rotateM(position,0, rotation.z,  0, 0, 1);
+                */
         }
 
         @NotNull
@@ -71,6 +83,15 @@ public class Camera {
                 rotation.x = x;
                 rotation.y = y;
                 rotation.z = z;
+                Matrix.setIdentityM(orientationMatrix, 0);
+                Matrix.rotateM(orientationMatrix,0, rotation.x, 1, 0, 0);
+                Matrix.rotateM(orientationMatrix,0, rotation.y, 0, 1, 0);
+                Matrix.rotateM(orientationMatrix,0, rotation.z,  0, 0, 1);
+                calculatePosition();
+        }
+
+        public static void rotation(float[] rotationMatrix) {
+                orientationMatrix = rotationMatrix;
                 calculatePosition();
         }
 

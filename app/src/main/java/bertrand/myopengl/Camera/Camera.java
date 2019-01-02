@@ -26,8 +26,8 @@ public class Camera {
                 } else {
                         isInit = true;
                 }
-                pos.z = -5;
-                rotation.x = 20;
+                pos.z = 0;
+                rotation.x = 0;
 
                 calculateProjectionMatrix();
                 calculatePosition();

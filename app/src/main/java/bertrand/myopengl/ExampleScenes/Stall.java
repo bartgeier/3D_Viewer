@@ -1,6 +1,5 @@
 package bertrand.myopengl.ExampleScenes;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 
 import org.jetbrains.annotations.NotNull;
@@ -9,13 +8,13 @@ import bertrand.myopengl.Camera.Camera;
 import bertrand.myopengl.Entitys.Box;
 import bertrand.myopengl.Entitys.Load;
 import bertrand.myopengl.Entitys.Constructor;
-import bertrand.myopengl.Tool.Color4f;
 import bertrand.myopengl.Tool.OBJ_FILE.OBJ_Data;
 import bertrand.myopengl.Tool.OBJ_FILE.OBJ_File_Loader;
+import bertrand.myopengl.Tool.Positions;
 import bertrand.myopengl.Tool.RFile.RFile;
 import bertrand.myopengl.Tool.Texture_File_Loader;
+import bertrand.myopengl.Tool.Vec3;
 
-import static bertrand.myopengl.Entitys.Box.Periode.Type.ROTATE;
 import static bertrand.myopengl.Entitys.Box.Periode.Type.UNDEF;
 
 public final class Stall {
@@ -39,45 +38,37 @@ public final class Stall {
                         file,
                         ":/raw/stall_png.png"
                 );
+                final Vec3 offset = Positions.offset(obj.positions);
+                final float[] positions = Positions.transformation(
+                        //positions offset is zero
+                        obj.positions,
+                        -offset.x,
+                        -offset.y,
+                        -offset.z
+                );
                 Load.texturedModel(
                         entity_ID,
                         Box.bodys,
                         Box.bodyDeleteInfos,
                         bitmap,
                         obj.indices,
-                        obj.positions,
+                        positions,
                         obj.texCoords,
                         obj.normals
                 );
-                /*
                 Constructor.location(
                         entity_ID,
                         Box.locations,
-                        -0.5f,
-                        -3f,
-                        -3f,
-                        0f,
-                        0f,
+                        0,
+                        0,
+                        0,
+                        90f,
+                        90f,
                         0f,
                         1f,
                         1f,
                         1f
                 );
-                */
-                Constructor.location(
-                        entity_ID,
-                        Box.locations,
-                        0f,
-                        0f,
-                        0f,
-                        0f,
-                        0f,
-                        0f,
-                        0.5f,
-                        0.5f,
-                        0.5f
-                );
-
                 Constructor.period(
                         entity_ID,
                         Box.periods,
@@ -92,8 +83,7 @@ public final class Stall {
                         1,1,1
                 );
                 Constructor.backGroundColor(Box.backGround,0.8f,0.8f,0.8f);
-                Camera.position(0,0,-5);
-                //Camera.rotation(20,0,0);
+                Camera.position(0,0,-8);
                 Camera.rotation(0,0,0);
         }
 }

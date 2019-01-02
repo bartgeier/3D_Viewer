@@ -52,10 +52,10 @@ public final class Triangle_1 {
                         Box.locations,
                         0f,
                         0f,
-                        -1f,
                         0f,
                         0f,
                         0f,
+                        180f,
                         1f,
                         1f,
                         1f
@@ -70,11 +70,11 @@ public final class Triangle_1 {
                 Constructor.light(
                         light_ID,
                         Box.lights,
-                        0f,-0.5f,-1f,
+                        0f,0f,-1f,
                         1,1,1
                 );
                 Constructor.backGroundColor(Box.backGround,0.8f,0.8f,0.8f);
-                Camera.position(0,0,0);
+                Camera.position(0,0,-1);
                 Camera.rotation(0,0,0);
         }
 }

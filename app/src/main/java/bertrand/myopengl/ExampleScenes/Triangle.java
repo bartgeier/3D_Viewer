@@ -6,7 +6,6 @@ import bertrand.myopengl.Camera.Camera;
 import bertrand.myopengl.Entitys.Box;
 import bertrand.myopengl.Entitys.Load;
 import bertrand.myopengl.Entitys.Constructor;
-import bertrand.myopengl.Tool.Color4f;
 import bertrand.myopengl.Tool.RFile.RFile;
 
 import static bertrand.myopengl.Entitys.Box.Periode.Type.SWING;
@@ -74,7 +73,7 @@ public final class Triangle  {
                         1,1,1
                 );
                 Constructor.backGroundColor(Box.backGround,0.8f,0.8f,0.8f);
-                Camera.position(0,0,0);
+                Camera.translation(0,0,0);
                 Camera.rotation(0,0,0);
         }
 }

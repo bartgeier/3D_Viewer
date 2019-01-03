@@ -12,6 +12,7 @@ import bertrand.myopengl.Entitys.Render;
 import bertrand.myopengl.Entitys.Update;
 import bertrand.myopengl.ExampleScenes.Cube;
 import bertrand.myopengl.ExampleScenes.ClearScreen;
+import bertrand.myopengl.ExampleScenes.Cube_1;
 import bertrand.myopengl.ExampleScenes.ExampleNames;
 import bertrand.myopengl.ExampleScenes.Stall;
 import bertrand.myopengl.ExampleScenes.Triangle;
@@ -39,6 +40,9 @@ public final class MainRenderer implements Renderer {
                         case CUBE:
                                 Cube.createScene(new RFile(context));
                                 break;
+                        case CUBE_1:
+                                Cube_1.createScene(new RFile(context));
+                                break;
                         case TRIANGLE:
                                 Triangle.createScene(new RFile(context));
                                 break;
@@ -58,7 +62,7 @@ public final class MainRenderer implements Renderer {
                         lastExampleIndex = newExampleIndex;
                 }
                 Update.locations(Box.locations, Box.periods, dt);
-                Update.bodys(Box.bodys, Camera.position(), Box.locations);
+                Update.bodys(Box.bodys, Camera.modelMatrix(), Box.locations);
                 Render.background(Box.backGround);
                 Render.entitys(Box.lights, Box.bodys, Box.shadersPrograms);
         }
@@ -81,10 +85,6 @@ public final class MainRenderer implements Renderer {
 
         public void onNewExample(final int idx) {
                 newExampleIndex = ExampleNames.Index.values()[idx];
-        }
-
-        public void onOrientationChanged(final float pitch, final float roll, final float azimut) {
-                Camera.rotation(pitch, -roll, azimut);
         }
 
         public void onDeviceOrientationChanged(final float[] rotationMatrix) {

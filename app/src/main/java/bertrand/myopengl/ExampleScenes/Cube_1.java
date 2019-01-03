@@ -4,13 +4,13 @@ import org.jetbrains.annotations.NotNull;
 
 import bertrand.myopengl.Camera.Camera;
 import bertrand.myopengl.Entitys.Box;
-import bertrand.myopengl.Entitys.Load;
 import bertrand.myopengl.Entitys.Constructor;
+import bertrand.myopengl.Entitys.Load;
 import bertrand.myopengl.Tool.RFile.RFile;
 
 import static bertrand.myopengl.Entitys.Box.Periode.Type.UNDEF;
 
-public final class Cube {
+public final class Cube_1 {
         @NotNull
         public static void createScene(@NotNull RFile file) {
                 final int entity_ID = Box.entity_ID_Generator.getID();
@@ -85,30 +85,37 @@ public final class Cube {
                                 -1, -1, -1,    // 23
                         },
                         new float[] { // colors
-                                0.5f, 0.5f, 0.5f, 1,   // 0
-                                0.5f, 0.5f, 0.5f, 1,   // 1
-                                0.5f, 0.5f, 0.5f, 1,   // 2
-                                0.5f, 0.5f, 0.5f, 1,   // 3
-                                0.5f, 0.5f, 0.5f, 1,    // 4
-                                0.5f, 0.5f, 0.5f, 1,    // 5
-                                0.5f, 0.5f, 0.5f, 1,    // 6
-                                0.5f, 0.5f, 0.5f, 1,    // 7
-                                0.5f, 0.5f, 0.5f, 1,   // 8
-                                0.5f, 0.5f, 0.5f, 1,   // 9
-                                0.5f, 0.5f, 0.5f, 1,   // 10
-                                0.5f, 0.5f, 0.5f, 1,   // 11
-                                0.5f, 0.5f, 0.5f, 1,   // 12
-                                0.5f, 0.5f, 0.5f, 1,   // 13
-                                0.5f, 0.5f, 0.5f, 1,   // 14
-                                0.5f, 0.5f, 0.5f, 1,   // 15
-                                0.5f, 0.5f, 0.5f, 1,    // 16
-                                0.5f, 0.5f, 0.5f, 1,    // 17
-                                0.5f, 0.5f, 0.5f, 1,    // 18
-                                0.5f, 0.5f, 0.5f, 1,    // 19
-                                0.5f, 0.5f, 0.5f, 1,    // 20
-                                0.5f, 0.5f, 0.5f, 1,    // 21
-                                0.5f, 0.5f, 0.5f, 1,    // 22
-                                0.5f, 0.5f, 0.5f, 1,    // 23
+                                  //Front blue
+                                  //r,   g,    b, a
+                                  0f,   0f,   1f, 1,   // 0
+                                  0f,   0f,   1f, 1,   // 1
+                                  0f,   0f,   1f, 1,   // 2
+                                  0f,   0f,   1f, 1,   // 3
+                                  //Back yellow
+                                  1f,   1f,   0f, 1,    // 4
+                                  1f,   1f,   0f, 1,    // 5
+                                  1f,   1f,   0f, 1,    // 6
+                                  1f,   1f,   0f, 1,    // 7
+                                  //Left red
+                                  1f,   0f,   0f, 1,   // 8
+                                  1f,   0f,   0f, 1,   // 9
+                                  1f,   0f,   0f, 1,   // 10
+                                  1f,   0f,   0f, 1,   // 11
+                                  //Right green
+                                  0f,   1f,   0f, 1,   // 12
+                                  0f,   1f,   0f, 1,   // 13
+                                  0f,   1f,   0f, 1,   // 14
+                                  0f,   1f,   0f, 1,   // 15
+                                  //Top cyan
+                                  1f,   0f,   1f, 1,    // 16
+                                  1f,   0f,   1f, 1,    // 17
+                                  1f,   0f,   1f, 1,    // 18
+                                  1f,   0f,   1f, 1,    // 19
+                                  //Bottom magenta
+                                  0f,   1f,   1f, 1,    // 20
+                                  0f,   1f,   1f, 1,    // 21
+                                  0f,   1f,   1f, 1,    // 22
+                                  0f,   1f,   1f, 1,    // 23
                         },
                         new float[] { // normals
                                 0, 0, 1,     // 0
@@ -165,8 +172,7 @@ public final class Cube {
                         1,1,1
                 );
                 Constructor.backGroundColor(Box.backGround,0.8f,0.8f,0.8f);
-                Camera.translation(0,-0f,-4);
-                //Camera.rotation(20,0,0);
+                Camera.translation(0,0f,-4);
                 Camera.rotation(0,0,0);
         }
 }

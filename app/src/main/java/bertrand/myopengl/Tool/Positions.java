@@ -1,5 +1,7 @@
 package bertrand.myopengl.Tool;
 
+import android.opengl.Matrix;
+
 import org.jetbrains.annotations.NotNull;
 
 public class Positions {
@@ -41,12 +43,7 @@ public class Positions {
 
         public static @NotNull final Vec3
         offset(@NotNull final float[] positions) {
-                final float[] boundingBox = boundingBox(positions);
-                if (boundingBox.length != 6) {
-                        throw new AssertionError(
-                                "Positions.offset, boundingBox.length != 6"
-                        );
-                }
+                @NotNull final float[] boundingBox = boundingBox(positions);
                 Vec3 offset = new Vec3();
                 offset.x = (boundingBox[0] + boundingBox[3])/2;
                 offset.y = (boundingBox[1] + boundingBox[4])/2;
@@ -55,23 +52,37 @@ public class Positions {
         }
 
         public static @NotNull final float[]
-        transformation(
+        multiplyMatrix(
                 @NotNull final float[] positions,
-                final float x,
-                final float y,
-                final float z
+                @NotNull float[] transformationMatrix
         ) {
                 if (positions.length % 3 != 0) {
                         throw new AssertionError(
-                                "Positions.boundingBox, positions.length % 3 "
+                                "Positions.multiplyMatrix, positions.length % 3 "
                         );
                 }
-                final float[] transformedPositions = new float[positions.length];
+                final float[] newPositions = new float[positions.length];
+                final float[] input = new float[4];
+                final float[] output = new float[4];
                 for (int i = 0; i < positions.length; i += 3) {
-                        transformedPositions[i] = positions[i] + x;
-                        transformedPositions[i + 1] = positions[i + 1] + y;
-                        transformedPositions[i + 2] = positions[i + 2] + z;
+                        input[0] = positions[i];
+                        input[1] = positions[i + 1];
+                        input[2] = positions[i + 2];
+                        input[3] = 1;
+                        Matrix.multiplyMV(
+                                output,
+                                0,
+                                transformationMatrix,
+                                0,
+                                input,
+                                0
+                        );
+                        newPositions[i] = output[0];
+                        newPositions[i + 1] = output[1];
+                        newPositions[i + 2] = output[2];
                 }
-                return transformedPositions;
+                return newPositions;
         }
+
+
 }

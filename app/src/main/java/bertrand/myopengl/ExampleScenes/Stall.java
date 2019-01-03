@@ -1,6 +1,7 @@
 package bertrand.myopengl.ExampleScenes;
 
 import android.graphics.Bitmap;
+import android.opengl.Matrix;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -38,14 +39,25 @@ public final class Stall {
                         file,
                         ":/raw/stall_png.png"
                 );
+
+                // translate vertecis around world origin
+                // rotate vertecis and normas orientation to North-South direction
                 final Vec3 offset = Positions.offset(obj.positions);
-                final float[] positions = Positions.transformation(
-                        //positions offset is zero
-                        obj.positions,
-                        -offset.x,
-                        -offset.y,
-                        -offset.z
+                final float[] translationMatrix = new float[16];
+                Matrix.setIdentityM(translationMatrix, 0);
+                Matrix.rotateM(translationMatrix,0, 90, 1, 0, 0);
+                Matrix.rotateM(translationMatrix,0, 90, 0, 1, 0);
+                Matrix.rotateM(translationMatrix,0, 0,  0, 0, 1);
+                final float[] normals = Positions.multiplyMatrix(
+                        obj.normals,
+                        translationMatrix
                 );
+                Matrix.translateM(translationMatrix,0, -offset.x, -offset.y, -offset.z);
+                final float[] positions = Positions.multiplyMatrix(
+                        obj.positions,
+                        translationMatrix
+                );
+
                 Load.texturedModel(
                         entity_ID,
                         Box.bodys,
@@ -54,16 +66,16 @@ public final class Stall {
                         obj.indices,
                         positions,
                         obj.texCoords,
-                        obj.normals
+                        normals
                 );
                 Constructor.location(
                         entity_ID,
                         Box.locations,
-                        0,
-                        0,
-                        0,
-                        90f,
-                        90f,
+                        0f,
+                        0f,
+                        0f,
+                        0f,
+                        0f,
                         0f,
                         1f,
                         1f,
@@ -83,7 +95,7 @@ public final class Stall {
                         1,1,1
                 );
                 Constructor.backGroundColor(Box.backGround,0.8f,0.8f,0.8f);
-                Camera.position(0,0,-8);
+                Camera.translation(0,0,-8);
                 Camera.rotation(0,0,0);
         }
 }

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class ExampleNames {
         public enum Index {
                 CUBE,
+                CUBE_1,
                 TRIANGLE,
                 TRIANGLE_1,
                 STALL,
@@ -27,6 +28,7 @@ public class ExampleNames {
 
         private void intNames() {
                 names.add(Index.CUBE.ordinal() , "Cube");
+                names.add(Index.CUBE_1.ordinal() , "Cube_1");
                 names.add(Index.TRIANGLE.ordinal(), "Triangle");
                 names.add(Index.TRIANGLE_1.ordinal(), "Triangle_1");
                 names.add(Index.STALL.ordinal(),"Stall");

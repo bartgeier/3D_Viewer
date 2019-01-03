@@ -1,5 +1,7 @@
 package bertrand.myopengl;
 
+import android.opengl.Matrix;
+
 import org.junit.Test;
 
 import bertrand.myopengl.Tool.Positions;
@@ -40,7 +42,7 @@ public class test_Positions {
                 assertEquals( (-0.5f + 2f)/2f,    o.y, 0.00001);
                 assertEquals((-5f + (-1f))/2f,    o.z, 0.00001);
         }
-
+/*
         @Test
         public void transformation() {
                 float[] positions = new float[]{ //positions
@@ -55,4 +57,30 @@ public class test_Positions {
                 assertEquals(0f,    newOffset.y, 0.00001);
                 assertEquals(0f,    newOffset.z, 0.00001);
         }
+*/
+
+        @Test
+        public void multiplyMatrix() {
+                float[] positions = new float[]{ //positions
+                        0.0f, -0.5f,  -5f,
+                        0.5f,    2f,  -4f,
+                        3f,  0.5f,  -1f,
+                };
+                final Vec3 o = Positions.offset(positions);
+
+                final float[] translationMatrix = new float[16];
+                Matrix.setIdentityM(translationMatrix, 0);
+                Matrix.translateM(translationMatrix,0, -o.x, -o.y, -o.z);
+                final float[] newPositions = Positions.multiplyMatrix(
+                        positions,
+                        translationMatrix
+                );
+                final Vec3 newOffset = Positions.offset(newPositions);
+
+                assertEquals(0f,    newOffset.x, 0.00001);
+                assertEquals(0f,    newOffset.y, 0.00001);
+                assertEquals(0f,    newOffset.z, 0.00001);
+        }
+
+
 }

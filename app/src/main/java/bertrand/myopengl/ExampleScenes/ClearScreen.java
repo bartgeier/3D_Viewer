@@ -15,7 +15,7 @@ public final class ClearScreen {
                 CleanUp.lights(Box.lights);
                 CleanUp.backGroundColor(Box.backGround);
                 CleanUp.shaders(Box.shadersPrograms, Box.shadersDeleteInfos);
-                Camera.position(0,0,0);
+                Camera.translation(0,0,0);
                 Camera.rotation(0,0,0);
         }
 

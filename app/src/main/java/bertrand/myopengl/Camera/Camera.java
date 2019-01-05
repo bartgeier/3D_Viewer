@@ -9,7 +9,7 @@ import bertrand.myopengl.Tool.Vec3;
 public class Camera {
         static private float fovyZoomAngle = 85f; // degrees
         static private float aspectRatio = 1f;
-        static private float near = 0.1f; // always bigger the 0
+        static private float near = 0.1f; // always bigger then 0
         static private float far = 150f;
         static private float[] projectionMatrix = new float[16];
 

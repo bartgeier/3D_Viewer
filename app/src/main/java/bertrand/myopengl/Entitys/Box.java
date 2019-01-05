@@ -124,7 +124,7 @@ public class Box {
 
         public static class BodyDeleteInfo {
                 public final int vao;
-                public int[] vbos;
+                public final int[] vbos;
                 public final int texId;
                 public BodyDeleteInfo(
                         final int vao,

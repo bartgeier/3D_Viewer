@@ -15,6 +15,8 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import javax.microedition.khronos.egl.EGLContext;
+
 import bertrand.myopengl.DeviceOrientation.DeviceOrientation;
 import bertrand.myopengl.DeviceOrientation.DeviceOrientationEvent;
 import bertrand.myopengl.DeviceOrientation.DeviceOrientationListner;

@@ -72,8 +72,8 @@ public class test_Positions {
                 Matrix.setIdentityM(translationMatrix, 0);
                 Matrix.translateM(translationMatrix,0, -o.x, -o.y, -o.z);
                 final float[] newPositions = Positions.multiplyMatrix(
-                        positions,
-                        translationMatrix
+                        translationMatrix,
+                        positions
                 );
                 final Vec3 newOffset = Positions.offset(newPositions);
 

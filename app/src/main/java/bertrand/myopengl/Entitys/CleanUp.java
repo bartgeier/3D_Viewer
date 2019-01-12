@@ -4,8 +4,6 @@ import android.util.SparseArray;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-
 import bertrand.myopengl.OpenGL.GPU;
 import bertrand.myopengl.Tool.Color4f;
 
@@ -19,35 +17,31 @@ public class CleanUp {
         }
 
         public static void shaders(
-                @NotNull final SparseArray<Box.ShaderProgam> shaderProgams,
-                @NotNull final SparseArray<Box.ShaderDeleteInfo> shaderDeleteInfos
+                @NotNull final SparseArray<Box.Shader> shaders
         ) {
-                int size = shaderDeleteInfos.size();
+                int size = shaders.size();
                 for (int i = 0; i < size; i++) {
                         GPU.cleanUp(
-                                shaderDeleteInfos.valueAt(i).programID,
-                                shaderDeleteInfos.valueAt(i).vertexShaderID,
-                                shaderDeleteInfos.valueAt(i).fragmentShaderID
+                                shaders.valueAt(i).programID,
+                                shaders.valueAt(i).vertexShaderID,
+                                shaders.valueAt(i).fragmentShaderID
                         );
                 }
-                shaderDeleteInfos.clear();
-                shaderProgams.clear();
+                shaders.clear();
         }
 
-        public static void bodys(
-                @NotNull final SparseArray<Box.Body> bodys,
-                @NotNull final ArrayList<Box.BodyDeleteInfo> bodyDeleteInfos
+        public static void meshes(
+                @NotNull final SparseArray<Box.Mesh> meshes
         ) {
-                int size = bodyDeleteInfos.size();
-                for (Box.BodyDeleteInfo info : bodyDeleteInfos) {
-                        if (info.texId != 0) {
-                                GPU.deleteTextureID(info.texId);
+                int size = meshes.size();
+                for (int i = 0; i < size; i++) {
+                        if (meshes.valueAt(i).texId != 0) {
+                                GPU.deleteTextureID(meshes.valueAt(i).texId);
                         }
-                        GPU.deleteVBOs(info.vbos);
-                        GPU.deleteVertexArrayObject(info.vao);
+                        GPU.deleteVBOs(meshes.valueAt(i).vbos);
+                        GPU.deleteVertexArrayObject(meshes.valueAt(i).vao);
                 }
-                bodyDeleteInfos.clear();
-                bodys.clear();
+                meshes.clear();
         }
 
         public static void locations(@NotNull final SparseArray<Box.Location> locations) {

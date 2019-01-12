@@ -53,8 +53,8 @@ public class Positions {
 
         public static @NotNull final float[]
         multiplyMatrix(
-                @NotNull final float[] positions,
-                @NotNull float[] transformationMatrix
+                @NotNull float[] transformationMatrix,
+                @NotNull final float[] positions
         ) {
                 if (positions.length % 3 != 0) {
                         throw new AssertionError(

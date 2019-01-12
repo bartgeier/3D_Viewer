@@ -1,18 +1,16 @@
 package bertrand.myopengl.Entitys;
 
+import android.opengl.Matrix;
 import android.util.SparseArray;
 
 import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
 
 import bertrand.myopengl.Tool.Color4f;
 import bertrand.myopengl.Tool.IDGenerator;
 import bertrand.myopengl.Tool.Vec3;
 
 public class Box {
-        public static IDGenerator entity_ID_Generator = new IDGenerator();
-        public static IDGenerator light_ID_Generator = new IDGenerator();
+
 
         public static class BackGround {
                 public Color4f color = null;
@@ -21,33 +19,32 @@ public class Box {
 
 
         public static class Light {
-                public final int light_ID;
                 public Vec3 position;
                 public Color4f color;
                 public Vec3 attenuation = new Vec3(1, 0, 0);
 
                 public Light(
-                        final int light_ID,
                         float x, float y, float z,
                         float red, float green, float blue
                 ) {
-                        this.light_ID = light_ID;
                         position = new Vec3(x, y, z);
                         color = new Color4f(red, green, blue);
                 }
 
                 public Light(final int light_ID, Vec3 position, float red, float green, float blue){
-                        this.light_ID = light_ID;
                         color = new Color4f(red, green, blue);
                         this.position = position;
                 }
         }
         public static SparseArray<Light> lights = new SparseArray<>();
+        public static IDGenerator light_ID_Generator = new IDGenerator();
 
 
-        public static class ShaderProgam {
+        public static class Shader {
                 public final int shader_type_ID;
                 public final int programID;
+                public final int vertexShaderID;
+                public final int fragmentShaderID;
                 public final int u_ModelViewMatrix;
                 public final int u_ProjectionMatrix;
                 public final int u_Light_AmbientIntens;
@@ -57,10 +54,11 @@ public class Box {
                 public final int u_MatSpecularIntensity;
                 public final int u_Shininess;
                 public final int u_Texture;
-
-                public ShaderProgam(
+                public Shader(
                         int shader_type_ID,
                         int programID,
+                        int vertexShaderID,
+                        int fragmentShaderID,
                         int u_ModelViewMatrix,
                         int u_ProjectionMatrix,
                         int u_Light_AmbientIntens,
@@ -73,6 +71,8 @@ public class Box {
                 ) {
                         this.shader_type_ID = shader_type_ID;
                         this.programID = programID;
+                        this.vertexShaderID = vertexShaderID;
+                        this.fragmentShaderID = fragmentShaderID;
                         this.u_ModelViewMatrix = u_ModelViewMatrix;
                         this.u_ProjectionMatrix = u_ProjectionMatrix;
                         this.u_Light_AmbientIntens = u_Light_AmbientIntens;
@@ -84,96 +84,79 @@ public class Box {
                         this.u_Texture = u_Texture;
                 }
         }
-        public static SparseArray<ShaderProgam> shadersPrograms = new SparseArray<>();
+        public static SparseArray<Shader> shaders = new SparseArray<>();
+        public static IDGenerator shader_ID_Generator = new IDGenerator();
 
 
-        public static class ShaderDeleteInfo {
-                public final int programID;
-                public final int vertexShaderID;
-                public final int fragmentShaderID;
-
-                public ShaderDeleteInfo(
-                        final int programID,
-                        final int vertexShaderID,
-                        final int fragmentShaderID
-
-                ) {
-                        this.programID = programID;
-                        this.vertexShaderID = vertexShaderID;
-                        this.fragmentShaderID = fragmentShaderID;
-                }
-        }
-        public static SparseArray<ShaderDeleteInfo> shadersDeleteInfos = new SparseArray<>();
-
-
-        static class Body{
-                public int entity_ID;
-                public int shader_type_ID;
-                public int vao;
-                public int indicesCount;
-                float[] modelViewMatrix = new float[16];
-                public Body(int entity_ID, int shader_type_ID, int vao, int indicesCount) {
-                        this.entity_ID =  entity_ID;
-                        this.shader_type_ID = shader_type_ID;
-                        this.vao = vao;
-                        this.indicesCount = indicesCount;
-                }
-        }
-        public static SparseArray<Body> bodys = new SparseArray<>();
-
-
-        public static class BodyDeleteInfo {
+        public static class Mesh{
                 public final int vao;
                 public final int[] vbos;
                 public final int texId;
-                public BodyDeleteInfo(
+                public final int indicesCount;
+                public Mesh(
                         final int vao,
                         @NotNull final int[] vbos,
-                        final int texId
+                        final int texId,
+                        final int indicesCount
                 ) {
                         this.vao = vao;
                         this.vbos = vbos;
                         this.texId = texId;
+                        this.indicesCount = indicesCount;
                 }
         }
-        public static ArrayList<BodyDeleteInfo> bodyDeleteInfos = new ArrayList<>();
+        public static SparseArray<Mesh> meshes = new SparseArray<>();
+        public static IDGenerator mesh_ID_Generator = new IDGenerator();
 
 
         static class Location {
-                public int entity_ID;
-                public Vec3 position;
-                public Vec3 rotation; // degrees
-                public Vec3 scale;
-                
-                public Location(int entity_ID, Vec3 position, Vec3 rotation, Vec3 scale) {
-                        this.entity_ID = entity_ID;
+                public final Vec3 position;
+                public final Vec3 rotation; // degrees
+                public final Vec3 scale;
+                public final float[] transformationMatrix = new float[16];
+                public final int shader_ID;
+                public final int vao;
+                public final int indicesCount;
+                public Location(
+                        final Vec3 position, final Vec3 rotation, final Vec3 scale,
+                        final int shaderProgram_ID, final int vao, final int indicesCount
+                ) {
                         this.position = position;
                         this.rotation = rotation;
                         this.scale = scale;
 
-                }
-                public Location(int entity_ID) {
-                        this.entity_ID = entity_ID;
-                        position = new Vec3(0,0,0);
-                        rotation = new Vec3(0,0,0);
-                        scale = new Vec3(1,1,1);
+                        this.shader_ID = shaderProgram_ID;
+                        this.vao = vao;
+                        this.indicesCount = indicesCount;
+
+                        Matrix.setIdentityM(transformationMatrix, 0);
+                        Matrix.translateM(transformationMatrix,0,position.x, position.y, position.z);
+                        Matrix.rotateM(transformationMatrix,0, rotation.x, 1, 0, 0);
+                        Matrix.rotateM(transformationMatrix,0, rotation.y, 0, 1, 0);
+                        Matrix.rotateM(transformationMatrix,0, rotation.z,  0, 0, 1);
+                        Matrix.scaleM(transformationMatrix,0, scale.x, scale.y, scale.z);
                 }
         }
         public static SparseArray<Location> locations = new SparseArray<>();
+        public static IDGenerator location_ID_Generator = new IDGenerator();
 
 
         public static class Periode {
                 public enum Type {
-                        UNDEF,
                         ROTATE,
                         SWING
                 }
-                public int entity_ID;
-                public Type type;
-                public double period_ms;
+                public final int location_ID;
+                public final Type type;
+                public final double period_ms;
                 public double angle;
-                public Periode(int entity_ID, Type type, double period_ms, double start_angle) {
-                        this.entity_ID = entity_ID;
+                public Periode(
+                        final int location_ID,
+                        final Type type,
+                        final double period_ms,
+                        final double start_angle
+                ) {
+                        this.location_ID = location_ID;
                         this.type = type;
                         this.period_ms = period_ms;
                         this.angle = start_angle;
@@ -181,4 +164,5 @@ public class Box {
 
         }
         public static SparseArray<Periode> periods = new SparseArray<>();
+        public static IDGenerator periode_ID_Generator = new IDGenerator();
 }

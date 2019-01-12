@@ -56,21 +56,20 @@ public final class MainRenderer implements Renderer {
                                 break;
                         }
                         Update.gpu_shader_projectionMatrix(
-                                Box.shadersPrograms,
+                                Box.shaders,
                                 Camera.projectionMatrix()
                         );
                         lastExampleIndex = newExampleIndex;
                 }
-                Update.locations(Box.locations, Box.periods, dt);
-                Update.bodys(Box.bodys, Camera.modelMatrix(), Box.locations);
+                Update.periods(Box.locations, Box.periods, dt);
                 Render.background(Box.backGround);
-                Render.entitys(Box.lights, Box.bodys, Box.shadersPrograms);
+                Render.entitys(Camera.modelMatrix(), Box.lights, Box.locations, Box.shaders);
         }
 
         @Override
         public void onSurfaceChanged(GL10 gl, int width, int height) {
                 Camera.aspectRatio((float) width / height);
-                Update.gpu_shader_projectionMatrix(Box.shadersPrograms, Camera.projectionMatrix());
+                Update.gpu_shader_projectionMatrix(Box.shaders, Camera.projectionMatrix());
         }
 
         @Override

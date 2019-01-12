@@ -7,9 +7,9 @@
       <x>480</x>
       <y>370</y>
       <w>130</w>
-      <h>100</h>
+      <h>80</h>
     </coordinates>
-    <panel_attributes>Update.locations</panel_attributes>
+    <panel_attributes>Update.periods</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -29,12 +29,12 @@ m2=dt</panel_attributes>
     <coordinates>
       <x>600</x>
       <y>400</y>
-      <w>140</w>
+      <w>360</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 Box.location</panel_attributes>
-    <additional_attributes>120.0;20.0;10.0;20.0</additional_attributes>
+    <additional_attributes>340.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
@@ -49,35 +49,12 @@ m2=Box.periods</panel_attributes>
     <additional_attributes>220.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>830</x>
-      <y>400</y>
-      <w>130</w>
-      <h>40</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-
-Box.bodys</panel_attributes>
-    <additional_attributes>110.0;20.0;10.0;20.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>720</x>
-      <y>250</y>
-      <w>120</w>
-      <h>220</h>
-    </coordinates>
-    <panel_attributes>Update.bodys</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
     <id>UMLClass</id>
     <coordinates>
       <x>940</x>
-      <y>370</y>
+      <y>280</y>
       <w>120</w>
-      <h>200</h>
+      <h>290</h>
     </coordinates>
     <panel_attributes>Render.entitys</panel_attributes>
     <additional_attributes/>
@@ -125,14 +102,14 @@ m2=Box.lights
     <id>Relation</id>
     <coordinates>
       <x>260</x>
-      <y>270</y>
-      <w>480</w>
+      <y>300</y>
+      <w>700</w>
       <h>50</h>
     </coordinates>
     <panel_attributes>lt=&lt;-()
 m2=Camera.modelMatrix()
 </panel_attributes>
-    <additional_attributes>460.0;20.0;10.0;20.0</additional_attributes>
+    <additional_attributes>680.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>

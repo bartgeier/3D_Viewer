@@ -10,7 +10,7 @@ public class Camera {
         static private float fovyZoomAngle = 85f; // degrees
         static private float aspectRatio = 1f;
         static private float near = 0.1f; // always bigger then 0
-        static private float far = 150f;
+        static private float far = 300f;
         static private float[] projectionMatrix = new float[16];
 
         static private Vec3 pos = new Vec3(0,0,0);

@@ -143,7 +143,9 @@ public class Box {
 
         public static class Periode {
                 public enum Type {
-                        ROTATE,
+                        ROTATE_X,
+                        ROTATE_Y,
+                        ROTATE_Z,
                         SWING
                 }
                 public final int location_ID;

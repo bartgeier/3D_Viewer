@@ -17,9 +17,17 @@ public class Update {
                         Box.Periode periode = periods.valueAt(i);
                         Box.Location l = locations.get(periode.location_ID);
                         switch(periode.type) {
-                                case ROTATE:
+                                case ROTATE_X:
+                                        periode.angle += dt_ms * 360/periode.period_ms;
+                                        l.rotation.x = (float)periode.angle;
+                                        break;
+                                case ROTATE_Y:
                                         periode.angle += dt_ms * 360/periode.period_ms;
                                         l.rotation.y = (float)periode.angle;
+                                        break;
+                                case ROTATE_Z:
+                                        periode.angle += dt_ms * 360/periode.period_ms;
+                                        l.rotation.z = (float)periode.angle;
                                         break;
                                 case SWING:
                                         periode.angle += dt_ms * 360/periode.period_ms;

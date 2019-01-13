@@ -2,15 +2,19 @@ package bertrand.myopengl.ExampleScenes;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Random;
+
 import bertrand.myopengl.Camera.Camera;
 import bertrand.myopengl.Entitys.Box;
 import bertrand.myopengl.Entitys.Load;
 import bertrand.myopengl.Entitys.add;
 import bertrand.myopengl.Tool.RFile.RFile;
 
+import static bertrand.myopengl.Entitys.Box.Periode.Type.ROTATE_X;
 import static bertrand.myopengl.Entitys.Box.Periode.Type.ROTATE_Y;
+import static bertrand.myopengl.Entitys.Box.Periode.Type.ROTATE_Z;
 
-public final class Cube {
+public final class Cube_swarm {
         public static void createScene(@NotNull RFile file) {
                 int shaderProgram_ID = Load.coloredShader(
                         Box.shaders,
@@ -80,30 +84,37 @@ public final class Cube {
                                 -1, -1, -1,    // 23
                         },
                         new float[] { // colors
-                                0.5f, 0.5f, 0.5f, 1,   // 0
-                                0.5f, 0.5f, 0.5f, 1,   // 1
-                                0.5f, 0.5f, 0.5f, 1,   // 2
-                                0.5f, 0.5f, 0.5f, 1,   // 3
-                                0.5f, 0.5f, 0.5f, 1,    // 4
-                                0.5f, 0.5f, 0.5f, 1,    // 5
-                                0.5f, 0.5f, 0.5f, 1,    // 6
-                                0.5f, 0.5f, 0.5f, 1,    // 7
-                                0.5f, 0.5f, 0.5f, 1,   // 8
-                                0.5f, 0.5f, 0.5f, 1,   // 9
-                                0.5f, 0.5f, 0.5f, 1,   // 10
-                                0.5f, 0.5f, 0.5f, 1,   // 11
-                                0.5f, 0.5f, 0.5f, 1,   // 12
-                                0.5f, 0.5f, 0.5f, 1,   // 13
-                                0.5f, 0.5f, 0.5f, 1,   // 14
-                                0.5f, 0.5f, 0.5f, 1,   // 15
-                                0.5f, 0.5f, 0.5f, 1,    // 16
-                                0.5f, 0.5f, 0.5f, 1,    // 17
-                                0.5f, 0.5f, 0.5f, 1,    // 18
-                                0.5f, 0.5f, 0.5f, 1,    // 19
-                                0.5f, 0.5f, 0.5f, 1,    // 20
-                                0.5f, 0.5f, 0.5f, 1,    // 21
-                                0.5f, 0.5f, 0.5f, 1,    // 22
-                                0.5f, 0.5f, 0.5f, 1,    // 23
+                                  //Front blue
+                                  //r,   g,    b, a
+                                  0f,   0f,   1f, 1,   // 0
+                                  0f,   0f,   1f, 1,   // 1
+                                  0f,   0f,   1f, 1,   // 2
+                                  0f,   0f,   1f, 1,   // 3
+                                  //Back yellow
+                                  1f,   1f,   0f, 1,    // 4
+                                  1f,   1f,   0f, 1,    // 5
+                                  1f,   1f,   0f, 1,    // 6
+                                  1f,   1f,   0f, 1,    // 7
+                                  //Left red
+                                  1f,   0f,   0f, 1,   // 8
+                                  1f,   0f,   0f, 1,   // 9
+                                  1f,   0f,   0f, 1,   // 10
+                                  1f,   0f,   0f, 1,   // 11
+                                  //Right green
+                                  0f,   1f,   0f, 1,   // 12
+                                  0f,   1f,   0f, 1,   // 13
+                                  0f,   1f,   0f, 1,   // 14
+                                  0f,   1f,   0f, 1,   // 15
+                                  //Top cyan
+                                  1f,   0f,   1f, 1,    // 16
+                                  1f,   0f,   1f, 1,    // 17
+                                  1f,   0f,   1f, 1,    // 18
+                                  1f,   0f,   1f, 1,    // 19
+                                  //Bottom magenta
+                                  0f,   1f,   1f, 1,    // 20
+                                  0f,   1f,   1f, 1,    // 21
+                                  0f,   1f,   1f, 1,    // 22
+                                  0f,   1f,   1f, 1,    // 23
                         },
                         new float[] { // normals
                                 0, 0, 1,     // 0
@@ -132,32 +143,62 @@ public final class Cube {
                                 0, -1, 0,    // 23
                         }
                 );
-                final int location_ID = Box.location_ID_Generator.getID();
-                add.location(
-                        location_ID,
-                        Box.locations,
-                        shaderProgram_ID,
-                        Box.meshes.get(mesh_ID).vao,
-                        Box.meshes.get(mesh_ID).indicesCount,
-                        0f,
-                        0f,
-                        0f,
-                        0f,
-                        0f,
-                        0f,
-                        1f,
-                        1f,
-                        1f
-                );
-                final int period_ID = Box.periode_ID_Generator.getID();
-                add.period(
-                        period_ID,
-                        location_ID,
-                        Box.periods,
-                        ROTATE_Y,
-                        8000,
-                        0
-                );
+                Random random = new Random();
+                for (int i = 0; i < 200; i++) {
+                        float x = random.nextFloat() * 100 - 50;
+                        float y = random.nextFloat() * 100 - 50;
+                        float z = random.nextFloat() * 100 - 50;
+                        final int location_ID = Box.location_ID_Generator.getID();
+                        add.location(
+                                location_ID,
+                                Box.locations,
+                                shaderProgram_ID,
+                                Box.meshes.get(mesh_ID).vao,
+                                Box.meshes.get(mesh_ID).indicesCount,
+                                x,
+                                y,
+                                z,
+                                0f,
+                                0f,
+                                0f,
+                                1f,
+                                1f,
+                                1f
+                        );
+
+                        float startAngel = random.nextFloat() * 360;
+                        startAngel %= 360;
+                        float period_ms  = random.nextFloat() * 8000;
+                        if(i%2 == 0) {
+                                period_ms = -period_ms;
+                        }
+                        Box.Periode.Type periodeType;
+                        switch(i%3) {
+                        case 0:
+                                periodeType = ROTATE_X;
+                                break;
+                        case 1:
+                                periodeType = ROTATE_Y;
+                                break;
+                        case 2:
+                                periodeType = ROTATE_Z;
+                                break;
+                        default:
+                                periodeType = ROTATE_X;
+                                break;
+                        }
+                        final int period_ID = Box.periode_ID_Generator.getID();
+                        add.period(
+                                period_ID,
+                                location_ID,
+                                Box.periods,
+                                periodeType,
+                                period_ms,
+                                startAngel
+                        );
+
+                }
+
                 final int light_ID = Box.light_ID_Generator.getID();
                 add.light(
                         light_ID,
@@ -166,8 +207,7 @@ public final class Cube {
                         1,1,1
                 );
                 add.backGroundColor(Box.backGround,0.8f,0.8f,0.8f);
-                Camera.translation(0,-0f,-4);
-                //Camera.rotation(20,0,0);
+                Camera.translation(0,0f,-4);
                 Camera.rotation(0,0,0);
         }
 }

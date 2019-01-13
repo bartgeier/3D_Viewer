@@ -13,6 +13,7 @@ import bertrand.myopengl.Entitys.Update;
 import bertrand.myopengl.ExampleScenes.Cube;
 import bertrand.myopengl.ExampleScenes.ClearScreen;
 import bertrand.myopengl.ExampleScenes.Cube_1;
+import bertrand.myopengl.ExampleScenes.Cube_swarm;
 import bertrand.myopengl.ExampleScenes.ExampleNames;
 import bertrand.myopengl.ExampleScenes.Stall;
 import bertrand.myopengl.ExampleScenes.Triangle;
@@ -42,6 +43,9 @@ public final class MainRenderer implements Renderer {
                                 break;
                         case CUBE_1:
                                 Cube_1.createScene(new RFile(context));
+                                break;
+                        case CUBE_SWARM:
+                                Cube_swarm.createScene(new RFile(context));
                                 break;
                         case TRIANGLE:
                                 Triangle.createScene(new RFile(context));

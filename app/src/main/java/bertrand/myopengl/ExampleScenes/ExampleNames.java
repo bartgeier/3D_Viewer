@@ -6,6 +6,7 @@ public class ExampleNames {
         public enum Index {
                 CUBE,
                 CUBE_1,
+                CUBE_SWARM,
                 TRIANGLE,
                 TRIANGLE_1,
                 STALL,
@@ -29,6 +30,7 @@ public class ExampleNames {
         private void intNames() {
                 names.add(Index.CUBE.ordinal() , "Cube");
                 names.add(Index.CUBE_1.ordinal() , "Cube_1");
+                names.add(Index.CUBE_SWARM.ordinal() , "Cube swarm");
                 names.add(Index.TRIANGLE.ordinal(), "Triangle");
                 names.add(Index.TRIANGLE_1.ordinal(), "Triangle_1");
                 names.add(Index.STALL.ordinal(),"Stall");

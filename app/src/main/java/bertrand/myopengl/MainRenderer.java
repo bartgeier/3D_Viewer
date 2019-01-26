@@ -20,21 +20,26 @@ import bertrand.myopengl.ExampleScenes.Triangle;
 import bertrand.myopengl.ExampleScenes.Triangle_1;
 import bertrand.myopengl.Tool.RFile.RFile;
 import bertrand.myopengl.Tool.Time.DeltaTime;
+import bertrand.myopengl.Tool.Time.StopWatch;
 
 
 public final class MainRenderer implements Renderer {
         private Context context;
+        private FrameMessageHandler frameMessageHandler;
         private ExampleNames.Index lastExampleIndex = ExampleNames.Index.CLEAR_SCREEN;
         private ExampleNames.Index newExampleIndex = ExampleNames.Index.CLEAR_SCREEN;
         private DeltaTime deltaTime = new DeltaTime();
+        private StopWatch stopWatch = new StopWatch();
 
-        MainRenderer (Context c) {
+        MainRenderer (Context c, FrameMessageHandler h) {
                 context = c;
+                frameMessageHandler = h;
         }
 
         @Override
         public void onDrawFrame(GL10 gl) {
                 final float dt = deltaTime.dt();
+
                 if(lastExampleIndex != newExampleIndex) {
                         ClearScreen.createScene();
                         switch(newExampleIndex) {
@@ -66,6 +71,11 @@ public final class MainRenderer implements Renderer {
                         lastExampleIndex = newExampleIndex;
                 }
                 Update.periods(Box.locations, Box.periods, dt);
+
+                /* cube swarm 200 cubes 59-60 frams per sec. */
+                frameMessageHandler.sendMessage_FrameRateUpdate(stopWatch.avarage_ns(10));
+                stopWatch.start_ns();
+
                 Render.background(Box.backGround);
                 Render.entitys(Camera.modelMatrix(), Box.lights, Box.locations, Box.shaders);
         }

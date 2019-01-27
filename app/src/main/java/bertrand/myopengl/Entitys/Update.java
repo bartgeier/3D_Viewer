@@ -1,7 +1,7 @@
 package bertrand.myopengl.Entitys;
 
 import android.opengl.Matrix;
-import android.util.SparseArray;
+import bertrand.myopengl.Tool.SparseArray.SparseArray;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -14,8 +14,8 @@ public class Update {
                 final float dt_ms
         ) {
                 for (int i = 0; i < periods.size(); i++) {
-                        Box.Periode periode = periods.valueAt(i);
-                        Box.Location l = locations.get(periode.location_ID);
+                        Box.Periode periode = periods.at(i);
+                        Box.Location l = locations.atId(periode.location_ID);
                         switch(periode.type) {
                                 case ROTATE_X:
                                         periode.angle += dt_ms * 360/periode.period_ms;
@@ -54,7 +54,7 @@ public class Update {
         ) {
                 int size = shaders.size();
                 for (int i = 0; i < size; i++) {
-                        Box.Shader shader = shaders.valueAt(i);
+                        Box.Shader shader = shaders.at(i);
                         GPU.useProgram(shader.programID);
                         GPU.loadMatrix(shader.u_ProjectionMatrix, projectionMatrix);
                 }

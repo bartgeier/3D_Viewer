@@ -17,9 +17,7 @@ public final class Triangle  {
                         file.string(":/raw/shader_colored_vert.txt"),
                         file.string(":/raw/shader_colored_frag.txt")
                 );
-                final int mesh_ID = Box.mesh_ID_Generator.getID();
-                Load.coloredModel(
-                        mesh_ID,
+                final int mesh_ID = Load.coloredModel(
                         Box.meshes,
                         new int[] { //indices
                                 0,1,2
@@ -40,13 +38,11 @@ public final class Triangle  {
                                 0, 0, 1,
                         }
                 );
-                final int location_ID = Box.location_ID_Generator.getID();
-                add.location(
-                        location_ID,
+                final int location_ID = add.location(
                         Box.locations,
                         shaderProgram_ID,
-                        Box.meshes.get(mesh_ID).vao,
-                        Box.meshes.get(mesh_ID).indicesCount,
+                        Box.meshes.atId(mesh_ID).vao,
+                        Box.meshes.atId(mesh_ID).indicesCount,
                         0f,
                         0f,
                         -5f,
@@ -57,18 +53,14 @@ public final class Triangle  {
                         1f,
                         1f
                 );
-                final int period_ID = Box.periode_ID_Generator.getID();
                 add.period(
-                        period_ID,
                         location_ID,
                         Box.periods,
                         SWING,
                         8000,
                         0
                 );
-                final int light_ID = Box.light_ID_Generator.getID();
                 add.light(
-                        light_ID,
                         Box.lights,
                         0f,-0.5f,-1f,
                         1,1,1

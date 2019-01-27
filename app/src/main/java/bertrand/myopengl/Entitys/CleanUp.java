@@ -1,6 +1,6 @@
 package bertrand.myopengl.Entitys;
 
-import android.util.SparseArray;
+import bertrand.myopengl.Tool.SparseArray.SparseArray;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -19,12 +19,11 @@ public class CleanUp {
         public static void shaders(
                 @NotNull final SparseArray<Box.Shader> shaders
         ) {
-                int size = shaders.size();
-                for (int i = 0; i < size; i++) {
+                for (int i = 0; i < shaders.size(); i++) {
                         GPU.cleanUp(
-                                shaders.valueAt(i).programID,
-                                shaders.valueAt(i).vertexShaderID,
-                                shaders.valueAt(i).fragmentShaderID
+                                shaders.at(i).programID,
+                                shaders.at(i).vertexShaderID,
+                                shaders.at(i).fragmentShaderID
                         );
                 }
                 shaders.clear();
@@ -33,13 +32,12 @@ public class CleanUp {
         public static void meshes(
                 @NotNull final SparseArray<Box.Mesh> meshes
         ) {
-                int size = meshes.size();
-                for (int i = 0; i < size; i++) {
-                        if (meshes.valueAt(i).texId != 0) {
-                                GPU.deleteTextureID(meshes.valueAt(i).texId);
+                for (int i = 0; i < meshes.size(); i++) {
+                        if (meshes.at(i).texId != 0) {
+                                GPU.deleteTextureID(meshes.at(i).texId);
                         }
-                        GPU.deleteVBOs(meshes.valueAt(i).vbos);
-                        GPU.deleteVertexArrayObject(meshes.valueAt(i).vao);
+                        GPU.deleteVBOs(meshes.at(i).vbos);
+                        GPU.deleteVertexArrayObject(meshes.at(i).vao);
                 }
                 meshes.clear();
         }

@@ -22,9 +22,7 @@ public final class Cube_swarm {
                         file.string(":/raw/shader_colored_frag.txt")
                 );
 
-                final int mesh_ID = Box.mesh_ID_Generator.getID();
-                Load.coloredModel(
-                        mesh_ID,
+                final int mesh_ID = Load.coloredModel(
                         Box.meshes,
                         new int[] { // indices
                                 // Front
@@ -148,13 +146,11 @@ public final class Cube_swarm {
                         float x = random.nextFloat() * 100 - 50;
                         float y = random.nextFloat() * 100 - 50;
                         float z = random.nextFloat() * 100 - 50;
-                        final int location_ID = Box.location_ID_Generator.getID();
-                        add.location(
-                                location_ID,
+                        final int location_ID = add.location(
                                 Box.locations,
                                 shaderProgram_ID,
-                                Box.meshes.get(mesh_ID).vao,
-                                Box.meshes.get(mesh_ID).indicesCount,
+                                Box.meshes.atId(mesh_ID).vao,
+                                Box.meshes.atId(mesh_ID).indicesCount,
                                 x,
                                 y,
                                 z,
@@ -187,9 +183,7 @@ public final class Cube_swarm {
                                 periodeType = ROTATE_X;
                                 break;
                         }
-                        final int period_ID = Box.periode_ID_Generator.getID();
                         add.period(
-                                period_ID,
                                 location_ID,
                                 Box.periods,
                                 periodeType,
@@ -198,10 +192,7 @@ public final class Cube_swarm {
                         );
 
                 }
-
-                final int light_ID = Box.light_ID_Generator.getID();
                 add.light(
-                        light_ID,
                         Box.lights,
                         0f,0.8f,-1f,
                         1,1,1

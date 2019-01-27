@@ -36,10 +36,11 @@ public class SparseArray<T> {
                 writeIdx = 0;
         }
 
-        /* return -1 no ID's -> array full */
         public int add(T data) {
                 if (nextFreeId >= 0) {
-                        return -1;
+                        /* no ID's -> array full */
+                        throw new AssertionError(
+                                "SparseArray.add, nextFreeId >= 0");
                 }
                 final int id = nextFreeId & 0x7FFFFFFF;
                 if (indices[id] == nextFreeId) {

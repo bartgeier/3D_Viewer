@@ -49,9 +49,7 @@ public final class Stall {
                         obj.positions
                 );
 
-                final int mesh_ID = Box.mesh_ID_Generator.getID();
-                Load.texturedModel(
-                        mesh_ID,
+                final int mesh_ID = Load.texturedModel(
                         Box.meshes,
                         bitmap,
                         obj.indices,
@@ -59,14 +57,11 @@ public final class Stall {
                         obj.texCoords,
                         normals
                 );
-
-                final int location_ID = Box.location_ID_Generator.getID();
                 add.location(
-                        location_ID,
                         Box.locations,
                         shaderProgram_ID,
-                        Box.meshes.get(mesh_ID).vao,
-                        Box.meshes.get(mesh_ID).indicesCount,
+                        Box.meshes.atId(mesh_ID).vao,
+                        Box.meshes.atId(mesh_ID).indicesCount,
                         0f,
                         0f,
                         0f,
@@ -77,9 +72,7 @@ public final class Stall {
                         1f,
                         1f
                 );
-                final int light_ID = Box.light_ID_Generator.getID();
                 add.light(
-                        light_ID,
                         Box.lights,
                         0f,-0.5f,-1f,
                         1,1,1

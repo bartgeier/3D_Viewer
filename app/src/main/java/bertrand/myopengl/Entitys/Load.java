@@ -1,7 +1,7 @@
 package bertrand.myopengl.Entitys;
 
 import android.graphics.Bitmap;
-import android.util.SparseArray;
+import bertrand.myopengl.Tool.SparseArray.SparseArray;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -11,8 +11,7 @@ import bertrand.myopengl.ShaderTypes.ShaderType;
 import bertrand.myopengl.Tool.Arr;
 
 public class Load {
-        public static void coloredModel(
-                final int mesh_ID,
+        public static int coloredModel(
                 @NotNull final SparseArray<Box.Mesh> meshes,
                 @NotNull final int[] indices,
                 @NotNull final float[] positions,
@@ -33,12 +32,10 @@ public class Load {
                         0,
                         indices.length
                 );
-                meshes.append(mesh_ID, mesh);
-
+                return meshes.add(mesh); //return SparseArray-ID
         }
 
-        public static void texturedModel(
-                final int mesh_ID,
+        public static int texturedModel(
                 @NotNull final SparseArray<Box.Mesh> meshes,
                 @NotNull final Bitmap bitmap,
                 @NotNull final int[] indices,
@@ -61,7 +58,7 @@ public class Load {
                         texId,
                         indices.length
                 );
-                meshes.append(mesh_ID, mesh);
+                return meshes.add(mesh); //return SparseArray-ID
         }
 
 
@@ -105,8 +102,7 @@ public class Load {
                         u_Shininess,
                         0
                 );
-                shaders.append(sProg.shader_type_ID, sProg);
-                return sProg.shader_type_ID;
+                return shaders.add(sProg); //return SparseArray-ID //sProg.shader_type_ID;
         }
 
         public static int texturedShader(
@@ -150,7 +146,6 @@ public class Load {
                         u_Shininess,
                         u_Texture
                 );
-                shaders.append(sProg.shader_type_ID, sProg);
-                return sProg.shader_type_ID;
+                return shaders.add(sProg); //return SparseArray-ID //sProg.shader_type_ID;
         }
 }

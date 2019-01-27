@@ -1,6 +1,6 @@
 package bertrand.myopengl.Entitys;
 
-import android.util.SparseArray;
+import bertrand.myopengl.Tool.SparseArray.SparseArray;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -16,18 +16,16 @@ public class add {
                 backGround.color = new Color4f(red, green, blue);
         }
 
-        public static void light(
-                int light_ID,
+        public static int light(
                 @NotNull final SparseArray<Box.Light> lights,
                 float x, float y, float z,
                 float red, float green, float blue
         ) {
                 Box.Light l = new Box.Light(x, y, z, red, green, blue);
-                lights.append(light_ID, l);
+                return lights.add(l);
         }
 
-        public static void location(
-                int location_ID,
+        public static int location(
                 @NotNull final SparseArray<Box.Location> locations,
                 int shaderProgram_ID,
                 int vao,
@@ -50,11 +48,10 @@ public class add {
                         vao,
                         indicesCount
                 );
-                locations.append(location_ID, l);
+                return locations.add(l);
         }
 
-        public static void period(
-                int period_ID,
+        public static int period(
                 int location_ID,
                 @NotNull final SparseArray<Box.Periode> periods,
                 @NotNull final Box.Periode.Type type,
@@ -62,6 +59,6 @@ public class add {
                 double start_angle
         ) {
                 Box.Periode p = new Box.Periode(location_ID, type, period_ms, start_angle);
-                periods.append(period_ID, p);
+                return periods.add(p);
         }
 }

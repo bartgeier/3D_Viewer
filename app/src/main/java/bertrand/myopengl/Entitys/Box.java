@@ -1,17 +1,14 @@
 package bertrand.myopengl.Entitys;
 
 import android.opengl.Matrix;
-import android.util.SparseArray;
 
 import org.jetbrains.annotations.NotNull;
 
 import bertrand.myopengl.Tool.Color4f;
-import bertrand.myopengl.Tool.IDGenerator;
 import bertrand.myopengl.Tool.Vec3;
+import bertrand.myopengl.Tool.SparseArray.SparseArray;
 
 public class Box {
-
-
         public static class BackGround {
                 public Color4f color = null;
         }
@@ -36,8 +33,7 @@ public class Box {
                         this.position = position;
                 }
         }
-        public static SparseArray<Light> lights = new SparseArray<>();
-        public static IDGenerator light_ID_Generator = new IDGenerator();
+        public static SparseArray<Light> lights = new SparseArray<>(null,50);
 
 
         public static class Shader {
@@ -84,8 +80,7 @@ public class Box {
                         this.u_Texture = u_Texture;
                 }
         }
-        public static SparseArray<Shader> shaders = new SparseArray<>();
-        public static IDGenerator shader_ID_Generator = new IDGenerator();
+        public static SparseArray<Shader> shaders = new SparseArray<>(null,50);
 
 
         public static class Mesh{
@@ -105,8 +100,7 @@ public class Box {
                         this.indicesCount = indicesCount;
                 }
         }
-        public static SparseArray<Mesh> meshes = new SparseArray<>();
-        public static IDGenerator mesh_ID_Generator = new IDGenerator();
+        public static SparseArray<Mesh> meshes = new SparseArray<>(null,50);
 
 
         static class Location {
@@ -137,8 +131,7 @@ public class Box {
                         Matrix.scaleM(transformationMatrix,0, scale.x, scale.y, scale.z);
                 }
         }
-        public static SparseArray<Location> locations = new SparseArray<>();
-        public static IDGenerator location_ID_Generator = new IDGenerator();
+        public static SparseArray<Location> locations = new SparseArray<>(null,1000);
 
 
         public static class Periode {
@@ -165,6 +158,5 @@ public class Box {
                 }
 
         }
-        public static SparseArray<Periode> periods = new SparseArray<>();
-        public static IDGenerator periode_ID_Generator = new IDGenerator();
+        public static SparseArray<Periode> periods = new SparseArray<>(null,1000);
 }

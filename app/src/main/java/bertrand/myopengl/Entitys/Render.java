@@ -1,7 +1,7 @@
 package bertrand.myopengl.Entitys;
 
 import android.opengl.Matrix;
-import android.util.SparseArray;
+import bertrand.myopengl.Tool.SparseArray.SparseArray;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -24,7 +24,7 @@ public class Render {
                 int lastShader_id = -1;
                 final float[] modelViewMatrix = new float[16];
                 for (int i = 0; i < locations.size(); i++) {
-                        final Box.Location location = locations.valueAt(i);
+                        final Box.Location location = locations.at(i);
 
                         Matrix.multiplyMM(
                                 modelViewMatrix,
@@ -37,7 +37,7 @@ public class Render {
 
                         if (location.shader_ID != lastShader_id) {
                                 lastShader_id = location.shader_ID;
-                                shader = shaders.get(location.shader_ID);
+                                shader = shaders.atId(location.shader_ID);
                                 GPU.useProgram(shader.programID);
                                 GPU.loadFloat(shader.u_Light_AmbientIntens, 0.2f);
                                 GPU.loadFloat(shader.u_Light_DiffuseIntens, 0.7f);
@@ -52,13 +52,13 @@ public class Render {
                                         default:
                                                 break;
                                 }
-                                Vec3 lightDirection = lights.valueAt(0).position.normalize();
+                                Vec3 lightDirection = lights.at(0).position.normalize();
                                 GPU.loadVec3(shader.u_Light_Direction, lightDirection);
                                 GPU.load3Float(
                                         shader.u_Light_Color,
-                                        lights.valueAt(0).color.r,
-                                        lights.valueAt(0).color.g,
-                                        lights.valueAt(0).color.b
+                                        lights.at(0).color.r,
+                                        lights.at(0).color.g,
+                                        lights.at(0).color.b
                                 );
                         }
                         GPU.loadMatrix(shader.u_ModelViewMatrix, modelViewMatrix);

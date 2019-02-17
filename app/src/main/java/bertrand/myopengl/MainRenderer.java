@@ -16,6 +16,7 @@ import bertrand.myopengl.ExampleScenes.Cube_1;
 import bertrand.myopengl.ExampleScenes.Cube_swarm;
 import bertrand.myopengl.ExampleScenes.ExampleNames;
 import bertrand.myopengl.ExampleScenes.Stall;
+import bertrand.myopengl.ExampleScenes.Rocket;
 import bertrand.myopengl.ExampleScenes.Triangle;
 import bertrand.myopengl.ExampleScenes.Triangle_1;
 import bertrand.myopengl.Tool.RFile.RFile;
@@ -60,6 +61,9 @@ public final class MainRenderer implements Renderer {
                                 break;
                         case STALL:
                                 Stall.createScene(new RFile(context));
+                                break;
+                        case ROCKET:
+                                Rocket.createScene(new RFile(context));
                                 break;
                         default:
                                 break;

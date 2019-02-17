@@ -10,7 +10,7 @@ public class ExampleNames {
                 TRIANGLE,
                 TRIANGLE_1,
                 STALL,
-                TEST_1,
+                ROCKET,
                 TEST_2,
                 TEST_3,
                 TEST_4,
@@ -34,7 +34,7 @@ public class ExampleNames {
                 names.add(Index.TRIANGLE.ordinal(), "Triangle");
                 names.add(Index.TRIANGLE_1.ordinal(), "Triangle_1");
                 names.add(Index.STALL.ordinal(),"Stall");
-                names.add(Index.TEST_1.ordinal(),"Test_1");
+                names.add(Index.ROCKET.ordinal(),"Rocket");
                 names.add(Index.TEST_2.ordinal(),"Test_2");
                 names.add(Index.TEST_3.ordinal(),"Test_3");
                 names.add(Index.TEST_4.ordinal(),"Test_4");

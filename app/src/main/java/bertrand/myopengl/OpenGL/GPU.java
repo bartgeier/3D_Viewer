@@ -67,6 +67,7 @@ public class GPU {
         public static int loadTexture(final Bitmap bitmap) {
                 final int texID = GPU.generateTextureID();
                 GLES.glBindTexture(GLES.GL_TEXTURE_2D, texID);
+
                 GLES.glTexParameteri( // Set filtering
                         GLES.GL_TEXTURE_2D,
                         GLES.GL_TEXTURE_MIN_FILTER,
@@ -77,6 +78,7 @@ public class GPU {
                         GLES.GL_TEXTURE_MAG_FILTER,
                         GLES.GL_NEAREST
                 );
+
                 GLUtils.texImage2D(GLES.GL_TEXTURE_2D, 0, bitmap, 0);
 
                 GLES.glActiveTexture(GLES.GL_TEXTURE0);
@@ -85,8 +87,12 @@ public class GPU {
                 return texID;
         }
 
-        public static void loadFloat(int uniformID, float f) {
+        public static void loadFloat(final int uniformID, final float f) {
                 GLES.glUniform1f(uniformID,f);
+        }
+
+        public static void loadInt(final int uniformID, final int i) {
+                GLES.glUniform1i(uniformID, i);
         }
 
         public static void load3Float(int uniformID, float f0, float f1, float f2) {
@@ -122,12 +128,11 @@ public class GPU {
         }
 
         public static void renderBackground(Color4f color) {
-                //GLES.glClearColor(0.8f,0.8f,0.8f,1.0f);
                 GLES.glClearColor(color.r, color.g, color.b,color.a);
                 GLES.glClear(GLES.GL_COLOR_BUFFER_BIT |GLES.GL_DEPTH_BUFFER_BIT);
                 GLES.glEnable(GLES.GL_DEPTH_TEST);
-                GLES.glEnable(GLES.GL_CULL_FACE);
-                GLES.glCullFace(GLES.GL_BACK);
+                //GLES.glEnable(GLES.GL_CULL_FACE);
+               // GLES.glCullFace(GLES.GL_BACK);
         }
 
         private static int generateVBO() {

@@ -23,7 +23,7 @@ public class VertexModel {
     }
     ArrayList<Vertex> vertices = new ArrayList<Vertex>();
 //    public void test_nextID() {
-//        vertices.add(new Vertex(1,2,3,1,0,0,1));
+//        vertices.add(new VertexInfo(1,2,3,1,0,0,1));
 //    }
 
 }

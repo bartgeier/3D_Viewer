@@ -47,7 +47,8 @@ public class Render {
                                         case ShaderType.Colored.shader_type_ID:
                                                 break;
                                         case ShaderType.Textured.shader_type_ID:
-                                                GPU.loadFloat(shader.u_Texture, 0);
+                                                //GPU.loadFloat(shader.u_Texture, 0);
+                                                GPU.loadInt(shader.u_Texture, 0);
                                                 break;
                                         default:
                                                 break;

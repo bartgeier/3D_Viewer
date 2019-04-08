@@ -1,9 +1,13 @@
 package bertrand.myopengl.ExampleScenes;
 
+import android.content.res.AssetManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.opengl.Matrix;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.io.IOException;
 
 import bertrand.myopengl.Camera.Camera;
 import bertrand.myopengl.Entitys.Box;
@@ -12,25 +16,24 @@ import bertrand.myopengl.Entitys.add;
 import bertrand.myopengl.Tool.OBJ_FILE.ModelData;
 import bertrand.myopengl.Tool.OBJ_FILE.OBJParser;
 import bertrand.myopengl.Tool.Positions;
-import bertrand.myopengl.Tool.RFile.RFile_IF;
-import bertrand.myopengl.Tool.Texture_File;
+import bertrand.myopengl.Tool.Str;
 import bertrand.myopengl.Tool.Vec3;
 
 public final class Stall {
-        public static void createScene(@NotNull RFile_IF file) {
+        public static void createScene(@NotNull AssetManager asset) {
+        try {
                 int shaderProgram_ID = Load.texturedShader(
                         Box.shaders,
-                        file.string(":/raw/shader_textured_vert.txt"),
-                        file.string(":/raw/shader_textured_frag.txt")
+                        Str.inputStreamToString(asset.open( "Shader/shader_textured_vert.txt")),
+                        Str.inputStreamToString(asset.open( "Shader/shader_textured_frag.txt"))
                 );
 
                 ModelData obj = OBJParser.transform(
-                        file,
-                        ":/raw/stall_obj.obj"
+                        asset.open("Stall/stall.obj")
                 );
-                Bitmap bitmap = Texture_File.readBitmap(
-                        file,
-                        ":/raw/stall_png.png"
+
+                Bitmap bitmap = BitmapFactory.decodeStream(
+                        asset.open("Stall/stall.png")
                 );
 
                 final Vec3 offset = Positions.offset(obj.getVertices());
@@ -80,6 +83,10 @@ public final class Stall {
                 add.backGroundColor(Box.backGround,0.8f,0.8f,0.8f);
                 Camera.translation(0,0,-8);
                 Camera.rotation(0,0,0);
+
+        } catch (IOException e) {
+                e.printStackTrace();
+        }
         }
 }
 

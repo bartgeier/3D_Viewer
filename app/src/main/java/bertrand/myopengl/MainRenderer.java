@@ -19,7 +19,6 @@ import bertrand.myopengl.ExampleScenes.Stall;
 import bertrand.myopengl.ExampleScenes.Rocket;
 import bertrand.myopengl.ExampleScenes.Triangle;
 import bertrand.myopengl.ExampleScenes.Triangle_1;
-import bertrand.myopengl.Tool.RFile.RFile;
 import bertrand.myopengl.Tool.Time.DeltaTime;
 import bertrand.myopengl.Tool.Time.StopWatch;
 
@@ -45,26 +44,27 @@ public final class MainRenderer implements Renderer {
                         ClearScreen.createScene();
                         switch(newExampleIndex) {
                         case CUBE:
-                                Cube.createScene(new RFile(context));
+                                Cube.createScene(context.getAssets());
                                 break;
                         case CUBE_1:
-                                Cube_1.createScene(new RFile(context));
+                                Cube_1.createScene(context.getAssets());
                                 break;
                         case CUBE_SWARM:
-                                Cube_swarm.createScene(new RFile(context));
+                                Cube_swarm.createScene(context.getAssets());
                                 break;
                         case TRIANGLE:
-                                Triangle.createScene(new RFile(context));
+                                Triangle.createScene(context.getAssets());
                                 break;
                         case TRIANGLE_1:
-                                Triangle_1.createScene(new RFile(context));
+                                Triangle_1.createScene(context.getAssets());
                                 break;
                         case STALL:
-                                Stall.createScene(new RFile(context));
+                                Stall.createScene(context.getAssets());
                                 break;
                         case ROCKET:
-                                Rocket.createScene(new RFile(context));
+                                Rocket.createScene(context.getAssets());
                                 break;
+
                         default:
                                 break;
                         }
@@ -73,10 +73,10 @@ public final class MainRenderer implements Renderer {
                                 Camera.projectionMatrix()
                         );
                         lastExampleIndex = newExampleIndex;
+
                 }
                 Update.periods(Box.locations, Box.periods, dt);
 
-                /* cube swarm 200 cubes 59-60 frams per sec. */
                 frameMessageHandler.sendMessage_FrameRateUpdate(stopWatch.avarage_ns(10));
                 stopWatch.start_ns();
 

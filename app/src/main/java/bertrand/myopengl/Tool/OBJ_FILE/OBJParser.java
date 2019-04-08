@@ -9,13 +9,12 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import bertrand.myopengl.Tool.RFile.RFile_IF;
 import bertrand.myopengl.Tool.Vec2;
 import bertrand.myopengl.Tool.Vec3;
 
 public class OBJParser {
-	public static ModelData transform(@NotNull RFile_IF file, final String objFilePath) {
-		InputStream is = file.inputStream(objFilePath);
+	public static ModelData transform(@NotNull InputStream is) {
+		//InputStream is = file.inputStream(objFilePath);
 		InputStreamReader s = new InputStreamReader(is);
 		BufferedReader reader = new BufferedReader(s);
 

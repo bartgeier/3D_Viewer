@@ -1,21 +1,26 @@
 package bertrand.myopengl.ExampleScenes;
 
+import android.content.res.AssetManager;
+
 import org.jetbrains.annotations.NotNull;
+
+import java.io.IOException;
 
 import bertrand.myopengl.Camera.Camera;
 import bertrand.myopengl.Entitys.Box;
 import bertrand.myopengl.Entitys.Load;
 import bertrand.myopengl.Entitys.add;
-import bertrand.myopengl.Tool.RFile.RFile;
+import bertrand.myopengl.Tool.Str;
 
 import static bertrand.myopengl.Entitys.Box.Periode.Type.ROTATE_Y;
 
 public final class Cube {
-        public static void createScene(@NotNull RFile file) {
+        public static void createScene(@NotNull AssetManager asset) {
+        try {
                 int shaderProgram_ID = Load.coloredShader(
                         Box.shaders,
-                        file.string(":/raw/shader_colored_vert.txt"),
-                        file.string(":/raw/shader_colored_frag.txt")
+                        Str.inputStreamToString(asset.open( "Shader/shader_colored_vert.txt")),
+                        Str.inputStreamToString(asset.open( "Shader/shader_colored_frag.txt"))
                 );
                 final int mesh_ID = Load.coloredModel(
                         Box.meshes,
@@ -160,5 +165,8 @@ public final class Cube {
                 Camera.translation(0,-0f,-4);
                 //Camera.rotation(20,0,0);
                 Camera.rotation(0,0,0);
+        } catch (IOException e) {
+                e.printStackTrace();
+        }
         }
 }

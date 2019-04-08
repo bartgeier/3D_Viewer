@@ -1,9 +1,13 @@
 package bertrand.myopengl.ExampleScenes;
 
+import android.content.res.AssetManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.opengl.Matrix;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.io.IOException;
 
 import bertrand.myopengl.Camera.Camera;
 import bertrand.myopengl.Entitys.Box;
@@ -12,25 +16,24 @@ import bertrand.myopengl.Entitys.add;
 import bertrand.myopengl.Tool.OBJ_FILE.ModelData;
 import bertrand.myopengl.Tool.OBJ_FILE.OBJParser;
 import bertrand.myopengl.Tool.Positions;
-import bertrand.myopengl.Tool.RFile.RFile_IF;
-import bertrand.myopengl.Tool.Texture_File;
+import bertrand.myopengl.Tool.Str;
 import bertrand.myopengl.Tool.Vec3;
 
 public final class Rocket {
-        public static void createScene(@NotNull RFile_IF file) {
+        public static void createScene(@NotNull AssetManager asset) {
+        try {
                 int shaderProgram_ID = Load.texturedShader(
                         Box.shaders,
-                        file.string(":/raw/test_textured_vert.txt"),
-                        file.string(":/raw/test_textured_frag.txt")
+                        Str.inputStreamToString(asset.open( "Shader/shader_textured_vert.txt")),
+                        Str.inputStreamToString(asset.open( "Shader/shader_textured_frag.txt"))
                 );
 
                 ModelData obj = OBJParser.transform(
-                        file,
-                        ":/raw/rocket_obj.obj"
+                        asset.open("Rocket/rocket_obj.obj")
                 );
-                Bitmap bitmap = Texture_File.readBitmap(
-                        file,
-                        ":/raw/rocket_png.png"
+
+                Bitmap bitmap = BitmapFactory.decodeStream(
+                        asset.open("Rocket/rocket_png.png")
                 );
 
                 final Vec3 offset = Positions.offset(obj.getNormals());
@@ -49,7 +52,6 @@ public final class Rocket {
                         obj.getVertices()
                 );
 
-
                 final int mesh_ID = Load.texturedModel(
                         Box.meshes,
                         bitmap,
@@ -58,6 +60,7 @@ public final class Rocket {
                         obj.getTextureCoords(),
                         normals
                 );
+
                 add.location(
                         Box.locations,
                         shaderProgram_ID,
@@ -81,6 +84,9 @@ public final class Rocket {
                 add.backGroundColor(Box.backGround,0.8f,0.8f,0.8f);
                 Camera.translation(0,0,-5);
                 Camera.rotation(0,0,0);
+        } catch (IOException e) {
+                e.printStackTrace();
+        }
         }
 }
 

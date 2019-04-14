@@ -20,24 +20,38 @@ public class Render {
                 @NotNull final SparseArray<Box.Location> locations,
                 @NotNull final SparseArray<Box.Shader> shaders
         ) {
+                if (locations.size() == 0) {
+                        return;
+                }
                 Box.Shader shader = null;
                 int lastShader_id = -1;
-                final float[] modelViewMatrix = new float[16];
-                for (int i = 0; i < locations.size(); i++) {
-                        final Box.Location location = locations.at(i);
+
+                final Box.Location root = locations.at(0);
+                Matrix.setIdentityM(root.transformationMatrix, 0);
+                Matrix.multiplyMM(
+                        root.modelViewMatrix,
+                        0,
+                        parentModelViewMatrix,
+                        0,
+                        root.transformationMatrix,
+                        0
+                );
+
+                for (int i = 1; i < locations.size(); i++) {
+                        final Box.Location l = locations.at(i);
 
                         Matrix.multiplyMM(
-                                modelViewMatrix,
+                                l.modelViewMatrix,
                                 0,
-                                parentModelViewMatrix,
+                                locations.at(l.parentIdx).modelViewMatrix,
                                 0,
-                                location.transformationMatrix,
+                                l.transformationMatrix,
                                 0
                         );
 
-                        if (location.shader_ID != lastShader_id) {
-                                lastShader_id = location.shader_ID;
-                                shader = shaders.atId(location.shader_ID);
+                        if (l.shader_ID != lastShader_id) {
+                                lastShader_id = l.shader_ID;
+                                shader = shaders.atId(l.shader_ID);
                                 GPU.useProgram(shader.programID);
                                 GPU.loadFloat(shader.u_Light_AmbientIntens, 0.2f);
                                 GPU.loadFloat(shader.u_Light_DiffuseIntens, 0.7f);
@@ -62,8 +76,8 @@ public class Render {
                                         lights.at(0).color.b
                                 );
                         }
-                        GPU.loadMatrix(shader.u_ModelViewMatrix, modelViewMatrix);
-                        GPU.render(location.vao, location.indicesCount);
+                        GPU.loadMatrix(shader.u_ModelViewMatrix, l.modelViewMatrix);
+                        GPU.render(l.vao, l.indicesCount);
                 }
         }
 }

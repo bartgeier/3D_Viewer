@@ -27,6 +27,7 @@ public class add {
 
         public static int location(
                 @NotNull final SparseArray<Box.Location> locations,
+                int parentIdx,
                 int shaderProgram_ID,
                 int vao,
                 int indicesCount,
@@ -41,6 +42,7 @@ public class add {
                 final float scale_z
         ) {
                 Box.Location l = new Box.Location(
+                        parentIdx,
                         new Vec3(pos_x, pos_y, pos_z),
                         new Vec3(rot_x, rot_y, rot_z),
                         new Vec3(scale_x, scale_y, scale_z),

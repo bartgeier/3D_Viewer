@@ -15,6 +15,24 @@ import bertrand.myopengl.Tool.Str;
 public final class Cube_1 {
         public static void createScene(@NotNull AssetManager asset) {
         try {
+                Camera.translation(0,0f,-4);
+                Camera.rotation(0,0,0);
+                final int root_location_ID = add.location(
+                        Box.locations,
+                        0,
+                        0, //dummy
+                        0, //dummy
+                        0, //dummy
+                        0f,
+                        0f,
+                        0f,
+                        0f,
+                        0f,
+                        0f,
+                        1f,
+                        1f,
+                        1f
+                );
                 int shaderProgram_ID = Load.coloredShader(
                         Box.shaders,
                         Str.inputStreamToString(asset.open( "Shader/shader_colored_vert.txt")),
@@ -141,6 +159,7 @@ public final class Cube_1 {
                 );
                 add.location(
                         Box.locations,
+                        0,
                         shaderProgram_ID,
                         Box.meshes.atId(mesh_ID).vao,
                         Box.meshes.atId(mesh_ID).indicesCount,
@@ -160,8 +179,6 @@ public final class Cube_1 {
                         1,1,1
                 );
                 add.backGroundColor(Box.backGround,0.8f,0.8f,0.8f);
-                Camera.translation(0,0f,-4);
-                Camera.rotation(0,0,0);
         } catch (IOException e) {
                 e.printStackTrace();
         }

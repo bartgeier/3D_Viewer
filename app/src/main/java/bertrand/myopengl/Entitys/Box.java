@@ -104,17 +104,22 @@ public class Box {
 
 
         static class Location {
+                public int parentIdx;
                 public final Vec3 position;
                 public final Vec3 rotation; // degrees
                 public final Vec3 scale;
                 public final float[] transformationMatrix = new float[16];
+                public final float[] modelViewMatrix = new float[16];
                 public final int shader_ID;
                 public final int vao;
                 public final int indicesCount;
                 public Location(
+                        int parentIdx,
                         final Vec3 position, final Vec3 rotation, final Vec3 scale,
                         final int shaderProgram_ID, final int vao, final int indicesCount
                 ) {
+                        this.parentIdx = parentIdx;
+
                         this.position = position;
                         this.rotation = rotation;
                         this.scale = scale;

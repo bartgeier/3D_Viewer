@@ -19,10 +19,10 @@ public class OBJParser {
 		BufferedReader reader = new BufferedReader(s);
 
 		String line;
-		List<VertexInfo> vs = new ArrayList<VertexInfo>();
-		List<Vec2> vts = new ArrayList<Vec2>();
-		List<Vec3> vns = new ArrayList<Vec3>();
-		List<Integer> indices = new ArrayList<Integer>();
+		List<VertexInfo> vs = new ArrayList<>();
+		List<Vec2> vts = new ArrayList<>();
+		List<Vec3> vns = new ArrayList<>();
+		List<Integer> indices = new ArrayList<>();
 		try {
 			while (true) {
 				line = reader.readLine();

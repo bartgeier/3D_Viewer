@@ -6,18 +6,17 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.List;
 
-import bertrand.myopengl.Tool.Hierarchy.HierarchyData;
-import bertrand.myopengl.Tool.Hierarchy.HierarchyParser;
-import bertrand.myopengl.Tool.Vec3;
+import bertrand.myopengl.Tool.Scene.HierarchyData;
+import bertrand.myopengl.Tool.Scene.SceneParser;
 
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 
-public class test_HierarchyParser {
+public class test_SceneParser {
         @Test
         public void names() {
                 String s =
-                "M;Models\n" +
+                "M;model names\n" +
                 "m;cube_planet;deciduous;conifer;waterTower;factory_smoke;haus;lake;factory\n" +
                 "\n" +
                 "H;idx;model idx;model;parent idx;parent;X;Y;Z;rotation X;rotation Y;rotation Z;scale X;scale Y;scale Z\n" +
@@ -32,7 +31,7 @@ public class test_HierarchyParser {
                 "h;8;5;haus;0;cube_planet;0.0;8.7894287109375;12.200411796569824;0.0;0.0;0.0;1.5486903190612793;1.5486903190612793;1.5486903190612793\n" +
                 "h;9;7;factory;0;cube_planet;0.0;-7.1825714111328125;12.201512336730957;0.0;0.0;0.0;3.084872007369995;1.4366670846939087;1.4366670846939087";
                 InputStream is = new ByteArrayInputStream(s.getBytes());
-                String[] names = HierarchyParser.names(is);
+                String[] names = SceneParser.names(is);
                 int idx = 0;
                 assertNotNull(names);
                 assertEquals(8, names.length);
@@ -49,7 +48,7 @@ public class test_HierarchyParser {
         @Test
         public void scene() {
                 String s =
-                "M;Models\n" +
+                "M;model names\n" +
                 "m;cube_planet;deciduous;conifer;waterTower;factory_smoke;haus;lake;factory\n" +
                 "\n" +
                 "H;idx;model idx;model;parent idx;parent;X;Y;Z;rotation X;rotation Y;rotation Z;scale X;scale Y;scale Z\n" +
@@ -64,14 +63,14 @@ public class test_HierarchyParser {
                 "h;8;5;haus;0;cube_planet;0.0;8.7894287109375;12.200411796569824;0.0;0.0;0.0;1.5486903190612793;1.5486903190612793;1.5486903190612793\n" +
                 "h;9;7;factory;0;cube_planet;0.0;-7.1825714111328125;12.201512336730957;0.0;0.0;0.0;3.084872007369995;1.4366670846939087;1.4366670846939087\n";
                 InputStream is = new ByteArrayInputStream(s.getBytes());
-                List<HierarchyData> scene = HierarchyParser.scene(is);
+                List<HierarchyData> hierarchy = SceneParser.hierarchy(is);
                 int idx = 0;
-                assertNotNull(scene);
-                assertEquals(10, scene.size());
-                assertEquals(0, scene.get(0).idx);
-                assertEquals(9, scene.get(9).idx);
-                assertEquals(0.0, scene.get(9).rotX, 0.001);
-                assertEquals(1.4366, scene.get(9).scaleZ, 0.0001);
+                assertNotNull(hierarchy);
+                assertEquals(10, hierarchy.size());
+                assertEquals(0, hierarchy.get(0).idx);
+                assertEquals(9, hierarchy.get(9).idx);
+                assertEquals(0.0, hierarchy.get(9).rotX, 0.001);
+                assertEquals(1.4366, hierarchy.get(9).scaleZ, 0.0001);
         }
 
 }

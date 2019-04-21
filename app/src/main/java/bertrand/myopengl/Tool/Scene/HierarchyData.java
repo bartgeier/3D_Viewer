@@ -1,4 +1,4 @@
-package bertrand.myopengl.Tool.Hierarchy;
+package bertrand.myopengl.Tool.Scene;
 
 public class HierarchyData {
         public int idx = 0;

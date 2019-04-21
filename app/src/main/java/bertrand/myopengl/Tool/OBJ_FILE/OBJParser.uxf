@@ -744,4 +744,17 @@ String[] fx</panel_attributes>
 </panel_attributes>
     <additional_attributes>10.0;10.0;10.0;30.0</additional_attributes>
   </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>765</x>
+      <y>45</y>
+      <w>144</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>/* arrange_f_indexes */
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
 </diagram>

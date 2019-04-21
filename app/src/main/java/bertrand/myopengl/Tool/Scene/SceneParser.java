@@ -1,4 +1,4 @@
-package bertrand.myopengl.Tool.Hierarchy;
+package bertrand.myopengl.Tool.Scene;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class HierarchyParser {
+public class SceneParser {
         public static String[] names(@NotNull InputStream is) {
                 InputStreamReader s = new InputStreamReader(is);
                 BufferedReader reader = new BufferedReader(s);
@@ -25,17 +25,17 @@ public class HierarchyParser {
                                 line = reader.readLine();
                         }
                 } catch (IOException e) {
-                        System.err.println("HierarchyParser.names Error reading the file");
+                        System.err.println("SceneParser.names Error reading the file");
                 }
                 return null;
         }
 
-        public static List<HierarchyData> scene(@NotNull InputStream is) {
+        public static List<HierarchyData> hierarchy(@NotNull InputStream is) {
                 InputStreamReader s = new InputStreamReader(is);
                 BufferedReader reader = new BufferedReader(s);
                 String line;
 
-                List<HierarchyData> datas = new ArrayList<HierarchyData>();
+                List<HierarchyData> datas = new ArrayList<>();
                 try {
                         line = reader.readLine();
                         while (line != null) {
@@ -62,7 +62,7 @@ public class HierarchyParser {
                                 line = reader.readLine();
                         }
                 } catch (IOException e) {
-                        System.err.println("HierarchyParser.scene Error reading the file");
+                        System.err.println("SceneParser.hierarchy Error reading the file");
                 }
                 return datas;
         }

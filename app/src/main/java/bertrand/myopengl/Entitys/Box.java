@@ -103,7 +103,7 @@ public class Box {
         public static SparseArray<Mesh> meshes = new SparseArray<>(null,50);
 
 
-        static class Location {
+        public static class Location {
                 public int parentIdx;
                 public final Vec3 position;
                 public final Vec3 rotation; // degrees
@@ -112,11 +112,12 @@ public class Box {
                 public final float[] modelViewMatrix = new float[16];
                 public final int shader_ID;
                 public final int vao;
+                public final int texId;
                 public final int indicesCount;
                 public Location(
                         int parentIdx,
                         final Vec3 position, final Vec3 rotation, final Vec3 scale,
-                        final int shaderProgram_ID, final int vao, final int indicesCount
+                        final int shaderProgram_ID, final int texId,final int vao, final int indicesCount
                 ) {
                         this.parentIdx = parentIdx;
 
@@ -126,6 +127,7 @@ public class Box {
 
                         this.shader_ID = shaderProgram_ID;
                         this.vao = vao;
+                        this.texId = texId;
                         this.indicesCount = indicesCount;
 
                         Matrix.setIdentityM(transformationMatrix, 0);

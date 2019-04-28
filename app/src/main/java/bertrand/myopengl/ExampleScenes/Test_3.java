@@ -19,10 +19,10 @@ import bertrand.myopengl.Tool.Positions;
 import bertrand.myopengl.Tool.Str;
 import bertrand.myopengl.Tool.Vec3;
 
-public final class Rocket {
+public final class Test_3 {
         public static void createScene(@NotNull AssetManager asset) {
         try {
-                Camera.translation(0,0,-5);
+                Camera.translation(0,0,-20);
                 Camera.rotation(0,0,0);
                 final int root_location_ID = add.location(
                         Box.locations,
@@ -48,14 +48,14 @@ public final class Rocket {
                 );
 
                 ModelData obj = OBJParser.transform(
-                        asset.open("Rocket/rocket_obj.obj")
+                        asset.open("LowPoly_Islands/waterTower.obj")
                 );
 
                 Bitmap bitmap = BitmapFactory.decodeStream(
-                        asset.open("Rocket/rocket_png.png")
+                        asset.open("LowPoly_Islands/waterTower.png")
                 );
 
-                final Vec3 offset = Positions.offset(obj.getNormals());
+                final Vec3 offset = Positions.offset(obj.getVertices());
                 final float[] translationMatrix = new float[16];
                 Matrix.setIdentityM(translationMatrix, 0);
                 Matrix.rotateM(translationMatrix,0, 90, 1, 0, 0);
@@ -71,7 +71,7 @@ public final class Rocket {
                         obj.getVertices()
                 );
 
-                final int mesh_ID = Load.texturedModel(
+                int mesh_ID = Load.texturedModel(
                         Box.meshes,
                         bitmap,
                         obj.getIndices(),
@@ -97,6 +97,39 @@ public final class Rocket {
                         1f,
                         1f
                 );
+
+                obj = OBJParser.transform(
+                        asset.open("LowPoly_Islands/factory.obj")
+                );
+                bitmap = BitmapFactory.decodeStream(
+                        asset.open("LowPoly_Islands/factory.png")
+                );
+                mesh_ID = Load.texturedModel(
+                        Box.meshes,
+                        bitmap,
+                        obj.getIndices(),
+                        obj.getVertices(),
+                        obj.getTextureCoords(),
+                        obj.getNormals()
+                );
+                add.location(
+                        Box.locations,
+                        0,
+                        shaderProgram_ID,
+                        Box.meshes.atId(mesh_ID).vao,
+                        Box.meshes.atId(mesh_ID).texId,
+                        Box.meshes.atId(mesh_ID).indicesCount,
+                        5f,
+                        5f,
+                        0f,
+                        0f,
+                        0f,
+                        0f,
+                        1f,
+                        1f,
+                        1f
+                );
+
                 add.light(
                         Box.lights,
                         0f,-0.5f,-1f,

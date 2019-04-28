@@ -29,6 +29,7 @@ public final class Stall {
                         0,
                         0, //dummy
                         0, //dummy
+                        0, // dummy
                         0, //dummy
                         0f,
                         0f,
@@ -83,6 +84,7 @@ public final class Stall {
                         0,
                         shaderProgram_ID,
                         Box.meshes.atId(mesh_ID).vao,
+                        Box.meshes.atId(mesh_ID).texId,
                         Box.meshes.atId(mesh_ID).indicesCount,
                         0f,
                         0f,

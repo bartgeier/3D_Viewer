@@ -15,8 +15,10 @@ import bertrand.myopengl.ExampleScenes.ClearScreen;
 import bertrand.myopengl.ExampleScenes.Cube_1;
 import bertrand.myopengl.ExampleScenes.Cube_swarm;
 import bertrand.myopengl.ExampleScenes.ExampleNames;
+import bertrand.myopengl.ExampleScenes.LowPoly_Islands;
 import bertrand.myopengl.ExampleScenes.Stall;
 import bertrand.myopengl.ExampleScenes.Rocket;
+import bertrand.myopengl.ExampleScenes.Test_3;
 import bertrand.myopengl.ExampleScenes.Triangle;
 import bertrand.myopengl.ExampleScenes.Triangle_1;
 import bertrand.myopengl.Tool.Time.DeltaTime;
@@ -64,6 +66,12 @@ public final class MainRenderer implements Renderer {
                         case ROCKET:
                                 Rocket.createScene(context.getAssets());
                                 break;
+                        case LOW_POLY_ISLANDS:
+                                LowPoly_Islands.createScene(context.getAssets());
+                                break;
+                        case TEST_3:
+                                Test_3.createScene(context.getAssets());
+                                        break;
 
                         default:
                                 break;

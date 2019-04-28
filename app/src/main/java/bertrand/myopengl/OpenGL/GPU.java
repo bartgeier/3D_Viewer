@@ -116,6 +116,23 @@ public class GPU {
                 );
         }
 
+        public static void selectTexture(final int texID) {
+                GLES.glBindTexture(GLES.GL_TEXTURE_2D, texID);
+        /*
+                GLES.glTexParameteri( // Set filtering
+                        GLES.GL_TEXTURE_2D,
+                        GLES.GL_TEXTURE_MIN_FILTER,
+                        GLES.GL_NEAREST
+                );
+                GLES.glTexParameteri( // Set filtering
+                        GLES.GL_TEXTURE_2D,
+                        GLES.GL_TEXTURE_MAG_FILTER,
+                        GLES.GL_NEAREST
+                );
+                */
+                GLES.glActiveTexture(GLES.GL_TEXTURE0);
+        }
+
         public static void render(int gpuVaoName, int numOfIndecis) {
                 GLES.glBindVertexArray(gpuVaoName);
                 GLES.glDrawElements(
@@ -126,6 +143,24 @@ public class GPU {
                 );
                 GLES.glBindVertexArray(0);
         }
+        /*
+        public static void render(int gpuVaoName, int numOfIndecis) {
+                GLES.glBindVertexArray(gpuVaoName);
+                GLES.glEnableVertexAttribArray(0);
+                GLES.glEnableVertexAttribArray(1);
+                GLES.glEnableVertexAttribArray(2);
+                GLES.glDrawElements(
+                        GLES.GL_TRIANGLES,
+                        numOfIndecis,
+                        GLES.GL_UNSIGNED_INT,
+                        0
+                );
+                GLES.glDisableVertexAttribArray(0);
+                GLES.glDisableVertexAttribArray(1);
+                GLES.glDisableVertexAttribArray(2);
+                GLES.glBindVertexArray(0);
+        }
+        */
 
         public static void renderBackground(Color4f color) {
                 GLES.glClearColor(color.r, color.g, color.b,color.a);

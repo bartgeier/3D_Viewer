@@ -30,12 +30,13 @@ public class SceneParser {
                 return null;
         }
 
-        public static List<HierarchyData> hierarchy(@NotNull InputStream is) {
+        public static Hierarchy hierarchy(@NotNull InputStream is) {
                 InputStreamReader s = new InputStreamReader(is);
                 BufferedReader reader = new BufferedReader(s);
                 String line;
 
-                List<HierarchyData> datas = new ArrayList<>();
+                //List<HierarchyData> datas = new ArrayList<>();
+                Hierarchy hierarchy = new Hierarchy();
                 try {
                         line = reader.readLine();
                         while (line != null) {
@@ -57,13 +58,13 @@ public class SceneParser {
                                         h.scaleX = Float.valueOf(l[i++]);
                                         h.scaleY = Float.valueOf(l[i++]);
                                         h.scaleZ = Float.valueOf(l[i]);
-                                        datas.add(h);
+                                        hierarchy.datas.add(h);
                                 }
                                 line = reader.readLine();
                         }
                 } catch (IOException e) {
                         System.err.println("SceneParser.hierarchy Error reading the file");
                 }
-                return datas;
+                return hierarchy;
         }
 }

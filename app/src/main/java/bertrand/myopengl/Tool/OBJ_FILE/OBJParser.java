@@ -54,14 +54,16 @@ public class OBJParser {
 					break;
 				}
 			}
-			while (line != null && line.startsWith("f ")) {
-				String[] f = line.split(" ");
-				String[] f1 = f[1].split("/");
-				String[] f2 = f[2].split("/");
-				String[] f3 = f[3].split("/");
-                                arrange_f_indexes(indices, vs, f1);
-				arrange_f_indexes(indices, vs, f2);
-				arrange_f_indexes(indices, vs, f3);
+			while (line != null) {
+				if(line.startsWith("f ")) {
+					String[] f = line.split(" ");
+					String[] f1 = f[1].split("/");
+					String[] f2 = f[2].split("/");
+					String[] f3 = f[3].split("/");
+					arrange_f_indexes(indices, vs, f1);
+					arrange_f_indexes(indices, vs, f2);
+					arrange_f_indexes(indices, vs, f3);
+				}
 				line = reader.readLine();
 			}
 			reader.close();

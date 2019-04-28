@@ -6,6 +6,7 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.List;
 
+import bertrand.myopengl.Tool.Scene.Hierarchy;
 import bertrand.myopengl.Tool.Scene.HierarchyData;
 import bertrand.myopengl.Tool.Scene.SceneParser;
 
@@ -63,14 +64,13 @@ public class test_SceneParser {
                 "h;8;5;haus;0;cube_planet;0.0;8.7894287109375;12.200411796569824;0.0;0.0;0.0;1.5486903190612793;1.5486903190612793;1.5486903190612793\n" +
                 "h;9;7;factory;0;cube_planet;0.0;-7.1825714111328125;12.201512336730957;0.0;0.0;0.0;3.084872007369995;1.4366670846939087;1.4366670846939087\n";
                 InputStream is = new ByteArrayInputStream(s.getBytes());
-                List<HierarchyData> hierarchy = SceneParser.hierarchy(is);
-                int idx = 0;
+                Hierarchy hierarchy = SceneParser.hierarchy(is);
                 assertNotNull(hierarchy);
-                assertEquals(10, hierarchy.size());
-                assertEquals(0, hierarchy.get(0).idx);
-                assertEquals(9, hierarchy.get(9).idx);
-                assertEquals(0.0, hierarchy.get(9).rotX, 0.001);
-                assertEquals(1.4366, hierarchy.get(9).scaleZ, 0.0001);
+                assertEquals(10, hierarchy.datas.size());
+                assertEquals(0, hierarchy.datas.get(0).idx);
+                assertEquals(9, hierarchy.datas.get(9).idx);
+                assertEquals(0.0, hierarchy.datas.get(9).rotX, 0.001);
+                assertEquals(1.4366, hierarchy.datas.get(9).scaleZ, 0.0001);
         }
 
 }

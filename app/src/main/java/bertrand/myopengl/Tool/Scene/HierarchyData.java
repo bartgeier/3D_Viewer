@@ -10,7 +10,7 @@ public class HierarchyData {
         public float rotX = 0;
         public float rotY = 0;
         public float rotZ = 0;
-        public float scaleX = 0;
-        public float scaleY = 0;
-        public float scaleZ = 0;
+        public float scaleX = 1f;
+        public float scaleY = 1f;
+        public float scaleZ = 1f;
 }

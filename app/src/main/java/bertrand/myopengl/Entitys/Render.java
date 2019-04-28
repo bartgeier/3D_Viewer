@@ -40,6 +40,7 @@ public class Render {
                 for (int i = 1; i < locations.size(); i++) {
                         final Box.Location l = locations.at(i);
 
+
                         Matrix.multiplyMM(
                                 l.modelViewMatrix,
                                 0,
@@ -76,6 +77,7 @@ public class Render {
                                         lights.at(0).color.b
                                 );
                         }
+                        GPU.selectTexture(l.texId);
                         GPU.loadMatrix(shader.u_ModelViewMatrix, l.modelViewMatrix);
                         GPU.render(l.vao, l.indicesCount);
                 }

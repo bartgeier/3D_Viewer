@@ -30,6 +30,7 @@ public class add {
                 int parentIdx,
                 int shaderProgram_ID,
                 int vao,
+                int texId,
                 int indicesCount,
                 final float pos_x,
                 final float pos_y,
@@ -47,6 +48,7 @@ public class add {
                         new Vec3(rot_x, rot_y, rot_z),
                         new Vec3(scale_x, scale_y, scale_z),
                         shaderProgram_ID,
+                        texId,
                         vao,
                         indicesCount
                 );

@@ -23,6 +23,7 @@ public final class Cube_1 {
                         0, //dummy
                         0, //dummy
                         0, //dummy
+                        0, //dummy
                         0f,
                         0f,
                         0f,
@@ -162,6 +163,7 @@ public final class Cube_1 {
                         0,
                         shaderProgram_ID,
                         Box.meshes.atId(mesh_ID).vao,
+                        0, //dummy
                         Box.meshes.atId(mesh_ID).indicesCount,
                         0f,
                         0f,

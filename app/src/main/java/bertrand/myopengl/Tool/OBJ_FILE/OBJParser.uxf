@@ -172,6 +172,7 @@ x.hasEqual( textureIdx, normalIdx );</panel_attributes>
       <h>27</h>
     </coordinates>
     <panel_attributes>conflict see OBJFile.uxf
+bg=red
 
 </panel_attributes>
     <additional_attributes/>

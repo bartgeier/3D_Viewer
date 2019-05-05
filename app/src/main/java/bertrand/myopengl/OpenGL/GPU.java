@@ -163,11 +163,11 @@ public class GPU {
         */
 
         public static void renderBackground(Color4f color) {
+                GLES.glEnable(GLES.GL_DEPTH_TEST);
                 GLES.glClearColor(color.r, color.g, color.b,color.a);
                 GLES.glClear(GLES.GL_COLOR_BUFFER_BIT |GLES.GL_DEPTH_BUFFER_BIT);
-                GLES.glEnable(GLES.GL_DEPTH_TEST);
-                //GLES.glEnable(GLES.GL_CULL_FACE);
-               // GLES.glCullFace(GLES.GL_BACK);
+                GLES.glEnable(GLES.GL_CULL_FACE);
+                //GLES.glCullFace(GLES.GL_FRONT_AND_BACK);
         }
 
         private static int generateVBO() {

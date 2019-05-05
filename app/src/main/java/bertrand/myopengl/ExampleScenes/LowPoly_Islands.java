@@ -26,7 +26,6 @@ public final class LowPoly_Islands {
         public static void createScene(@NotNull AssetManager asset) {
         try {
                 Camera.translation(0,-0f,-50);
-                //Camera.rotation(20,0,0);
                 Camera.rotation(0,0,0);
 
                 int shaderProgram_ID = Load.texturedShader(
@@ -59,6 +58,7 @@ public final class LowPoly_Islands {
                 }
                 Hierarchy hierarchy = new Hierarchy();
                 hierarchy.createRoot();
+                hierarchy.datas.get(0).rotX = 90f;//turn root into Device orientaion
                 hierarchy.attach(
                         SceneParser.hierarchy(
                                 asset.open("LowPoly_Islands/Scene_Simple.csv")
@@ -74,8 +74,8 @@ public final class LowPoly_Islands {
                                 Box.meshes.at(d.model_idx).indicesCount,
 
                                 d.x,
+                                d.y,
                                 d.z,
-                                -d.y,
                                 d.rotX,
                                 d.rotY,
                                 d.rotZ,

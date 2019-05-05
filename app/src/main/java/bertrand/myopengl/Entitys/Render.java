@@ -27,7 +27,6 @@ public class Render {
                 int lastShader_id = -1;
 
                 final Box.Location root = locations.at(0);
-                Matrix.setIdentityM(root.transformationMatrix, 0);
                 Matrix.multiplyMM(
                         root.modelViewMatrix,
                         0,

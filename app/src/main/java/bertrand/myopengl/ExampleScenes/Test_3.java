@@ -34,7 +34,7 @@ public final class Test_3 {
                         0f,
                         0f,
                         0f,
-                        0f,
+                        90f,
                         0f,
                         0f,
                         1f,
@@ -56,6 +56,7 @@ public final class Test_3 {
                 );
 
                 final Vec3 offset = Positions.offset(obj.getVertices());
+                /*
                 final float[] translationMatrix = new float[16];
                 Matrix.setIdentityM(translationMatrix, 0);
                 Matrix.rotateM(translationMatrix,0, 90, 1, 0, 0);
@@ -70,14 +71,14 @@ public final class Test_3 {
                         translationMatrix,
                         obj.getVertices()
                 );
-
+                */
                 int mesh_ID = Load.texturedModel(
                         Box.meshes,
                         bitmap,
                         obj.getIndices(),
-                        positions,
+                        obj.getVertices(),
                         obj.getTextureCoords(),
-                        normals
+                        obj.getNormals()
                 );
 
                 add.location(
@@ -99,10 +100,10 @@ public final class Test_3 {
                 );
 
                 obj = OBJParser.transform(
-                        asset.open("LowPoly_Islands/factory.obj")
+                        asset.open("LowPoly_Islands/conifer.obj")
                 );
                 bitmap = BitmapFactory.decodeStream(
-                        asset.open("LowPoly_Islands/factory.png")
+                        asset.open("LowPoly_Islands/conifer.png")
                 );
                 mesh_ID = Load.texturedModel(
                         Box.meshes,
@@ -119,9 +120,9 @@ public final class Test_3 {
                         Box.meshes.atId(mesh_ID).vao,
                         Box.meshes.atId(mesh_ID).texId,
                         Box.meshes.atId(mesh_ID).indicesCount,
-                        5f,
-                        5f,
                         0f,
+                        0f,
+                        5f,
                         0f,
                         0f,
                         0f,

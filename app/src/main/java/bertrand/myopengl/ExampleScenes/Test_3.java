@@ -48,11 +48,11 @@ public final class Test_3 {
                 );
 
                 ModelData obj = OBJParser.transform(
-                        asset.open("LowPoly_Islands/pipe_90.obj")
+                        asset.open("LowPoly_Islands/deciduous.obj")
                 );
 
                 Bitmap bitmap = BitmapFactory.decodeStream(
-                        asset.open("LowPoly_Islands/pipe_90.png")
+                        asset.open("LowPoly_Islands/deciduous.png")
                 );
 
                 final Vec3 offset = Positions.offset(obj.getVertices());

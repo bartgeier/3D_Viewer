@@ -4,7 +4,7 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>333</x>
+      <x>369</x>
       <y>1080</y>
       <w>333</w>
       <h>99</h>
@@ -19,7 +19,7 @@ void onSensorChanged(DeviceOrientationEvent event)
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>756</x>
+      <x>792</x>
       <y>918</y>
       <w>585</w>
       <h>153</h>
@@ -37,7 +37,7 @@ void onDeviceOrientationChanged(final float[] rotationMatrix);</panel_attributes
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>855</x>
+      <x>891</x>
       <y>1062</y>
       <w>27</w>
       <h>81</h>
@@ -48,7 +48,7 @@ void onDeviceOrientationChanged(final float[] rotationMatrix);</panel_attributes
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>765</x>
+      <x>801</x>
       <y>1125</y>
       <w>180</w>
       <h>27</h>
@@ -59,7 +59,7 @@ void onDeviceOrientationChanged(final float[] rotationMatrix);</panel_attributes
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>657</x>
+      <x>693</x>
       <y>1125</y>
       <w>126</w>
       <h>27</h>
@@ -70,7 +70,7 @@ void onDeviceOrientationChanged(final float[] rotationMatrix);</panel_attributes
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1125</x>
+      <x>1161</x>
       <y>1125</y>
       <w>90</w>
       <h>45</h>
@@ -82,7 +82,7 @@ Renderer</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1161</x>
+      <x>1197</x>
       <y>1062</y>
       <w>27</w>
       <h>81</h>
@@ -93,7 +93,7 @@ Renderer</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>828</x>
+      <x>864</x>
       <y>0</y>
       <w>234</w>
       <h>846</h>
@@ -106,7 +106,7 @@ Renderer</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1422</x>
+      <x>1458</x>
       <y>270</y>
       <w>234</w>
       <h>99</h>
@@ -122,7 +122,7 @@ static final int a_Normal = 2;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>936</x>
+      <x>972</x>
       <y>837</y>
       <w>36</w>
       <h>99</h>
@@ -135,7 +135,7 @@ m2=1</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1512</x>
+      <x>1548</x>
       <y>918</y>
       <w>234</w>
       <h>189</h>
@@ -157,7 +157,7 @@ float[] modelMatrix;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1332</x>
+      <x>1368</x>
       <y>936</y>
       <w>198</w>
       <h>36</h>
@@ -170,7 +170,7 @@ m2=1</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1188</x>
+      <x>1224</x>
       <y>72</y>
       <w>162</w>
       <h>54</h>
@@ -184,7 +184,7 @@ Color4f color
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1053</x>
+      <x>1089</x>
       <y>72</y>
       <w>153</w>
       <h>36</h>
@@ -197,7 +197,7 @@ m2=1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1053</x>
+      <x>1089</x>
       <y>144</y>
       <w>153</w>
       <h>36</h>
@@ -210,7 +210,7 @@ m2=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1188</x>
+      <x>1224</x>
       <y>144</y>
       <w>162</w>
       <h>99</h>
@@ -225,7 +225,7 @@ Vec3 attenuation;</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1188</x>
+      <x>1224</x>
       <y>261</y>
       <w>198</w>
       <h>225</h>
@@ -250,7 +250,7 @@ final int u_Texture;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1053</x>
+      <x>1089</x>
       <y>261</y>
       <w>153</w>
       <h>36</h>
@@ -263,7 +263,7 @@ m2=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1188</x>
+      <x>1224</x>
       <y>504</y>
       <w>162</w>
       <h>99</h>
@@ -279,7 +279,7 @@ final int indicesCount;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1053</x>
+      <x>1089</x>
       <y>504</y>
       <w>153</w>
       <h>36</h>
@@ -292,7 +292,7 @@ m2=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1188</x>
+      <x>1224</x>
       <y>621</y>
       <w>198</w>
       <h>135</h>
@@ -312,7 +312,7 @@ final int indicesCount;
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1053</x>
+      <x>1089</x>
       <y>621</y>
       <w>153</w>
       <h>36</h>
@@ -325,7 +325,7 @@ m2=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1188</x>
+      <x>1224</x>
       <y>774</y>
       <w>162</w>
       <h>90</h>
@@ -341,7 +341,7 @@ double angle;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1053</x>
+      <x>1089</x>
       <y>774</y>
       <w>153</w>
       <h>36</h>
@@ -354,7 +354,7 @@ m2=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1134</x>
+      <x>1170</x>
       <y>9</y>
       <w>261</w>
       <h>873</h>
@@ -366,7 +366,7 @@ m2=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1422</x>
+      <x>1458</x>
       <y>378</y>
       <w>234</w>
       <h>99</h>
@@ -382,7 +382,7 @@ static final int a_Normal = 2;</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>333</x>
+      <x>369</x>
       <y>918</y>
       <w>306</w>
       <h>99</h>
@@ -398,7 +398,7 @@ void sendMessage_FrameRateUpdate(time);</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>630</x>
+      <x>666</x>
       <y>981</y>
       <w>144</w>
       <h>27</h>
@@ -409,7 +409,7 @@ void sendMessage_FrameRateUpdate(time);</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>306</x>
+      <x>342</x>
       <y>1251</y>
       <w>369</w>
       <h>54</h>
@@ -424,7 +424,7 @@ void onSensorChanged(DeviceOrientationEvent event)
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>486</x>
+      <x>522</x>
       <y>1170</y>
       <w>27</w>
       <h>99</h>
@@ -435,7 +435,7 @@ void onSensorChanged(DeviceOrientationEvent event)
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>0</x>
+      <x>36</x>
       <y>1251</y>
       <w>243</w>
       <h>54</h>
@@ -448,7 +448,7 @@ onSensorChanged(SensorEvent event)</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>45</x>
+      <x>81</x>
       <y>1332</y>
       <w>153</w>
       <h>45</h>
@@ -461,7 +461,7 @@ SensorEventListener
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>117</x>
+      <x>153</x>
       <y>1296</y>
       <w>27</w>
       <h>54</h>
@@ -472,7 +472,7 @@ SensorEventListener
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>234</x>
+      <x>270</x>
       <y>1260</y>
       <w>90</w>
       <h>27</h>
@@ -483,8 +483,8 @@ SensorEventListener
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>90</x>
-      <y>1071</y>
+      <x>144</x>
+      <y>1107</y>
       <w>153</w>
       <h>108</h>
     </coordinates>
@@ -501,18 +501,18 @@ final float[] rotationMatrix;
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>234</x>
-      <y>1170</y>
-      <w>90</w>
-      <h>99</h>
+      <x>288</x>
+      <y>1206</y>
+      <w>72</w>
+      <h>63</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;80.0;90.0</additional_attributes>
+    <additional_attributes>10.0;10.0;60.0;50.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>414</x>
+      <x>450</x>
       <y>810</y>
       <w>153</w>
       <h>45</h>
@@ -528,7 +528,7 @@ Handler
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>486</x>
+      <x>522</x>
       <y>846</y>
       <w>27</w>
       <h>90</h>
@@ -539,7 +539,7 @@ Handler
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>801</x>
+      <x>837</x>
       <y>1179</y>
       <w>126</w>
       <h>45</h>
@@ -551,7 +551,7 @@ GLSurfaceView</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>855</x>
+      <x>891</x>
       <y>1143</y>
       <w>27</w>
       <h>54</h>
@@ -562,7 +562,7 @@ GLSurfaceView</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>486</x>
+      <x>522</x>
       <y>1008</y>
       <w>27</w>
       <h>90</h>
@@ -573,7 +573,7 @@ GLSurfaceView</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>630</x>
+      <x>666</x>
       <y>1008</y>
       <w>153</w>
       <h>135</h>
@@ -584,23 +584,34 @@ GLSurfaceView</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>144</x>
-      <y>1170</y>
+      <x>198</x>
+      <y>1206</y>
       <w>27</w>
-      <h>99</h>
+      <h>63</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>234</x>
-      <y>1107</y>
-      <w>117</w>
+      <x>288</x>
+      <y>1143</y>
+      <w>99</w>
       <h>27</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;110.0;10.0</additional_attributes>
+    <additional_attributes>10.0;10.0;90.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>72</x>
+      <y>1080</y>
+      <w>315</w>
+      <h>189</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;190.0;10.0;10.0;330.0;10.0</additional_attributes>
   </element>
 </diagram>

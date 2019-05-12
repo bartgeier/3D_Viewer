@@ -52,4 +52,23 @@ public class MainSurfaceView extends GLSurfaceView {
                         }
                 });
         }
+
+        public void setScaleFactor(final float scaleFactor) {
+                queueEvent(new Runnable() {
+                        @Override
+                        public void run() {
+                                renderer.onScaleFactorChanged(scaleFactor);
+                        }
+                });
+        }
+
+        public void setMove(final float x, final float y) {
+                queueEvent(new Runnable() {
+                        @Override
+                        public void run() {
+                                renderer.onMove(x,y);
+                        }
+                });
+        }
+
 }

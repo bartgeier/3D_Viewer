@@ -2,6 +2,7 @@ package bertrand.myopengl;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView.Renderer;
+import android.opengl.Matrix;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -23,7 +24,6 @@ import bertrand.myopengl.ExampleScenes.Triangle;
 import bertrand.myopengl.ExampleScenes.Triangle_1;
 import bertrand.myopengl.Tool.Time.DeltaTime;
 import bertrand.myopengl.Tool.Time.StopWatch;
-
 
 public final class MainRenderer implements Renderer {
         private Context context;
@@ -114,5 +114,37 @@ public final class MainRenderer implements Renderer {
 
         public void onDeviceOrientationChanged(final float[] rotationMatrix) {
                 Camera.rotation(rotationMatrix);
+        }
+
+        public void onScaleFactorChanged(final float scaleFactor) {
+                Camera.moveZ(scaleFactor);
+        }
+        public void onMove(final float x, final float y) {
+                float[] vector = new float[4];
+                float[] result = new float[4];
+                vector[0] = x;
+                vector[1] = y;
+                vector[2] = 0;
+                vector[3] = 1;
+                float[] rotMatrix = new float[16];
+                Matrix.transposeM(rotMatrix,0,Camera.rotationMatrix(),0);
+                Matrix.multiplyMV(
+                        result,
+                        0,
+                        rotMatrix,
+                        0,
+                        vector,
+                        0
+                );
+                Box.Location l = Box.locations.at(0);
+                l.position.x += result[0]/100;
+                l.position.y += result[1]/100;
+                l.position.z += result[2]/100;
+                Matrix.setIdentityM(l.transformationMatrix, 0);
+                Matrix.translateM(l.transformationMatrix,0,l.position.x, l.position.y, l.position.z);
+                Matrix.rotateM(l.transformationMatrix,0, l.rotation.x, 1, 0, 0);
+                Matrix.rotateM(l.transformationMatrix,0, l.rotation.y, 0, 1, 0);
+                Matrix.rotateM(l.transformationMatrix,0, l.rotation.z,  0, 0, 1);
+                Matrix.scaleM(l.transformationMatrix,0, l.scale.x, l.scale.y, l.scale.z);
         }
 }

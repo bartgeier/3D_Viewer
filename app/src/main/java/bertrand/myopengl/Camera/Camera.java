@@ -36,6 +36,25 @@ public class Camera {
                 return modelMatrix;
         }
 
+        @NotNull
+        public static float[] rotationMatrix() {
+                return rotationMatrix;
+        }
+
+        public static void moveZ(final float factor) {
+                final float x = 1/factor;
+                if (x > 1) {
+                        pos.z +=  (x - 1) + pos.z*(x - 1);
+                        if (pos.z > 0) {
+                                pos.z = 0;
+                        }
+                        translation(pos.x, pos.y, pos.z);
+                } else if (x < 1) {
+                        pos.z -= ((1-x)+pos.z*(1-x)) ;
+                        translation(pos.x, pos.y, pos.z);
+                }
+        }
+
         public static void translation(float x, float y, float z) {
                 pos.x = x;
                 pos.y = y;

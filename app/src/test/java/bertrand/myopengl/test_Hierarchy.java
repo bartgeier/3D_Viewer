@@ -15,12 +15,12 @@ public class test_Hierarchy {
         @Test
         public void attach() {
                 String sA =
-                "H;idx;model idx;model;parent idx;parent;X;Y;Z;rotation X;rotation Y;rotation Z;scale X;scale Y;scale Z\n" +
+                "H;idx;model idx;model;parent idx;parent;X;Y;Z;rotation X;rotation Y;rotation Z;scaleFactor X;scaleFactor Y;scaleFactor Z\n" +
                 "h;0;0;cube_planet;0;cube_planet;0.0;0.0;0.0;0.0;0.0;0.0;16.628190994262695;16.628190994262695;0.17471875250339508\n";
                 InputStream isA = new ByteArrayInputStream(sA.getBytes());
                 Hierarchy hierarchy_A = SceneParser.hierarchy(isA);
                 String sB =
-                "H;idx;model idx;model;parent idx;parent;X;Y;Z;rotation X;rotation Y;rotation Z;scale X;scale Y;scale Z\n" +
+                "H;idx;model idx;model;parent idx;parent;X;Y;Z;rotation X;rotation Y;rotation Z;scaleFactor X;scaleFactor Y;scaleFactor Z\n" +
                 "h;0;1;deciduous;0;deciduous;-14.82341194152832;15.559011459350586;12.197236061096191;0.0;0.0;0.0;0.5104865431785583;0.5104865431785583;0.5104865431785583\n" +
                 "h;1;4;factory_smoke;0;deciduous;-7.750556945800781;-7.175302505493164;19.00285530090332;0.0;-0.0;-0.4134733974933624;1.1755114793777466;0.5885948538780212;0.23291943967342377\n";
                 InputStream isB = new ByteArrayInputStream(sB.getBytes());
@@ -41,7 +41,7 @@ public class test_Hierarchy {
         @Test
         public void createRoot() {
                 String sA =
-                "H;idx;model idx;model;parent idx;parent;X;Y;Z;rotation X;rotation Y;rotation Z;scale X;scale Y;scale Z\n" +
+                "H;idx;model idx;model;parent idx;parent;X;Y;Z;rotation X;rotation Y;rotation Z;scaleFactor X;scaleFactor Y;scaleFactor Z\n" +
                 "h;0;0;cube_planet;0;cube_planet;0.0;0.0;0.0;0.0;0.0;0.0;16.628190994262695;16.628190994262695;0.17471875250339508\n" +
                 "h;1;1;deciduous;0;cube_planet;-14.82341194152832;15.559011459350586;12.197236061096191;0.0;0.0;0.0;0.5104865431785583;0.5104865431785583;0.5104865431785583\n";
                 InputStream isA = new ByteArrayInputStream(sA.getBytes());

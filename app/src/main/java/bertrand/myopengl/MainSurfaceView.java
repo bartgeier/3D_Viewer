@@ -57,7 +57,7 @@ public class MainSurfaceView extends GLSurfaceView {
                 queueEvent(new Runnable() {
                         @Override
                         public void run() {
-                                renderer.onScaleFactorChanged(scaleFactor);
+                                renderer.onTouchScreenScaling(scaleFactor);
                         }
                 });
         }
@@ -66,7 +66,7 @@ public class MainSurfaceView extends GLSurfaceView {
                 queueEvent(new Runnable() {
                         @Override
                         public void run() {
-                                renderer.onMove(x,y);
+                                renderer.onTouchScreenMoving(x,y);
                         }
                 });
         }

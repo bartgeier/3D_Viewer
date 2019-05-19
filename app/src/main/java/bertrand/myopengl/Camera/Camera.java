@@ -6,6 +6,8 @@ import org.jetbrains.annotations.NotNull;
 
 import bertrand.myopengl.Tool.Vec3;
 
+import static java.lang.StrictMath.abs;
+
 public class Camera {
         static private float fovyZoomAngle = 85f; // degrees
         static private float aspectRatio = 1f;
@@ -41,18 +43,23 @@ public class Camera {
                 return rotationMatrix;
         }
 
-        public static void moveZ(final float factor) {
-                final float x = 1/factor;
-                if (x > 1) {
-                        pos.z +=  (x - 1) + pos.z*(x - 1);
-                        if (pos.z > 0) {
-                                pos.z = 0;
-                        }
-                        translation(pos.x, pos.y, pos.z);
-                } else if (x < 1) {
-                        pos.z -= ((1-x)+pos.z*(1-x)) ;
-                        translation(pos.x, pos.y, pos.z);
+        public static void setDistance(final float factor) {
+                final float f = 1/(100*factor);
+                final float offset = 0.01f;
+                float distance = abs(pos.z);
+                if (factor > 1) {
+                        /* approching */
+                        distance -=  (offset + distance * f);
+                } else if (factor < 1) {
+                        /* increase distance */
+                        distance +=  (offset + distance * f);
+                } else {
+                        return;
                 }
+                if (pos.z > 0) {
+                        pos.z = 0;
+                }
+                translation(pos.x, pos.y, -distance);
         }
 
         public static void translation(float x, float y, float z) {

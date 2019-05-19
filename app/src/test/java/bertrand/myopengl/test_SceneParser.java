@@ -20,7 +20,7 @@ public class test_SceneParser {
                 "M;model names\n" +
                 "m;cube_planet;deciduous;conifer;waterTower;factory_smoke;haus;lake;factory\n" +
                 "\n" +
-                "H;idx;model idx;model;parent idx;parent;X;Y;Z;rotation X;rotation Y;rotation Z;scale X;scale Y;scale Z\n" +
+                "H;idx;model idx;model;parent idx;parent;X;Y;Z;rotation X;rotation Y;rotation Z;scaleFactor X;scaleFactor Y;scaleFactor Z\n" +
                 "h;0;0;cube_planet;0;cube_planet;0.0;0.0;0.0;0.0;0.0;0.0;16.628190994262695;16.628190994262695;0.17471875250339508\n" +
                 "h;1;1;deciduous;0;cube_planet;-14.82341194152832;15.559011459350586;12.197236061096191;0.0;0.0;0.0;0.5104865431785583;0.5104865431785583;0.5104865431785583\n" +
                 "h;2;2;conifer;0;cube_planet;6.806492805480957;5.371898174285889;12.197236061096191;0.0;0.0;0.0;0.75;0.75;0.75\n" +
@@ -52,7 +52,7 @@ public class test_SceneParser {
                 "M;model names\n" +
                 "m;cube_planet;deciduous;conifer;waterTower;factory_smoke;haus;lake;factory\n" +
                 "\n" +
-                "H;idx;model idx;model;parent idx;parent;X;Y;Z;rotation X;rotation Y;rotation Z;scale X;scale Y;scale Z\n" +
+                "H;idx;model idx;model;parent idx;parent;X;Y;Z;rotation X;rotation Y;rotation Z;scaleFactor X;scaleFactor Y;scaleFactor Z\n" +
                 "h;0;0;cube_planet;0;cube_planet;0.0;0.0;0.0;0.0;0.0;0.0;16.628190994262695;16.628190994262695;0.17471875250339508\n" +
                 "h;1;1;deciduous;0;cube_planet;-14.82341194152832;15.559011459350586;12.197236061096191;0.0;0.0;0.0;0.5104865431785583;0.5104865431785583;0.5104865431785583\n" +
                 "h;2;2;conifer;0;cube_planet;6.806492805480957;5.371898174285889;12.197236061096191;0.0;0.0;0.0;0.75;0.75;0.75\n" +

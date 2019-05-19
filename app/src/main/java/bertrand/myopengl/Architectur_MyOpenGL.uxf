@@ -4,22 +4,22 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>369</x>
+      <x>0</x>
       <y>1080</y>
-      <w>333</w>
+      <w>954</w>
       <h>99</h>
     </coordinates>
     <panel_attributes>ManActivity
 --
 FrameMessageHandler frameMessageHandler
 void onSensorChanged(DeviceOrientationEvent event)
-</panel_attributes>
+boolean onTouchEvent(MotionEvent event)</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>792</x>
+      <x>1044</x>
       <y>918</y>
       <w>585</w>
       <h>153</h>
@@ -31,13 +31,15 @@ void onSurfaceChanged(GL10 gl, int width, int height);
 void onSurfaceCreated(GL10 gl, EGLConfig config);
 void onClearScreen();
 void onNewExample(final int idx);
-void onDeviceOrientationChanged(final float[] rotationMatrix);</panel_attributes>
+void onDeviceOrientationChanged(final float[] rotationMatrix);
+void onTouchScreenScaling(final float scaleFactor)
+void onTouchScreenMoving(final float x, final float y)</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>891</x>
+      <x>1143</x>
       <y>1062</y>
       <w>27</w>
       <h>81</h>
@@ -48,7 +50,7 @@ void onDeviceOrientationChanged(final float[] rotationMatrix);</panel_attributes
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>801</x>
+      <x>1053</x>
       <y>1125</y>
       <w>180</w>
       <h>27</h>
@@ -59,7 +61,7 @@ void onDeviceOrientationChanged(final float[] rotationMatrix);</panel_attributes
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>693</x>
+      <x>945</x>
       <y>1125</y>
       <w>126</w>
       <h>27</h>
@@ -70,7 +72,7 @@ void onDeviceOrientationChanged(final float[] rotationMatrix);</panel_attributes
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1161</x>
+      <x>1413</x>
       <y>1125</y>
       <w>90</w>
       <h>45</h>
@@ -82,7 +84,7 @@ Renderer</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1197</x>
+      <x>1449</x>
       <y>1062</y>
       <w>27</w>
       <h>81</h>
@@ -93,7 +95,7 @@ Renderer</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>864</x>
+      <x>1116</x>
       <y>0</y>
       <w>234</w>
       <h>846</h>
@@ -106,7 +108,7 @@ Renderer</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1458</x>
+      <x>1710</x>
       <y>270</y>
       <w>234</w>
       <h>99</h>
@@ -122,7 +124,7 @@ static final int a_Normal = 2;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>972</x>
+      <x>1224</x>
       <y>837</y>
       <w>36</w>
       <h>99</h>
@@ -135,7 +137,7 @@ m2=1</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1548</x>
+      <x>1800</x>
       <y>918</y>
       <w>234</w>
       <h>189</h>
@@ -157,7 +159,7 @@ float[] modelMatrix;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1368</x>
+      <x>1620</x>
       <y>936</y>
       <w>198</w>
       <h>36</h>
@@ -170,7 +172,7 @@ m2=1</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1224</x>
+      <x>1476</x>
       <y>72</y>
       <w>162</w>
       <h>54</h>
@@ -184,7 +186,7 @@ Color4f color
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1089</x>
+      <x>1341</x>
       <y>72</y>
       <w>153</w>
       <h>36</h>
@@ -197,7 +199,7 @@ m2=1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1089</x>
+      <x>1341</x>
       <y>144</y>
       <w>153</w>
       <h>36</h>
@@ -210,7 +212,7 @@ m2=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1224</x>
+      <x>1476</x>
       <y>144</y>
       <w>162</w>
       <h>99</h>
@@ -225,7 +227,7 @@ Vec3 attenuation;</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1224</x>
+      <x>1476</x>
       <y>261</y>
       <w>198</w>
       <h>225</h>
@@ -250,7 +252,7 @@ final int u_Texture;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1089</x>
+      <x>1341</x>
       <y>261</y>
       <w>153</w>
       <h>36</h>
@@ -263,7 +265,7 @@ m2=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1224</x>
+      <x>1476</x>
       <y>504</y>
       <w>162</w>
       <h>99</h>
@@ -279,7 +281,7 @@ final int indicesCount;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1089</x>
+      <x>1341</x>
       <y>504</y>
       <w>153</w>
       <h>36</h>
@@ -292,7 +294,7 @@ m2=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1224</x>
+      <x>1476</x>
       <y>621</y>
       <w>198</w>
       <h>135</h>
@@ -312,7 +314,7 @@ final int indicesCount;
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1089</x>
+      <x>1341</x>
       <y>621</y>
       <w>153</w>
       <h>36</h>
@@ -325,7 +327,7 @@ m2=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1224</x>
+      <x>1476</x>
       <y>774</y>
       <w>162</w>
       <h>90</h>
@@ -341,7 +343,7 @@ double angle;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1089</x>
+      <x>1341</x>
       <y>774</y>
       <w>153</w>
       <h>36</h>
@@ -354,7 +356,7 @@ m2=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1170</x>
+      <x>1422</x>
       <y>9</y>
       <w>261</w>
       <h>873</h>
@@ -366,7 +368,7 @@ m2=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1458</x>
+      <x>1710</x>
       <y>378</y>
       <w>234</w>
       <h>99</h>
@@ -382,7 +384,7 @@ static final int a_Normal = 2;</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>369</x>
+      <x>621</x>
       <y>918</y>
       <w>306</w>
       <h>99</h>
@@ -398,7 +400,7 @@ void sendMessage_FrameRateUpdate(time);</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>666</x>
+      <x>918</x>
       <y>981</y>
       <w>144</w>
       <h>27</h>
@@ -409,14 +411,16 @@ void sendMessage_FrameRateUpdate(time);</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>342</x>
-      <y>1251</y>
-      <w>369</w>
-      <h>54</h>
+      <x>234</x>
+      <y>1242</y>
+      <w>216</w>
+      <h>72</h>
     </coordinates>
     <panel_attributes>DeviceOrientationListner
 --
-void onSensorChanged(DeviceOrientationEvent event)
+void onSensorChanged (
+DeviceOrientationEvent event
+)
 
 </panel_attributes>
     <additional_attributes/>
@@ -424,20 +428,20 @@ void onSensorChanged(DeviceOrientationEvent event)
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>522</x>
+      <x>324</x>
       <y>1170</y>
       <w>27</w>
-      <h>99</h>
+      <h>90</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;90.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;80.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>36</x>
-      <y>1251</y>
-      <w>243</w>
+      <x>0</x>
+      <y>1395</y>
+      <w>450</w>
       <h>54</h>
     </coordinates>
     <panel_attributes>DeviceOrientation
@@ -448,8 +452,8 @@ onSensorChanged(SensorEvent event)</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>81</x>
-      <y>1332</y>
+      <x>126</x>
+      <y>1494</y>
       <w>153</w>
       <h>45</h>
     </coordinates>
@@ -461,30 +465,30 @@ SensorEventListener
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>153</x>
-      <y>1296</y>
+      <x>198</x>
+      <y>1440</y>
       <w>27</w>
-      <h>54</h>
+      <h>72</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;40.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>270</x>
-      <y>1260</y>
-      <w>90</w>
-      <h>27</h>
+      <x>333</x>
+      <y>1305</y>
+      <w>27</w>
+      <h>108</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>80.0;10.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;100.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>144</x>
-      <y>1107</y>
+      <x>36</x>
+      <y>1242</y>
       <w>153</w>
       <h>108</h>
     </coordinates>
@@ -501,18 +505,18 @@ final float[] rotationMatrix;
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>288</x>
-      <y>1206</y>
+      <x>180</x>
+      <y>1269</y>
       <w>72</w>
-      <h>63</h>
+      <h>27</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;60.0;50.0</additional_attributes>
+    <additional_attributes>10.0;10.0;60.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>450</x>
+      <x>702</x>
       <y>810</y>
       <w>153</w>
       <h>45</h>
@@ -528,7 +532,7 @@ Handler
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>522</x>
+      <x>774</x>
       <y>846</y>
       <w>27</w>
       <h>90</h>
@@ -539,7 +543,7 @@ Handler
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>837</x>
+      <x>1089</x>
       <y>1179</y>
       <w>126</w>
       <h>45</h>
@@ -551,7 +555,7 @@ GLSurfaceView</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>891</x>
+      <x>1143</x>
       <y>1143</y>
       <w>27</w>
       <h>54</h>
@@ -562,7 +566,7 @@ GLSurfaceView</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>522</x>
+      <x>774</x>
       <y>1008</y>
       <w>27</w>
       <h>90</h>
@@ -573,7 +577,7 @@ GLSurfaceView</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>666</x>
+      <x>918</x>
       <y>1008</y>
       <w>153</w>
       <h>135</h>
@@ -584,34 +588,117 @@ GLSurfaceView</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>198</x>
-      <y>1206</y>
+      <x>99</x>
+      <y>1341</y>
       <w>27</w>
-      <h>63</h>
+      <h>72</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>288</x>
-      <y>1143</y>
-      <w>99</w>
-      <h>27</h>
+      <x>99</x>
+      <y>1170</y>
+      <w>27</w>
+      <h>90</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;90.0;10.0</additional_attributes>
+    <additional_attributes>10.0;80.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>72</x>
-      <y>1080</y>
-      <w>315</w>
-      <h>189</h>
+      <x>9</x>
+      <y>1170</y>
+      <w>27</w>
+      <h>243</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;190.0;10.0;10.0;330.0;10.0</additional_attributes>
+    <additional_attributes>10.0;250.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>477</x>
+      <y>1242</y>
+      <w>450</w>
+      <h>144</h>
+    </coordinates>
+    <panel_attributes>TouchScreen
+--
+boolean isScaling;
+float scaleFactor;
+
+boolean isMoving;
+float deltaX;
+float deltaY;
+
+void onTouchEvent(MotionEvent event)
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>630</x>
+      <y>1404</y>
+      <w>306</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>Android
+ScaleGestureDetector.OnScaleGestureListener
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>774</x>
+      <y>1377</y>
+      <w>27</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;30.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>693</x>
+      <y>1170</y>
+      <w>27</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;80.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>477</x>
+      <y>1404</y>
+      <w>144</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>Android
+ScaleGestureDetector
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>540</x>
+      <y>1377</y>
+      <w>27</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;30.0;10.0;10.0</additional_attributes>
   </element>
 </diagram>

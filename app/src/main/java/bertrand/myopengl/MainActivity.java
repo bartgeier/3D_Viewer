@@ -4,21 +4,17 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ConfigurationInfo;
-import android.graphics.Rect;
 import android.os.Handler;
 import android.os.Message;
 import android.support.constraint.ConstraintLayout;
-import android.support.v4.view.MotionEventCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
-import android.view.ScaleGestureDetector;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,17 +25,9 @@ import bertrand.myopengl.DeviceOrientation.DeviceOrientationEvent;
 import bertrand.myopengl.DeviceOrientation.DeviceOrientationListner;
 import bertrand.myopengl.ExampleScenes.ExampleNames;
 import bertrand.myopengl.Tool.TextChooser.TextChooserActivity;
+import bertrand.myopengl.TouchScreen.TouchScreen;
 
-import static android.view.MotionEvent.INVALID_POINTER_ID;
-
-public class MainActivity
-        extends
-        AppCompatActivity
-        implements
-        DeviceOrientationListner,
-        ScaleGestureDetector.OnScaleGestureListener {
-       // GestureDetector.OnGestureListener {
-
+public class MainActivity extends AppCompatActivity implements DeviceOrientationListner {
         public class UI{
                 ConstraintLayout layout;
                 ActionBar actionBar;
@@ -49,9 +37,7 @@ public class MainActivity
         private static final int EXAMPLE_ACTIVITY_ID = 1;
         MainSurfaceView mainGLView;
         DeviceOrientation deviceOrientation;
-        ScaleGestureDetector scaleGestureDetector;
-        //GestureDetector gestureDetector;
-
+        TouchScreen touchScreen;
 
         FrameMessageHandler frameMessageHandler = new FrameMessageHandler(new Handler.Callback() {
                 @Override
@@ -100,8 +86,7 @@ public class MainActivity
                         mainGLView.setEGLContextClientVersion(2);
                         mainGLView.start(frameMessageHandler);
                         deviceOrientation = new DeviceOrientation(this,this);
-                        scaleGestureDetector = new ScaleGestureDetector(this,this);
-                        //gestureDetector = new GestureDetector(this,this);
+                        touchScreen = new TouchScreen(this);
                 } else {
                         Toast.makeText(
                                 MainActivity.this,
@@ -163,125 +148,15 @@ public class MainActivity
                 mainGLView.setDeviceOrientation(event.rotationMatrix);
         }
 
-        boolean scaling;
-        float mLastTouchX;
-        float mLastTouchY;
-        int mActivePointerId;
         @Override
         public boolean onTouchEvent(MotionEvent event) {
-                scaleGestureDetector.onTouchEvent(event);
-                final int action = event.getActionMasked();
-                switch (event.getActionMasked()) {
-                        case MotionEvent.ACTION_DOWN: {
-                                scaling = false;
-                                final int pointerIndex = event.getActionIndex();
-                                final float x = event.getX(pointerIndex);
-                                final float y = event.getY(pointerIndex);
-                                // Remember where we started (for dragging)
-                                mLastTouchX = x;
-                                mLastTouchY = y;
-                                // Save the ID of this pointer (for dragging)
-                                mActivePointerId = event.getPointerId(0);
-                                break;
-                        }
-                        case MotionEvent.ACTION_MOVE: {
-                                if (scaling == false) {
-                                        // Find the index of the active pointer and fetch its position
-                                        final int pointerIndex = event.findPointerIndex(mActivePointerId);
-                                        final float x = event.getX(pointerIndex);
-                                        final float y = event.getY(pointerIndex);
-                                        // Calculate the distance moved
-                                        final float dx = x - mLastTouchX;
-                                        final float dy = -(y - mLastTouchY);
-                                        mLastTouchX = x;
-                                        mLastTouchY = y;
-                                        mainGLView.setMove(dx, dy);
-                                }
-                                break;
-                        }
-                        case MotionEvent.ACTION_UP: {
-                                mActivePointerId = INVALID_POINTER_ID;
-                                break;
-                        }
-                        case MotionEvent.ACTION_POINTER_UP: {
-                                final int pointerIndex = event.getActionIndex();
-                                final int pointerId = event.getPointerId(pointerIndex);
-                                if (pointerId == mActivePointerId) {
-                                        // This was our active pointer going up. Choose a new
-                                        // active pointer and adjust accordingly.
-                                        final int newPointerIndex = pointerIndex == 0 ? 1 : 0;
-                                        mLastTouchX = event.getX(newPointerIndex);
-                                        mLastTouchY = event.getY(newPointerIndex);
-                                        mActivePointerId = event.getPointerId(newPointerIndex);
-                                }
-                                break;
-                        }
-
+                touchScreen.onTouchEvent(event);
+                if (touchScreen.isScaling) {
+                        mainGLView.setScaleFactor(touchScreen.scaleFactor);
+                } else if (touchScreen.isMoving) {
+                        mainGLView.setMove(touchScreen.deltaX, -touchScreen.deltaY);
                 }
-
                 return true;
         }
-
-        @Override
-        public boolean onScale(ScaleGestureDetector detector) {
-                scaling = true;
-                mainGLView.setScaleFactor(detector.getScaleFactor());
-                return true;
-        }
-
-        @Override
-        public boolean onScaleBegin(ScaleGestureDetector detector) {
-                return true;
-        }
-
-        @Override
-        public void onScaleEnd(ScaleGestureDetector detector) {
-        }
-//
-//        /*  */
-//        @Override
-//        public boolean onDown(MotionEvent e) {
-//                scaling = false;
-//                return false;
-//        }
-//
-//        @Override
-//        public void onShowPress(MotionEvent e) {
-//
-//        }
-//
-//        @Override
-//        public boolean onSingleTapUp(MotionEvent e) {
-//                return false;
-//        }
-//
-//        private Rect mContentRect;
-//        @Override
-//        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-//                // Scrolling uses math based on the viewport (as opposed to math using pixels).
-//
-//                // Pixel offset is the offset in screen pixels, while viewport offset is the
-//                // offset within the current viewport.
-//                float viewportOffsetX = distanceX * mCurrentViewport.width()
-//                        / mContentRect.width();
-//                float viewportOffsetY = -distanceY * mCurrentViewport.height()
-//                        / mContentRect.height();
-//    ...
-//                // Updates the viewport, refreshes the display.
-//                setViewportBottomLeft(
-//                        mCurrentViewport.left + viewportOffsetX,
-//                        mCurrentViewport.bottom + viewportOffsetY);
-//                return true;
-//        }
-//
-//        @Override
-//        public void onLongPress(MotionEvent e) {
-//
-//        }
-//
-//        @Override
-//        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-//                return false;
-//        }
 
 }

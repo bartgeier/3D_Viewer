@@ -62,11 +62,11 @@ public class MainSurfaceView extends GLSurfaceView {
                 });
         }
 
-        public void setMove(final float x, final float y) {
+        public void setMove(final float dx, final float dy) {
                 queueEvent(new Runnable() {
                         @Override
                         public void run() {
-                                renderer.onTouchScreenMoving(x,y);
+                                renderer.onTouchScreenMoving(dx,dy);
                         }
                 });
         }

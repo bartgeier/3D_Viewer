@@ -117,14 +117,14 @@ public final class MainRenderer implements Renderer {
         }
 
         public void onTouchScreenScaling(final float scaleFactor) {
-                Camera.setDistance(scaleFactor);
+                Camera.distance(scaleFactor);
         }
 
-        public void onTouchScreenMoving(final float x, final float y) {
+        public void onTouchScreenMoving(final float dx, final float dy) {
                 float[] vector = new float[4];
                 float[] result = new float[4];
-                vector[0] = x;
-                vector[1] = y;
+                vector[0] = dx/10 * (Camera.distance() + 1);
+                vector[1] = dy/10 * (Camera.distance() + 1);
                 vector[2] = 0;
                 vector[3] = 1;
                 float[] rotMatrix = new float[16];

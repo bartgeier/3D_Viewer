@@ -43,7 +43,7 @@ public class Camera {
                 return rotationMatrix;
         }
 
-        public static void setDistance(final float factor) {
+        public static void distance(final float factor) {
                 final float f = 1/(100*factor);
                 final float offset = 0.01f;
                 float distance = abs(pos.z);
@@ -60,6 +60,10 @@ public class Camera {
                         pos.z = 0;
                 }
                 translation(pos.x, pos.y, -distance);
+        }
+
+        public static float distance() {
+                return abs(pos.z);
         }
 
         public static void translation(float x, float y, float z) {

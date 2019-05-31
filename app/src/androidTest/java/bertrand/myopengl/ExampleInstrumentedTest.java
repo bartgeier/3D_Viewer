@@ -23,4 +23,5 @@ public class ExampleInstrumentedTest {
 
         assertEquals("bertrand.myopengl", appContext.getPackageName());
     }
+
 }

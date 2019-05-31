@@ -3,30 +3,28 @@ package bertrand.myopengl.ExampleScenes;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.opengl.Matrix;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 
-import bertrand.myopengl.Camera.Camera;
 import bertrand.myopengl.Entitys.Box;
 import bertrand.myopengl.Entitys.Load;
 import bertrand.myopengl.Entitys.add;
+import bertrand.myopengl.Tool.Mathe;
 import bertrand.myopengl.Tool.OBJ_FILE.ModelData;
 import bertrand.myopengl.Tool.OBJ_FILE.OBJParser;
-import bertrand.myopengl.Tool.Positions;
 import bertrand.myopengl.Tool.Scene.Hierarchy;
 import bertrand.myopengl.Tool.Scene.HierarchyData;
 import bertrand.myopengl.Tool.Scene.SceneParser;
 import bertrand.myopengl.Tool.Str;
-import bertrand.myopengl.Tool.Vec3;
 
 public final class LowPoly_Islands {
         public static void createScene(@NotNull AssetManager asset) {
         try {
-                Camera.translation(0,-0f,-50);
-                Camera.rotation(0,0,0);
+                Box.Camera camera = Box.cameras.atId(0);
+                Mathe.translationXYZ(camera.T,0,0,-50);
+                Mathe.rotationXYZ(camera.R, 0, 0, 0);
 
                 int shaderProgram_ID = Load.texturedShader(
                         Box.shaders,

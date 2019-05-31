@@ -47,6 +47,7 @@ public class Update {
                 }
         }
 
+        public static float[] matrix = new float[16];
         /* curring partially applied function argument */
         public static void gpu_shader_projectionMatrix(
                 @NotNull final SparseArray<Box.Shader> shaders,

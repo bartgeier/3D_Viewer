@@ -166,4 +166,30 @@ public class Box {
 
         }
         public static SparseArray<Periode> periods = new SparseArray<>(null,1000);
+
+        public static class Camera {
+                public final int location_ID;
+                public float aspectRatio;         // screen => (float)width / height
+                public float fovyZoomAngle;       // 85f degrees
+                public float near;                // 0.1f always bigger then 0
+                public float far;                 // 300f
+                public float[] T = new float[16]; // translation matrix
+                public float[] R = new float[16]; // rotation matrix
+                public Camera(
+                        final int location_ID,
+                        final float aspectRatio,
+                        final float fovyZoomAngle,
+                        final float near,
+                        final float far
+                ) {
+                        this.location_ID = location_ID;
+                        this.aspectRatio = aspectRatio;
+                        this.fovyZoomAngle = fovyZoomAngle;
+                        this.near = near;
+                        this.far = far;
+                        Matrix.setIdentityM(this.T, 0);
+                        Matrix.setIdentityM(this.R, 0);
+                }
+        }
+        public static SparseArray<Camera> cameras = new SparseArray<>(null,2);
 }

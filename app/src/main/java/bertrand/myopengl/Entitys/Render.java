@@ -14,6 +14,7 @@ public class Render {
                 GPU.renderBackground(backGround.color);
         }
 
+        public static float[] matrix = new float[16];
         public static void entitys(
                 @NotNull final float[] parentModelViewMatrix,
                 @NotNull final SparseArray<Box.Light> lights,
@@ -38,8 +39,6 @@ public class Render {
 
                 for (int i = 1; i < locations.size(); i++) {
                         final Box.Location l = locations.at(i);
-
-
                         Matrix.multiplyMM(
                                 l.modelViewMatrix,
                                 0,

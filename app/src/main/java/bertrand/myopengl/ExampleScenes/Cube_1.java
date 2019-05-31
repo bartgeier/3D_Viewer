@@ -6,17 +6,18 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 
-import bertrand.myopengl.Camera.Camera;
 import bertrand.myopengl.Entitys.Box;
 import bertrand.myopengl.Entitys.add;
 import bertrand.myopengl.Entitys.Load;
+import bertrand.myopengl.Tool.Mathe;
 import bertrand.myopengl.Tool.Str;
 
 public final class Cube_1 {
         public static void createScene(@NotNull AssetManager asset) {
         try {
-                Camera.translation(0,0f,-4);
-                Camera.rotation(0,0,0);
+                Box.Camera camera = Box.cameras.atId(0);
+                Mathe.translationXYZ(camera.T,0,0,-8);
+                Mathe.rotationXYZ(camera.R, 0, 0, 0);
                 final int root_location_ID = add.location(
                         Box.locations,
                         0,

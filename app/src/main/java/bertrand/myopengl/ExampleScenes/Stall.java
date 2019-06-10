@@ -22,9 +22,6 @@ import bertrand.myopengl.Tool.Vec3;
 public final class Stall {
         public static void createScene(@NotNull AssetManager asset) {
         try {
-                Box.Camera camera = Box.cameras.atId(0);
-                Mathe.translationXYZ(camera.T,0,0,-8);
-                Mathe.rotationXYZ(camera.R, 0, 0, 0);
                 final int root_location_ID = add.location(
                         Box.locations,
                         0,
@@ -42,6 +39,15 @@ public final class Stall {
                         1f,
                         1f
                 );
+
+                Box.Camera camera = Box.cameras.atId(0);
+                camera.location_ID = root_location_ID;
+                Mathe.translationXYZ(camera.T,0,0,-8);
+                Mathe.rotationXYZ(camera.R, 0, 0, 0);
+
+
+
+
                 int shaderProgram_ID = Load.texturedShader(
                         Box.shaders,
                         Str.inputStreamToString(asset.open( "Shader/shader_textured_vert.txt")),
@@ -61,7 +67,6 @@ public final class Stall {
                 Matrix.setIdentityM(translationMatrix, 0);
                 Matrix.rotateM(translationMatrix,0, 90, 1, 0, 0);
                 Matrix.rotateM(translationMatrix,0, 90, 0, 1, 0);
-                Matrix.rotateM(translationMatrix,0, 0,  0, 0, 1);
                 final float[] normals = Positions.multiplyMatrix(
                         translationMatrix,
                         obj.getNormals()

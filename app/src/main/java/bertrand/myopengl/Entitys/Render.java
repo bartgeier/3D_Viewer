@@ -5,16 +5,47 @@ import bertrand.myopengl.Tool.SparseArray.SparseArray;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Arrays;
+
 import bertrand.myopengl.OpenGL.GPU;
 import bertrand.myopengl.ShaderTypes.ShaderType;
 import bertrand.myopengl.Tool.Vec3;
+
+import static bertrand.myopengl.Entitys.Box.cameras;
 
 public class Render {
         public static void background(@NotNull final Box.BackGround backGround) {
                 GPU.renderBackground(backGround.color);
         }
 
-        public static float[] matrix = new float[16];
+        public static float[] matrixA = new float[16];
+        public static float[] matrixB = new float[16];
+        public static float[] matrixC = new float[16];
+        public static void camera (
+                @NotNull final float[] parentModelViewMatrix,
+                @NotNull final SparseArray<Box.Location> locations,
+                @NotNull final int location_ID
+        ) {
+                Matrix.setIdentityM(parentModelViewMatrix,0);
+                int index = locations.getIndex(location_ID);
+                final float[] m = locations.at(index).transformationMatrix.clone();
+                while (index != 0) {
+                        index = locations.at(index).parentIdx;
+                        Matrix.multiplyMM(
+                                parentModelViewMatrix,0,
+                                locations.at(index).transformationMatrix,0,
+                                m,0
+                        );
+                        System.arraycopy(
+                                /* m = parentModelViewMatrix */
+                                parentModelViewMatrix, 0,
+                                m, 0,
+                                parentModelViewMatrix.length //16
+                        );
+                }
+        }
+
+
         public static void entitys(
                 @NotNull final float[] parentModelViewMatrix,
                 @NotNull final SparseArray<Box.Light> lights,
@@ -80,4 +111,5 @@ public class Render {
                         GPU.render(l.vao, l.indicesCount);
                 }
         }
+
 }

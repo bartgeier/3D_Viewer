@@ -21,6 +21,7 @@ import bertrand.myopengl.ExampleScenes.Rocket;
 import bertrand.myopengl.ExampleScenes.Test_3;
 import bertrand.myopengl.ExampleScenes.Triangle;
 import bertrand.myopengl.ExampleScenes.Triangle_1;
+import bertrand.myopengl.ExampleScenes.XYZ_Arrows;
 import bertrand.myopengl.Tool.Mathe;
 import bertrand.myopengl.Tool.Time.DeltaTime;
 import bertrand.myopengl.Tool.Time.StopWatch;
@@ -54,7 +55,7 @@ public final class MainRenderer implements Renderer {
                 Box.Camera camera = Box.cameras.atId(cameraId);
 
                 if(lastExampleIndex != newExampleIndex) {
-                        ClearScreen.createScene();
+                        ClearScreen.cleanUp();
                         switch(newExampleIndex) {
                                 case CUBE:
                                         Cube.createScene(context.getAssets());
@@ -80,11 +81,14 @@ public final class MainRenderer implements Renderer {
                                 case LOW_POLY_ISLANDS:
                                         LowPoly_Islands.createScene(context.getAssets());
                                         break;
+                                case XYZ_Arrows:
+                                        XYZ_Arrows.createScene(context.getAssets());
+                                        break;
                                 case TEST_3:
                                         Test_3.createScene(context.getAssets());
                                         break;
-
                                 default:
+                                        ClearScreen.createScene();
                                         break;
                         }
                         Matrix.perspectiveM(Update.matrix,0, camera.fovyZoomAngle, camera.aspectRatio, camera.near, camera.far);
@@ -101,8 +105,12 @@ public final class MainRenderer implements Renderer {
                 stopWatch.start_ns();
 
                 Render.background(Box.backGround);
-                Matrix.multiplyMM(Render.matrix,0,camera.T,0,camera.R,0);
-                Render.entitys(Render.matrix, Box.lights, Box.locations, Box.shaders);
+                Matrix.multiplyMM(Render.matrixA,0,camera.T,0,camera.R,0);
+                Render.camera(Render.matrixB,Box.locations, camera.location_ID);
+                Matrix.invertM(Render.matrixC,0,Render.matrixB,0);
+                Matrix.multiplyMM(Render.matrixB,0,Render.matrixA,0,Render.matrixC,0);
+
+                Render.entitys(Render.matrixB, Box.lights, Box.locations, Box.shaders);
         }
 
         @Override
@@ -128,6 +136,8 @@ public final class MainRenderer implements Renderer {
         }
 
         public void onDeviceOrientationChanged(final float[] rotationMatrix) {
+                /* rotateM because y pointet to the sky not z */
+                //Mat rix.rotateM(rotationMatrix,0, 90, 1, 0, 0);
                 Box.Camera c = Box.cameras.atId(cameraId);
                 c.R = rotationMatrix;
         }
@@ -155,7 +165,7 @@ public final class MainRenderer implements Renderer {
                         vector,
                         0
                 );
-                Box.Location l = Box.locations.at(0);
+                Box.Location l = Box.locations.atId(camera.location_ID);
                 l.position.x += result[0]/100;
                 l.position.y += result[1]/100;
                 l.position.z += result[2]/100;

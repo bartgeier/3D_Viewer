@@ -12,6 +12,7 @@ public class ExampleNames {
                 STALL,
                 ROCKET,
                 LOW_POLY_ISLANDS,
+                XYZ_Arrows,
                 TEST_3,
                 TEST_4,
                 TEST_5,
@@ -36,6 +37,7 @@ public class ExampleNames {
                 names.add(Index.STALL.ordinal(),"Stall");
                 names.add(Index.ROCKET.ordinal(),"Rocket");
                 names.add(Index.LOW_POLY_ISLANDS.ordinal(),"LowPoly Islands");
+                names.add(Index.XYZ_Arrows.ordinal(),"World XYZ");
                 names.add(Index.TEST_3.ordinal(),"Test_3");
                 names.add(Index.TEST_4.ordinal(),"Test_4");
                 names.add(Index.TEST_5.ordinal(),"Test_5");

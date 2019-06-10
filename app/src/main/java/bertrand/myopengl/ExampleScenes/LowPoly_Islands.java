@@ -22,10 +22,6 @@ import bertrand.myopengl.Tool.Str;
 public final class LowPoly_Islands {
         public static void createScene(@NotNull AssetManager asset) {
         try {
-                Box.Camera camera = Box.cameras.atId(0);
-                Mathe.translationXYZ(camera.T,0,0,-50);
-                Mathe.rotationXYZ(camera.R, 0, 0, 0);
-
                 int shaderProgram_ID = Load.texturedShader(
                         Box.shaders,
                         Str.inputStreamToString(asset.open( "Shader/shader_textured_vert.txt")),
@@ -56,7 +52,6 @@ public final class LowPoly_Islands {
                 }
                 Hierarchy hierarchy = new Hierarchy();
                 hierarchy.createRoot();
-                hierarchy.datas.get(0).rotX = 90f;//turn root into Device orientaion
                 hierarchy.attach(
                         SceneParser.hierarchy(
                                 asset.open("LowPoly_Islands/Scene_Simple.csv")
@@ -82,6 +77,12 @@ public final class LowPoly_Islands {
                                 d.scaleZ
                         );
                 }
+
+                Box.Camera camera = Box.cameras.atId(0);
+                camera.location_ID = Box.locations.getId(0);//root
+                Mathe.translationXYZ(camera.T,0,0,-50);
+                Mathe.rotationXYZ(camera.R, 0, 0, 0);
+
                 add.light(
                         Box.lights,
                         0f,-0.5f,-1f,

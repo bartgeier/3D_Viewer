@@ -21,9 +21,6 @@ import bertrand.myopengl.Tool.Vec3;
 public final class Test_3 {
         public static void createScene(@NotNull AssetManager asset) {
         try {
-                Box.Camera camera = Box.cameras.atId(0);
-                Mathe.translationXYZ(camera.T,0,0,-20);
-                Mathe.rotationXYZ(camera.R, 0, 0, 0);
                 final int root_location_ID = add.location(
                         Box.locations,
                         0,
@@ -33,8 +30,8 @@ public final class Test_3 {
                         0, //dummy
                         0f,
                         0f,
+                        -5f,
                         0f,
-                        90f,
                         0f,
                         0f,
                         1f,
@@ -66,7 +63,7 @@ public final class Test_3 {
                         obj.getNormals()
                 );
 
-                add.location(
+                final int tree_location_ID  = add.location(
                         Box.locations,
                         0,
                         shaderProgram_ID,
@@ -83,6 +80,13 @@ public final class Test_3 {
                         1f,
                         1f
                 );
+                //----------------- camera
+
+                Box.Camera camera = Box.cameras.atId(0);
+                camera.location_ID = root_location_ID;
+                Mathe.translationXYZ(camera.T,0,0,-8);
+                Mathe.rotationXYZ(camera.R, 0, 0, 0);
+                //-----------------
 
                 obj = OBJParser.transform(
                         asset.open("LowPoly_Islands/conifer.obj")

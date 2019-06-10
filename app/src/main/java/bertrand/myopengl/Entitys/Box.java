@@ -168,13 +168,13 @@ public class Box {
         public static SparseArray<Periode> periods = new SparseArray<>(null,1000);
 
         public static class Camera {
-                public final int location_ID;
+                public int location_ID;
                 public float aspectRatio;         // screen => (float)width / height
                 public float fovyZoomAngle;       // 85f degrees
                 public float near;                // 0.1f always bigger then 0
                 public float far;                 // 300f
-                public float[] T = new float[16]; // translation matrix
-                public float[] R = new float[16]; // rotation matrix
+                public float[] T = new float[16]; // translation matrixA
+                public float[] R = new float[16]; // rotation matrixA
                 public Camera(
                         final int location_ID,
                         final float aspectRatio,

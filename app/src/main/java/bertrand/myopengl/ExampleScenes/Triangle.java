@@ -17,9 +17,6 @@ import static bertrand.myopengl.Entitys.Box.Periode.Type.SWING;
 public final class Triangle  {
         public static void createScene(@NotNull AssetManager asset) {
         try {
-                Box.Camera camera = Box.cameras.atId(0);
-                Mathe.translationXYZ(camera.T,0,0,-1);
-                Mathe.rotationXYZ(camera.R, 0, 0, 0);
                 final int root_location_ID = add.location(
                         Box.locations,
                         0,
@@ -38,7 +35,10 @@ public final class Triangle  {
                         1f
                 );
 
-
+                Box.Camera camera = Box.cameras.atId(0);
+                camera.location_ID = root_location_ID;
+                Mathe.translationXYZ(camera.T,0,0,-3);
+                Mathe.rotationXYZ(camera.R, 0, 0, 0);
 
                 int shaderProgram_ID = Load.coloredShader(
                         Box.shaders,
@@ -51,14 +51,14 @@ public final class Triangle  {
                                 0,1,2
                         },
                         new float[] { //positions
-                                0.0f, -0.5f, 0f,
-                                0.5f,  0.5f, 0f,
-                                -0.5f,  0.5f, 0f,
+                                0.0f,  0.5f, 0f,
+                               -0.5f, -0.5f, 0f,
+                                0.5f, -0.5f, 0f,
                         },
                         new float[] { //colors
                                 1.0f, 0.06f, 0.0f, 1.0f,
-                                0.0f, 1.0f, 0.0f, 1.0f,
                                 0.0f, 0.0f, 1.0f, 1.0f,
+                                0.0f, 1.0f, 0.0f, 1.0f,
                         },
                         new float[] { //normals
                                 0, 0, 1,
@@ -75,7 +75,7 @@ public final class Triangle  {
                         Box.meshes.atId(mesh_ID).indicesCount,
                         0f,
                         0f,
-                        -5f,
+                        0f,
                         0f,
                         0f,
                         0f,

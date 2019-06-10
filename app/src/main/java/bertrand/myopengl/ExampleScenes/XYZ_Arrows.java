@@ -3,7 +3,6 @@ package bertrand.myopengl.ExampleScenes;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.opengl.Matrix;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -19,7 +18,7 @@ import bertrand.myopengl.Tool.Positions;
 import bertrand.myopengl.Tool.Str;
 import bertrand.myopengl.Tool.Vec3;
 
-public final class Rocket {
+public final class XYZ_Arrows {
         public static void createScene(@NotNull AssetManager asset) {
         try {
                 final int root_location_ID = add.location(
@@ -39,12 +38,6 @@ public final class Rocket {
                         1f,
                         1f
                 );
-
-                Box.Camera camera = Box.cameras.atId(0);
-                camera.location_ID = root_location_ID;
-                Mathe.translationXYZ(camera.T,0,0,-5);
-                Mathe.rotationXYZ(camera.R, 0, 0, 0);
-
                 int shaderProgram_ID = Load.texturedShader(
                         Box.shaders,
                         Str.inputStreamToString(asset.open( "Shader/shader_textured_vert.txt")),
@@ -52,15 +45,16 @@ public final class Rocket {
                 );
 
                 ModelData obj = OBJParser.transform(
-                        asset.open("Rocket/rocket_obj.obj")
+                        asset.open("XYZ_Arrows/XYZ_Arrows.obj")
                 );
 
                 Bitmap bitmap = BitmapFactory.decodeStream(
-                        asset.open("Rocket/rocket_png.png")
+                        asset.open("XYZ_Arrows/XYZ_Arrows.png")
                 );
 
                 final Vec3 offset = Positions.offset(obj.getVertices());
-                final int mesh_ID = Load.texturedModel(
+
+                int mesh_ID = Load.texturedModel(
                         Box.meshes,
                         bitmap,
                         obj.getIndices(),
@@ -69,16 +63,16 @@ public final class Rocket {
                         obj.getNormals()
                 );
 
-                add.location(
+                final int XYZ_Arrows_location_ID  = add.location(
                         Box.locations,
                         0,
                         shaderProgram_ID,
                         Box.meshes.atId(mesh_ID).vao,
                         Box.meshes.atId(mesh_ID).texId,
                         Box.meshes.atId(mesh_ID).indicesCount,
-                        -offset.x,
-                        -offset.y,
-                        -offset.z,
+                        0f,
+                        0f,
+                        0f,
                         0f,
                         0f,
                         0f,
@@ -86,6 +80,12 @@ public final class Rocket {
                         1f,
                         1f
                 );
+
+                Box.Camera camera = Box.cameras.atId(0);
+                camera.location_ID = root_location_ID;
+                Mathe.translationXYZ(camera.T,0,0,-25);
+                Mathe.rotationXYZ(camera.R, 0, 0, 0);
+
                 add.light(
                         Box.lights,
                         0f,-0.5f,-1f,

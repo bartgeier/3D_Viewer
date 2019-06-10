@@ -13,13 +13,11 @@ import bertrand.myopengl.Tool.Mathe;
 import bertrand.myopengl.Tool.Str;
 
 import static bertrand.myopengl.Entitys.Box.Periode.Type.ROTATE_Y;
+import static bertrand.myopengl.Entitys.Box.Periode.Type.ROTATE_Z;
 
 public final class Cube {
         public static void createScene(@NotNull AssetManager asset) {
         try {
-                Box.Camera camera = Box.cameras.atId(0);
-                Mathe.translationXYZ(camera.T,0,0,-4);
-                Mathe.rotationXYZ(camera.R, 0, 0, 0);
                 final int root_location_ID = add.location(
                         Box.locations,
                         0,
@@ -37,6 +35,11 @@ public final class Cube {
                         1f,
                         1f
                 );
+                Box.Camera camera = Box.cameras.atId(0);
+                camera.location_ID = root_location_ID;
+                Mathe.translationXYZ(camera.T,0,0,-4);
+                Mathe.rotationXYZ(camera.R, 0, 0, 0);
+
                 int shaderProgram_ID = Load.coloredShader(
                         Box.shaders,
                         Str.inputStreamToString(asset.open( "Shader/shader_colored_vert.txt")),
@@ -45,10 +48,10 @@ public final class Cube {
                 final int mesh_ID = Load.coloredModel(
                         Box.meshes,
                         new int[] { // indices
-                                // Front
+                                // Top
                                 0, 1, 2,
                                 2, 3, 0,
-                                // Back
+                                // Bottom
                                 4, 5, 6,
                                 6, 7, 4,
                                 // Left
@@ -57,21 +60,21 @@ public final class Cube {
                                 // Right
                                 12, 13, 14,
                                 14, 15, 12,
-                                // Top
+                                // Back
                                 16, 17, 18,
                                 18, 19, 16,
-                                // Bottom
+                                // Front
                                 20, 21, 22,
                                 22, 23, 20
                         },
                         new float[] { // positions
-                                // Front
+                                // Top
                                 1, -1,  1,   // 0
                                 1,  1,  1,   // 1
                                 -1,  1,  1,   // 2
                                 -1,  -1, 1,   // 3
 
-                                // Back
+                                // Bottom
                                 -1, -1, -1,    // 4
                                 -1,  1, -1,    // 5
                                 1,  1, -1,    // 6
@@ -89,13 +92,13 @@ public final class Cube {
                                 1,  1,  1,   // 14
                                 1, -1,  1,   // 15
 
-                                // Top
+                                // Back
                                 1,  1,  1,    // 16
                                 1,  1, -1,    // 17
                                 -1,  1, -1,    // 18
                                 -1,  1,  1,    // 19
 
-                                // Bottom
+                                // Front
                                 1, -1, -1,    // 20
                                 1, -1,  1,    // 21
                                 -1, -1,  1,    // 22
@@ -174,8 +177,8 @@ public final class Cube {
                 add.period(
                         location_ID,
                         Box.periods,
-                        ROTATE_Y,
-                        8000,
+                        ROTATE_Z,
+                        2000,
                         0
                 );
                 add.light(

@@ -105,7 +105,7 @@ public class GPU {
 
         public static void loadMatrix(int uniformID,@NotNull float[] matrix) {
                 if (matrix.length != 16) {
-                        throw new AssertionError("Is not 4x4 matrix ");
+                        throw new AssertionError("Is not 4x4 matrixA ");
                 }
                 GLES.glUniformMatrix4fv(
                         uniformID,

@@ -16,6 +16,10 @@ public class CleanUp {
                 lights.clear();
         }
 
+        public static void cameras(@NotNull final SparseArray<Box.Camera> cameras) {
+                cameras.clear();
+        }
+
         public static void shaders(
                 @NotNull final SparseArray<Box.Shader> shaders
         ) {

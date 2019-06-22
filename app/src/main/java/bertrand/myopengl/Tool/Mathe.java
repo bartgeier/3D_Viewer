@@ -13,6 +13,9 @@ import static java.lang.StrictMath.sqrt;
 import static java.lang.StrictMath.toDegrees;
 
 public class Mathe {
+        /** Temporary memory for operations that need temporary matrix data. */
+        private final static float[] sTemp = new float[32];
+
         public static Vec3 eulerAngels(
                 @NotNull final float[] R
         ) {
@@ -58,6 +61,16 @@ public class Mathe {
                 Matrix.rotateM(rotationMatrix,0, dz, 0, 0, 1);
         }
 
+
+        /* x *= m */
+        public static void multiplyMM(float[] x, float[] m) {
+                synchronized(sTemp) {
+                        Matrix.multiplyMM(sTemp, 0, x,0, m, 0);
+                        System.arraycopy(sTemp, 0, x, 0, 16);
+                }
+        }
+
+
         public static float adjustDistance(
                 float distance,
                 final float factor,
@@ -102,6 +115,51 @@ public class Mathe {
         ) {
                 Matrix.setIdentityM(T, 0);
                 Matrix.translateM(T,0,x, y, z);
+        }
+
+        /* https://www.euclideanspace.com */
+        /* /maths/geometry/rotations/conversions/quaternionToMatrix/index.htm */
+        public static void quatToMatrix(
+                final float R[],
+                final float w,
+                final float x,
+                final float y,
+                final float z
+        ) {
+                final float ww = w * w;
+                final float xx = x * x;
+                final float yy = y * y;
+                final float zz = z * z;
+                final float xy = x * y;
+                final float zw = z * w;
+                final float xz = x * z;
+                final float yw = y * w;
+                final float yz = y * z;
+                final float xw = x * w;
+                // invs (inverse square length)
+                // is only required if quaternion is not already normalised
+                final float invs = 1 / (xx + yy + zz + ww);
+                // since ww + xx + yy + zz = 1 / invs * invs
+                R[0] = (xx - yy - zz + ww) * invs;
+                R[5] = (-xx + yy - zz + ww) * invs;
+                R[10] = (-xx - yy + zz + ww) * invs;
+                R[15] = 1;
+
+                R[1] = 2.0f * (xy + zw) * invs;
+                R[4] = 2.0f * (xy - zw) * invs;
+
+                R[2] = 2.0f * (xz - yw) * invs;
+                R[8] = 2.0f * (xz + yw) * invs;
+
+                R[6] = 2.0f * (yz + xw) * invs;
+                R[9] = 2.0f * (yz - xw) * invs;
+
+                R[3] = 0;
+                R[7] = 0;
+                R[11] = 0;
+                R[12] = 0;
+                R[13] = 0;
+                R[14] = 0;
         }
 
 

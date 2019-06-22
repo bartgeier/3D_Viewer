@@ -99,7 +99,8 @@ public final class MainRenderer implements Renderer {
                         lastExampleIndex = newExampleIndex;
 
                 }
-                Update.periods(Box.locations, Box.periods, dt);
+                Update.swings(Box.locations, Box.swings, dt);
+                Update.spins(Box.locations, Box.spin, dt);
 
                 frameMessageHandler.sendMessage_FrameRateUpdate(stopWatch.avarage_ns(10));
                 stopWatch.start_ns();

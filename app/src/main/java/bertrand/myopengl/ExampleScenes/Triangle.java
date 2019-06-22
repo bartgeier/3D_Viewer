@@ -12,8 +12,6 @@ import bertrand.myopengl.Entitys.add;
 import bertrand.myopengl.Tool.Mathe;
 import bertrand.myopengl.Tool.Str;
 
-import static bertrand.myopengl.Entitys.Box.Periode.Type.SWING;
-
 public final class Triangle  {
         public static void createScene(@NotNull AssetManager asset) {
         try {
@@ -83,13 +81,12 @@ public final class Triangle  {
                         1f,
                         1f
                 );
-                add.period(
+                Box.Swing swing = new Box.Swing(
                         location_ID,
-                        Box.periods,
-                        SWING,
-                        8000,
-                        0
+                        8000, 0, 3,0
                 );
+                Box.swings.add(swing);
+
                 add.light(
                         Box.lights,
                         0f,-0.5f,-1f,

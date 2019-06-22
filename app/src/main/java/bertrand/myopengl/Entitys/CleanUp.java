@@ -50,7 +50,11 @@ public class CleanUp {
                 locations.clear();
         }
 
-        public static void periods(@NotNull final SparseArray<Box.Periode> periods) {
-                periods.clear();
+        public static void swings(@NotNull final SparseArray<Box.Swing> swings) {
+                swings.clear();
+        }
+
+        public static void spins(@NotNull final SparseArray<Box.Spin> spins) {
+                spins.clear();
         }
 }

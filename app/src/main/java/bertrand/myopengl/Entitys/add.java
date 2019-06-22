@@ -6,6 +6,7 @@ import org.jetbrains.annotations.NotNull;
 
 import bertrand.myopengl.Tool.Color4f;
 import bertrand.myopengl.Tool.Vec3;
+import bertrand.myopengl.Tool.Vec4;
 
 
 public class add {
@@ -46,6 +47,7 @@ public class add {
                         parentIdx,
                         new Vec3(pos_x, pos_y, pos_z),
                         new Vec3(rot_x, rot_y, rot_z),
+                        new Vec4(0,0,0,0),
                         new Vec3(scale_x, scale_y, scale_z),
                         shaderProgram_ID,
                         texId,
@@ -53,16 +55,5 @@ public class add {
                         indicesCount
                 );
                 return locations.add(l);
-        }
-
-        public static int period(
-                int location_ID,
-                @NotNull final SparseArray<Box.Periode> periods,
-                @NotNull final Box.Periode.Type type,
-                double period_ms,
-                double start_angle
-        ) {
-                Box.Periode p = new Box.Periode(location_ID, type, period_ms, start_angle);
-                return periods.add(p);
         }
 }

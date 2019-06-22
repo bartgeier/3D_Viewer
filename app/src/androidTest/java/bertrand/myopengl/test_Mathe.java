@@ -233,4 +233,52 @@ public class test_Mathe {
                 assertEquals(22f, T[13],0.1f);
                 assertEquals(33f, T[14],0.1f);
         }
+
+        @Test
+        public void quaternion_to_matrix() {
+                //float[] H = new float[4];
+                float[] R = new float[16];
+                //https://www.andre-gaschler.com/rotationconverter/
+                Mathe.quatToMatrix(R,0.5f,0.5f,0.5f,0.5f);
+                assertEquals(0.0f ,R[0], 0.001f);
+                assertEquals(1.0f ,R[1], 0.001f);
+                assertEquals(0.0f ,R[2], 0.001f);
+                assertEquals(0.0f ,R[3], 0.001f);
+
+                assertEquals(0.0f, R[4], 0.001f);
+                assertEquals(0.0f, R[5], 0.001f);
+                assertEquals(1.0f ,R[6], 0.001f);
+                assertEquals(0.0f ,R[7], 0.001f);
+
+                assertEquals(1.0f ,R[8], 0.001f);
+                assertEquals(0.0f ,R[9], 0.001f);
+                assertEquals(0.0f ,R[10], 0.001f);
+                assertEquals(0.0f ,R[11], 0.001f);
+
+                assertEquals(0.0f ,R[12], 0.001f);
+                assertEquals(0.0f ,R[13], 0.001f);
+                assertEquals(0.0f ,R[14], 0.001f);
+                assertEquals(1.0f ,R[15], 0.001f);
+
+                Mathe.quatToMatrix(R,0.9f,1.0f,5.2f,3.6f);
+                assertEquals(-0.9134178f ,R[0], 0.000001f);
+                assertEquals(0.40373120f ,R[1], 0.000001f);
+                assertEquals(-0.0516623f ,R[2], 0.000001f);
+                assertEquals(0.00000000f ,R[3], 0.000001f);
+
+                assertEquals(0.0937575f, R[4], 0.000001f);
+                assertEquals(0.3322172f, R[5], 0.000001f);
+                assertEquals(0.9385315f ,R[6], 0.000001f);
+                assertEquals(0.0000000f ,R[7], 0.000001f);
+
+                assertEquals(0.39607750f ,R[8], 0.000001f);
+                assertEquals(0.85242770f ,R[9], 0.000001f);
+                assertEquals(-0.3413059f ,R[10], 0.000001f);
+                assertEquals(0.00000000f ,R[11], 0.000001f);
+
+                assertEquals(0.0f ,R[12], 0.001f);
+                assertEquals(0.0f ,R[13], 0.001f);
+                assertEquals(0.0f ,R[14], 0.001f);
+                assertEquals(1.0f ,R[15], 0.001f);
+        }
 }

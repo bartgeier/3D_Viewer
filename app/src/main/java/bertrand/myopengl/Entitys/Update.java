@@ -1,6 +1,8 @@
 package bertrand.myopengl.Entitys;
 
 import android.opengl.Matrix;
+
+import bertrand.myopengl.Tool.Mathe;
 import bertrand.myopengl.Tool.SparseArray.SparseArray;
 
 import org.jetbrains.annotations.NotNull;
@@ -8,42 +10,40 @@ import org.jetbrains.annotations.NotNull;
 import bertrand.myopengl.OpenGL.GPU;
 
 public class Update {
-        public static void periods(
+        public static void spins(
                 @NotNull final SparseArray<Box.Location> locations,
-                @NotNull final SparseArray<Box.Periode> periods,
+                @NotNull final SparseArray<Box.Spin> spins,
                 final float dt_ms
         ) {
-                for (int i = 0; i < periods.size(); i++) {
-                        Box.Periode periode = periods.at(i);
-                        Box.Location l = locations.atId(periode.location_ID);
-                        switch(periode.type) {
-                                case ROTATE_X:
-                                        periode.angle += dt_ms * 360/periode.period_ms;
-                                        l.rotation.x = (float)periode.angle;
-                                        break;
-                                case ROTATE_Y:
-                                        periode.angle += dt_ms * 360/periode.period_ms;
-                                        l.rotation.y = (float)periode.angle;
-                                        break;
-                                case ROTATE_Z:
-                                        periode.angle += dt_ms * 360/periode.period_ms;
-                                        l.rotation.z = (float)periode.angle;
-                                        break;
-                                case SWING:
-                                        periode.angle += dt_ms * 360/periode.period_ms;
-                                        periode.angle %= 360;
-                                        final double rad = Math.toRadians(periode.angle);
-                                        l.position.x = (float)(4 * Math.sin(rad));
-                                        break;
-                                default:
-                                        break;
-                        }
-                        Matrix.setIdentityM(l.transformationMatrix, 0);
-                        Matrix.translateM(l.transformationMatrix,0,l.position.x, l.position.y, l.position.z);
-                        Matrix.rotateM(l.transformationMatrix,0, l.rotation.x, 1, 0, 0);
-                        Matrix.rotateM(l.transformationMatrix,0, l.rotation.y, 0, 1, 0);
-                        Matrix.rotateM(l.transformationMatrix,0, l.rotation.z,  0, 0, 1);
-                        Matrix.scaleM(l.transformationMatrix,0, l.scale.x, l.scale.y, l.scale.z);
+                for (int i = 0; i < spins.size(); i++) {
+                        Box.Spin spin = spins.at(i);
+                        Box.Location l = locations.atId(spin.location_ID);
+                        Matrix.rotateM(
+                                l.transformationMatrix,0,
+                                dt_ms * 360/spin.period_ms,
+                                spin.axis_x,spin.axis_y,spin.axis_z
+                        );
+                }
+        }
+
+        public static void swings(
+                @NotNull final SparseArray<Box.Location> locations,
+                @NotNull final SparseArray<Box.Swing> swings,
+                final float dt_ms
+        ) {
+                for (int i = 0; i < swings.size(); i++) {
+                        Box.Swing swing = swings.at(i);
+                        Box.Location l = locations.atId(swing.location_ID);
+
+                        final float w = (float)(2*Math.PI/swing.period_ms); //Kreisfrequenz
+                        swing.angle += (dt_ms*w + swing.phaseShift);
+                        swing.angle %= 2*Math.PI;
+                        final float deflection = swing.amplitude * (float)Math.sin(swing.angle);
+                        final float delta = deflection - Mathe.Tx(l.transformationMatrix);
+                        Matrix.translateM(
+                                l.transformationMatrix,0,
+                                delta, 0, 0
+                        );
                 }
         }
 

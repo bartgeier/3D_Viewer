@@ -12,9 +12,6 @@ import bertrand.myopengl.Entitys.add;
 import bertrand.myopengl.Tool.Mathe;
 import bertrand.myopengl.Tool.Str;
 
-import static bertrand.myopengl.Entitys.Box.Periode.Type.ROTATE_Y;
-import static bertrand.myopengl.Entitys.Box.Periode.Type.ROTATE_Z;
-
 public final class Cube {
         public static void createScene(@NotNull AssetManager asset) {
         try {
@@ -174,13 +171,10 @@ public final class Cube {
                         1f,
                         1f
                 );
-                add.period(
-                        location_ID,
-                        Box.periods,
-                        ROTATE_Z,
-                        2000,
-                        0
-                );
+
+                Box.Spin spin = new Box.Spin(location_ID, 2000,0,0,1);
+                Box.spin.add(spin);
+
                 add.light(
                         Box.lights,
                         0f,0.8f,-1f,

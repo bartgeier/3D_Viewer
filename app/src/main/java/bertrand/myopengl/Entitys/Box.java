@@ -2,11 +2,13 @@ package bertrand.myopengl.Entitys;
 
 import android.opengl.Matrix;
 
+
 import org.jetbrains.annotations.NotNull;
 
 import bertrand.myopengl.Tool.Color4f;
 import bertrand.myopengl.Tool.Vec3;
 import bertrand.myopengl.Tool.SparseArray.SparseArray;
+import bertrand.myopengl.Tool.Vec4;
 
 public class Box {
         public static class BackGround {
@@ -107,6 +109,7 @@ public class Box {
                 public int parentIdx;
                 public final Vec3 position;
                 public final Vec3 rotation; // degrees
+                public final Vec4 quaternion;
                 public final Vec3 scale;
                 public final float[] transformationMatrix = new float[16];
                 public final float[] modelViewMatrix = new float[16];
@@ -116,13 +119,14 @@ public class Box {
                 public final int indicesCount;
                 public Location(
                         int parentIdx,
-                        final Vec3 position, final Vec3 rotation, final Vec3 scale,
+                        final Vec3 position, final Vec3 rotation, final Vec4 quaternion, final Vec3 scale,
                         final int shaderProgram_ID, final int texId,final int vao, final int indicesCount
                 ) {
                         this.parentIdx = parentIdx;
 
                         this.position = position;
                         this.rotation = rotation;
+                        this.quaternion = quaternion;
                         this.scale = scale;
 
                         this.shader_ID = shaderProgram_ID;
@@ -140,32 +144,48 @@ public class Box {
         }
         public static SparseArray<Location> locations = new SparseArray<>(null,1000);
 
-
-        public static class Periode {
-                public enum Type {
-                        ROTATE_X,
-                        ROTATE_Y,
-                        ROTATE_Z,
-                        SWING
-                }
+        public static class Swing {
                 public final int location_ID;
-                public final Type type;
-                public final double period_ms;
-                public double angle;
-                public Periode(
+                public final float period_ms;
+                public float angle; //rad
+                public final float amplitude;
+                public final float phaseShift; //rad
+                public Swing(
                         final int location_ID,
-                        final Type type,
-                        final double period_ms,
-                        final double start_angle
+                        final float period_ms,
+                        final float start_angle,
+                        final float amplitude,
+                        final float phaseShift
                 ) {
                         this.location_ID = location_ID;
-                        this.type = type;
                         this.period_ms = period_ms;
                         this.angle = start_angle;
+                        this.amplitude = amplitude;
+                        this.phaseShift = phaseShift;
                 }
 
         }
-        public static SparseArray<Periode> periods = new SparseArray<>(null,1000);
+        public static SparseArray<Swing> swings = new SparseArray<>(null,1000);
+
+
+        public static class Spin {
+                public int location_ID;
+                public float period_ms;
+                public float axis_x,axis_y,axis_z;
+                public Spin(
+                        final int location_ID,
+                        final float period_ms,
+                        final float axis_x, final float axis_y, final float axis_z
+                ) {
+                        this.location_ID = location_ID;
+                        this.period_ms = period_ms;
+                        this.axis_x = axis_x;
+                        this.axis_y = axis_y;
+                        this.axis_z = axis_z;
+                }
+        }
+        public static SparseArray<Spin> spin = new SparseArray<>(null,1000);
+
 
         public static class Camera {
                 public int location_ID;
@@ -175,7 +195,7 @@ public class Box {
                 public float far;                 // 300f
                 public float[] T = new float[16]; // translation matrixA
                 public float[] R = new float[16]; // rotation matrixA
-                public Camera(
+                        public Camera(
                         final int location_ID,
                         final float aspectRatio,
                         final float fovyZoomAngle,

@@ -167,14 +167,8 @@ public final class MainRenderer implements Renderer {
                         0
                 );
                 Box.Location l = Box.locations.atId(camera.location_ID);
-                l.position.x += result[0]/100;
-                l.position.y += result[1]/100;
-                l.position.z += result[2]/100;
-                Matrix.setIdentityM(l.transformationMatrix, 0);
-                Matrix.translateM(l.transformationMatrix,0,l.position.x, l.position.y, l.position.z);
-                Matrix.rotateM(l.transformationMatrix,0, l.rotation.x, 1, 0, 0);
-                Matrix.rotateM(l.transformationMatrix,0, l.rotation.y, 0, 1, 0);
-                Matrix.rotateM(l.transformationMatrix,0, l.rotation.z,  0, 0, 1);
-                Matrix.scaleM(l.transformationMatrix,0, l.scale.x, l.scale.y, l.scale.z);
+                Matrix.translateM(l.TF,0,
+                        result[0]/100, result[1]/100, result[2]/100
+                );
         }
 }

@@ -8,7 +8,6 @@ import org.jetbrains.annotations.NotNull;
 import bertrand.myopengl.Tool.Color4f;
 import bertrand.myopengl.Tool.Vec3;
 import bertrand.myopengl.Tool.SparseArray.SparseArray;
-import bertrand.myopengl.Tool.Vec4;
 
 public class Box {
         public static class BackGround {
@@ -107,39 +106,26 @@ public class Box {
 
         public static class Location {
                 public int parentIdx;
-                public final Vec3 position;
-                public final Vec3 rotation; // degrees
-                public final Vec4 quaternion;
-                public final Vec3 scale;
-                public final float[] transformationMatrix = new float[16];
-                public final float[] modelViewMatrix = new float[16];
+                public final float[] TF = new float[16]; // transformation matrix
+                public final float[] MV = new float[16]; // model view matrix
                 public final int shader_ID;
                 public final int vao;
                 public final int texId;
                 public final int indicesCount;
                 public Location(
                         int parentIdx,
-                        final Vec3 position, final Vec3 rotation, final Vec4 quaternion, final Vec3 scale,
-                        final int shaderProgram_ID, final int texId,final int vao, final int indicesCount
+                        final int shaderProgram_ID,
+                        final int vao,
+                        final int texId,
+                        final int indicesCount
                 ) {
                         this.parentIdx = parentIdx;
-
-                        this.position = position;
-                        this.rotation = rotation;
-                        this.quaternion = quaternion;
-                        this.scale = scale;
-
                         this.shader_ID = shaderProgram_ID;
                         this.vao = vao;
                         this.texId = texId;
                         this.indicesCount = indicesCount;
+                        Matrix.setIdentityM(TF, 0);
 
-                        Matrix.setIdentityM(transformationMatrix, 0);
-                        Matrix.translateM(transformationMatrix,0,position.x, position.y, position.z);
-                        Matrix.rotateM(transformationMatrix,0, rotation.x, 1, 0, 0);
-                        Matrix.rotateM(transformationMatrix,0, rotation.y, 0, 1, 0);
-                        Matrix.rotateM(transformationMatrix,0, rotation.z,  0, 0, 1);
-                        Matrix.scaleM(transformationMatrix,0, scale.x, scale.y, scale.z);
                 }
         }
         public static SparseArray<Location> locations = new SparseArray<>(null,1000);

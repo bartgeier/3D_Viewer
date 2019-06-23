@@ -52,9 +52,10 @@ public class SceneParser {
                                         h.x = Float.valueOf(l[i++]);
                                         h.y = Float.valueOf(l[i++]);
                                         h.z = Float.valueOf(l[i++]);
-                                        h.rotX = Float.valueOf(l[i++]);
-                                        h.rotY = Float.valueOf(l[i++]);
-                                        h.rotZ = Float.valueOf(l[i++]);
+                                        h.quatW = Float.valueOf(l[i++]);
+                                        h.quatX = Float.valueOf(l[i++]);
+                                        h.quatY = Float.valueOf(l[i++]);
+                                        h.quatZ = Float.valueOf(l[i++]);
                                         h.scaleX = Float.valueOf(l[i++]);
                                         h.scaleY = Float.valueOf(l[i++]);
                                         h.scaleZ = Float.valueOf(l[i]);

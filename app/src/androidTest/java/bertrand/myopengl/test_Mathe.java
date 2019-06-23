@@ -281,4 +281,30 @@ public class test_Mathe {
                 assertEquals(0.0f ,R[14], 0.001f);
                 assertEquals(1.0f ,R[15], 0.001f);
         }
+
+        @Test
+        public void rotateM_withQuaternion() {
+                float[] TF = new float[16];
+                Matrix.setIdentityM(TF,0);
+                Mathe.rotateM_withQuaternion(TF, 0.9f,1.0f,5.2f,3.6f);
+                assertEquals(-0.9134178f ,TF[0], 0.000001f);
+                assertEquals(0.40373120f ,TF[1], 0.000001f);
+                assertEquals(-0.0516623f ,TF[2], 0.000001f);
+                assertEquals(0.00000000f ,TF[3], 0.000001f);
+
+                assertEquals(0.0937575f, TF[4], 0.000001f);
+                assertEquals(0.3322172f, TF[5], 0.000001f);
+                assertEquals(0.9385315f ,TF[6], 0.000001f);
+                assertEquals(0.0000000f ,TF[7], 0.000001f);
+
+                assertEquals(0.39607750f ,TF[8], 0.000001f);
+                assertEquals(0.85242770f ,TF[9], 0.000001f);
+                assertEquals(-0.3413059f ,TF[10], 0.000001f);
+                assertEquals(0.00000000f ,TF[11], 0.000001f);
+
+                assertEquals(0.0f ,TF[12], 0.001f);
+                assertEquals(0.0f ,TF[13], 0.001f);
+                assertEquals(0.0f ,TF[14], 0.001f);
+                assertEquals(1.0f ,TF[15], 0.001f);
+        }
 }

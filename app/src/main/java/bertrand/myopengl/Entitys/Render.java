@@ -5,13 +5,9 @@ import bertrand.myopengl.Tool.SparseArray.SparseArray;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
-
 import bertrand.myopengl.OpenGL.GPU;
 import bertrand.myopengl.ShaderTypes.ShaderType;
 import bertrand.myopengl.Tool.Vec3;
-
-import static bertrand.myopengl.Entitys.Box.cameras;
 
 public class Render {
         public static void background(@NotNull final Box.BackGround backGround) {
@@ -21,30 +17,37 @@ public class Render {
         public static float[] matrixA = new float[16];
         public static float[] matrixB = new float[16];
         public static float[] matrixC = new float[16];
+
+        /* output global_TF relative to 0,0,0 */
+        /* calculate the global transformation matrix from location_ID  */
+        /* ATTENTION */
+        /* Except the index from location_ID is the root index (index == 0) then */
+        /* returns a identity matrix */
+        /* That's allows us to move the Origin, the hole world and a camera attached to root */
+        /* looks still at 0,0,0.  see MainRenderer.onTouchScreenMoving */
         public static void camera (
-                @NotNull final float[] parentModelViewMatrix,
+                @NotNull final float[] global_TF,
                 @NotNull final SparseArray<Box.Location> locations,
                 @NotNull final int location_ID
         ) {
-                Matrix.setIdentityM(parentModelViewMatrix,0);
+                Matrix.setIdentityM(global_TF,0);
                 int index = locations.getIndex(location_ID);
-                final float[] m = locations.at(index).transformationMatrix.clone();
+                final float[] m = locations.at(index).TF.clone();
                 while (index != 0) {
                         index = locations.at(index).parentIdx;
                         Matrix.multiplyMM(
-                                parentModelViewMatrix,0,
-                                locations.at(index).transformationMatrix,0,
+                                global_TF,0,
+                                locations.at(index).TF,0, // local transformation
                                 m,0
                         );
                         System.arraycopy(
                                 /* m = parentModelViewMatrix */
-                                parentModelViewMatrix, 0,
+                                global_TF, 0,
                                 m, 0,
-                                parentModelViewMatrix.length //16
+                                global_TF.length //16
                         );
                 }
         }
-
 
         public static void entitys(
                 @NotNull final float[] parentModelViewMatrix,
@@ -60,22 +63,22 @@ public class Render {
 
                 final Box.Location root = locations.at(0);
                 Matrix.multiplyMM(
-                        root.modelViewMatrix,
+                        root.MV,
                         0,
                         parentModelViewMatrix,
                         0,
-                        root.transformationMatrix,
+                        root.TF,
                         0
                 );
 
                 for (int i = 1; i < locations.size(); i++) {
                         final Box.Location l = locations.at(i);
                         Matrix.multiplyMM(
-                                l.modelViewMatrix,
+                                l.MV,
                                 0,
-                                locations.at(l.parentIdx).modelViewMatrix,
+                                locations.at(l.parentIdx).MV,
                                 0,
-                                l.transformationMatrix,
+                                l.TF,
                                 0
                         );
 
@@ -91,7 +94,6 @@ public class Render {
                                         case ShaderType.Colored.shader_type_ID:
                                                 break;
                                         case ShaderType.Textured.shader_type_ID:
-                                                //GPU.loadFloat(shader.u_Texture, 0);
                                                 GPU.loadInt(shader.u_Texture, 0);
                                                 break;
                                         default:
@@ -107,7 +109,7 @@ public class Render {
                                 );
                         }
                         GPU.selectTexture(l.texId);
-                        GPU.loadMatrix(shader.u_ModelViewMatrix, l.modelViewMatrix);
+                        GPU.loadMatrix(shader.u_ModelViewMatrix, l.MV);
                         GPU.render(l.vao, l.indicesCount);
                 }
         }

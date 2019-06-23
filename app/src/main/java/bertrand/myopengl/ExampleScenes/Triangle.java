@@ -15,22 +15,14 @@ import bertrand.myopengl.Tool.Str;
 public final class Triangle  {
         public static void createScene(@NotNull AssetManager asset) {
         try {
-                final int root_location_ID = add.location(
-                        Box.locations,
-                        0,
-                        0, //dummy
-                        0, //dummy
-                        0, //dummy
-                        0, //dummy
-                        0f,
-                        0f,
-                        0f,
-                        0f,
-                        0f,
-                        0f,
-                        1f,
-                        1f,
-                        1f
+                final int root_location_ID = Box.locations.add(
+                        new Box.Location(
+                                0,
+                                0,
+                                0,
+                                0,
+                                0
+                        )
                 );
 
                 Box.Camera camera = Box.cameras.atId(0);
@@ -64,23 +56,16 @@ public final class Triangle  {
                                 0, 0, 1,
                         }
                 );
-                final int location_ID = add.location(
-                        Box.locations,
-                        0,
-                        shaderProgram_ID,
-                        Box.meshes.atId(mesh_ID).vao,
-                        0, //dummy
-                        Box.meshes.atId(mesh_ID).indicesCount,
-                        0f,
-                        0f,
-                        0f,
-                        0f,
-                        0f,
-                        0f,
-                        1f,
-                        1f,
-                        1f
+                final int location_ID = Box.locations.add(
+                        new Box.Location(
+                                0,
+                                shaderProgram_ID,
+                                Box.meshes.atId(mesh_ID).vao,
+                                Box.meshes.atId(mesh_ID).texId,
+                                Box.meshes.atId(mesh_ID).indicesCount
+                        )
                 );
+
                 Box.Swing swing = new Box.Swing(
                         location_ID,
                         8000, 0, 3,0

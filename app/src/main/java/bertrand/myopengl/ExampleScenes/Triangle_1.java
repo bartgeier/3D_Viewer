@@ -15,23 +15,16 @@ import bertrand.myopengl.Tool.Str;
 public final class Triangle_1 {
         public static void createScene(@NotNull AssetManager asset) {
         try {
-                final int root_location_ID = add.location(
-                        Box.locations,
-                        0,
-                        0, //dummy
-                        0, //dummy
-                        0, //dummy
-                        0, //dummy
-                        0f,
-                        0f,
-                        0f,
-                        0f,
-                        0f,
-                        0f,
-                        1f,
-                        1f,
-                        1f
+                final int root_location_ID = Box.locations.add(
+                        new Box.Location(
+                                0,
+                                0,
+                                0,
+                                0,
+                                0
+                        )
                 );
+
                 Box.Camera camera = Box.cameras.atId(0);
                 camera.location_ID = root_location_ID;
                 Mathe.translationXYZ(camera.T,0,0,-1);
@@ -63,23 +56,17 @@ public final class Triangle_1 {
                                 0, 0, 1,
                         }
                 );
-                add.location(
-                        Box.locations,
-                        0,
-                        shaderProgram_ID,
-                        Box.meshes.atId(mesh_ID).vao,
-                        0, //dummy
-                        Box.meshes.atId(mesh_ID).indicesCount,
-                        0f,
-                        0f,
-                        0f,
-                        0f,
-                        0f,
-                        0f,
-                        1f,
-                        1f,
-                        1f
+
+                Box.locations.add(
+                        new Box.Location(
+                                0,
+                                shaderProgram_ID,
+                                Box.meshes.atId(mesh_ID).vao,
+                                0, //dummy
+                                Box.meshes.atId(mesh_ID).indicesCount
+                        )
                 );
+
                 add.light(
                         Box.lights,
                         0f,0f,-1f,

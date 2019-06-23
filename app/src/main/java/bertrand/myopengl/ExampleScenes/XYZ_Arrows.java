@@ -3,6 +3,7 @@ package bertrand.myopengl.ExampleScenes;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.opengl.Matrix;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -21,23 +22,16 @@ import bertrand.myopengl.Tool.Vec3;
 public final class XYZ_Arrows {
         public static void createScene(@NotNull AssetManager asset) {
         try {
-                final int root_location_ID = add.location(
-                        Box.locations,
-                        0,
-                        0, //dummy
-                        0, //dummy
-                        0, //dummy
-                        0, //dummy
-                        0f,
-                        0f,
-                        0f,
-                        0f,
-                        0f,
-                        0f,
-                        1f,
-                        1f,
-                        1f
+                final int root_location_ID = Box.locations.add(
+                        new Box.Location(
+                                0,
+                                0,
+                                0,
+                                0,
+                                0
+                        )
                 );
+
                 int shaderProgram_ID = Load.texturedShader(
                         Box.shaders,
                         Str.inputStreamToString(asset.open( "Shader/shader_textured_vert.txt")),
@@ -52,8 +46,6 @@ public final class XYZ_Arrows {
                         asset.open("XYZ_Arrows/XYZ_Arrows.png")
                 );
 
-                final Vec3 offset = Positions.offset(obj.getVertices());
-
                 int mesh_ID = Load.texturedModel(
                         Box.meshes,
                         bitmap,
@@ -63,22 +55,14 @@ public final class XYZ_Arrows {
                         obj.getNormals()
                 );
 
-                final int XYZ_Arrows_location_ID  = add.location(
-                        Box.locations,
-                        0,
-                        shaderProgram_ID,
-                        Box.meshes.atId(mesh_ID).vao,
-                        Box.meshes.atId(mesh_ID).texId,
-                        Box.meshes.atId(mesh_ID).indicesCount,
-                        0f,
-                        0f,
-                        0f,
-                        0f,
-                        0f,
-                        0f,
-                        1f,
-                        1f,
-                        1f
+                Box.locations.add(
+                        new Box.Location(
+                                0,
+                                shaderProgram_ID,
+                                Box.meshes.atId(mesh_ID).vao,
+                                Box.meshes.atId(mesh_ID).texId,
+                                Box.meshes.atId(mesh_ID).indicesCount
+                        )
                 );
 
                 Box.Camera camera = Box.cameras.atId(0);

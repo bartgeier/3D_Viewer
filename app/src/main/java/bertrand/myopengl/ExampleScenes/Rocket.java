@@ -15,29 +15,19 @@ import bertrand.myopengl.Entitys.add;
 import bertrand.myopengl.Tool.Mathe;
 import bertrand.myopengl.Tool.OBJ_FILE.ModelData;
 import bertrand.myopengl.Tool.OBJ_FILE.OBJParser;
-import bertrand.myopengl.Tool.Positions;
 import bertrand.myopengl.Tool.Str;
-import bertrand.myopengl.Tool.Vec3;
 
 public final class Rocket {
         public static void createScene(@NotNull AssetManager asset) {
         try {
-                final int root_location_ID = add.location(
-                        Box.locations,
-                        0,
-                        0, //dummy
-                        0, //dummy
-                        0, //dummy
-                        0, //dummy
-                        0f,
-                        0f,
-                        0f,
-                        0f,
-                        0f,
-                        0f,
-                        1f,
-                        1f,
-                        1f
+                final int root_location_ID = Box.locations.add(
+                        new Box.Location(
+                                0,
+                                0,
+                                0,
+                                0,
+                                0
+                        )
                 );
 
                 Box.Camera camera = Box.cameras.atId(0);
@@ -59,7 +49,6 @@ public final class Rocket {
                         asset.open("Rocket/rocket_png.png")
                 );
 
-                final Vec3 offset = Positions.offset(obj.getVertices());
                 final int mesh_ID = Load.texturedModel(
                         Box.meshes,
                         bitmap,
@@ -69,23 +58,16 @@ public final class Rocket {
                         obj.getNormals()
                 );
 
-                add.location(
-                        Box.locations,
+                Box.Location l = new Box.Location(
                         0,
                         shaderProgram_ID,
                         Box.meshes.atId(mesh_ID).vao,
                         Box.meshes.atId(mesh_ID).texId,
-                        Box.meshes.atId(mesh_ID).indicesCount,
-                        -offset.x,
-                        -offset.y,
-                        -offset.z,
-                        0f,
-                        0f,
-                        0f,
-                        1f,
-                        1f,
-                        1f
+                        Box.meshes.atId(mesh_ID).indicesCount
                 );
+                Box.locations.add(l);
+                Matrix.rotateM(l.TF,0,90,1,0,0);
+
                 add.light(
                         Box.lights,
                         0f,-0.5f,-1f,

@@ -17,22 +17,14 @@ import bertrand.myopengl.Tool.Str;
 public final class Cube_swarm {
         public static void createScene(@NotNull AssetManager asset) {
                 try {
-                        final int root_location_ID = add.location(
-                                Box.locations,
-                                0,
-                                0, //dummy
-                                0, //dummy
-                                0, //dummy
-                                0, //dummy
-                                0f,
-                                0f,
-                                0f,
-                                0f,
-                                0f,
-                                0f,
-                                1f,
-                                1f,
-                                1f
+                        final int root_location_ID = Box.locations.add(
+                                new Box.Location(
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        0
+                                )
                         );
                         Box.Camera camera = Box.cameras.atId(0);
                         camera.location_ID = root_location_ID;
@@ -166,50 +158,42 @@ public final class Cube_swarm {
                         );
                         Random random = new Random();
                         for (int i = 0; i < 270; i++) {
-                                float x = random.nextFloat() * 120 - 50;
-                                float y = random.nextFloat() * 120 - 50;
-                                float z = random.nextFloat() * 120 - 50;
-                                final int location_ID = add.location(
-                                        Box.locations,
+                                Box.Location l = new Box.Location(
                                         0,
                                         shaderProgram_ID,
                                         Box.meshes.atId(mesh_ID).vao,
                                         0, //dummy
-                                        Box.meshes.atId(mesh_ID).indicesCount,
-                                        x,
-                                        y,
-                                        z,
-                                        0f,
-                                        0f,
-                                        0f,
-                                        1f,
-                                        1f,
-                                        1f
+                                        Box.meshes.atId(mesh_ID).indicesCount
                                 );
+                                final int location_ID = Box.locations.add(l);
+                                float x = random.nextFloat() * 120 - 50;
+                                float y = random.nextFloat() * 120 - 50;
+                                float z = random.nextFloat() * 120 - 50;
+                                Matrix.translateM(l.TF,0,x,y,z);
 
                                 float startAngel = (random.nextFloat() * 360) % 360;
-                                Box.Location l = Box.locations.atId(location_ID);
+                                //Box.Location l = Box.locations.atId(location_ID);
                                 if (random.nextBoolean()) {
                                         Matrix.rotateM(
-                                                l.transformationMatrix, 0,
+                                                l.TF, 0,
                                                 startAngel,
                                                 1, 0, 0
                                         );
                                 }
                                 if (random.nextBoolean()) {
                                         Matrix.rotateM(
-                                                l.transformationMatrix, 0,
+                                                l.TF, 0,
                                                 startAngel,
                                                 0, 1, 0
                                         );
                                 }
                                 if (random.nextBoolean()) {
                                         Matrix.rotateM(
-                                                l.transformationMatrix, 0,
+                                                l.TF, 0,
                                                 startAngel,
                                                 0, 0, 1
                                         );
-                                };
+                                }
 
 
                                 float period_ms = random.nextFloat() * 8000;

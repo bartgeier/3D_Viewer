@@ -117,6 +117,17 @@ public class Mathe {
                 Matrix.translateM(T,0,x, y, z);
         }
 
+        public static void rotateM_withQuaternion(
+                float[] m,
+                float w, float x, float y, float z
+        ) {
+                synchronized(sTemp) {
+                        quatToMatrix(sTemp,  w, x, y, z);
+                        Matrix.multiplyMM(sTemp, 16, m, 0, sTemp, 0);
+                        System.arraycopy(sTemp, 16, m, 0, 16);
+                }
+        }
+
         /* https://www.euclideanspace.com */
         /* /maths/geometry/rotations/conversions/quaternionToMatrix/index.htm */
         public static void quatToMatrix(
@@ -161,6 +172,8 @@ public class Mathe {
                 R[13] = 0;
                 R[14] = 0;
         }
+
+
 
 
 

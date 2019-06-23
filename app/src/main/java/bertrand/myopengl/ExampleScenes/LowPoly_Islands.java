@@ -3,6 +3,7 @@ package bertrand.myopengl.ExampleScenes;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.opengl.Matrix;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -57,25 +58,19 @@ public final class LowPoly_Islands {
                                 asset.open("LowPoly_Islands/Scene_Simple.csv")
                         )
                 );
+
                 for (HierarchyData d: hierarchy.datas) {
-                        add.location(
-                                Box.locations,
+                        Box.Location l = new Box.Location(
                                 d.parent_idx,
                                 shaderProgram_ID,
                                 Box.meshes.at(d.model_idx).vao,
                                 Box.meshes.at(d.model_idx).texId,
-                                Box.meshes.at(d.model_idx).indicesCount,
-
-                                d.x,
-                                d.y,
-                                d.z,
-                                d.rotX,
-                                d.rotY,
-                                d.rotZ,
-                                d.scaleX,
-                                d.scaleY,
-                                d.scaleZ
+                                Box.meshes.at(d.model_idx).indicesCount
                         );
+                        Matrix.translateM(l.TF,0,d.x, d.y, d.z);
+                        Mathe.rotateM_withQuaternion(l.TF, d.quatW,d.quatX,d.quatY,d.quatZ);
+                        Matrix.scaleM(l.TF,0, d.scaleX, d.scaleY, d.scaleZ);
+                        Box.locations.add(l);
                 }
 
                 Box.Camera camera = Box.cameras.atId(0);

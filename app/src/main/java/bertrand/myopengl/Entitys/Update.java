@@ -19,7 +19,7 @@ public class Update {
                         Box.Spin spin = spins.at(i);
                         Box.Location l = locations.atId(spin.location_ID);
                         Matrix.rotateM(
-                                l.transformationMatrix,0,
+                                l.TF,0,
                                 dt_ms * 360/spin.period_ms,
                                 spin.axis_x,spin.axis_y,spin.axis_z
                         );
@@ -39,9 +39,9 @@ public class Update {
                         swing.angle += (dt_ms*w + swing.phaseShift);
                         swing.angle %= 2*Math.PI;
                         final float deflection = swing.amplitude * (float)Math.sin(swing.angle);
-                        final float delta = deflection - Mathe.Tx(l.transformationMatrix);
+                        final float delta = deflection - Mathe.Tx(l.TF);
                         Matrix.translateM(
-                                l.transformationMatrix,0,
+                                l.TF,0,
                                 delta, 0, 0
                         );
                 }

@@ -24,29 +24,45 @@ public final class ClearScreen {
                 CleanUp.shaders(Box.shaders);
 
         }
+
         public static void createScene() {
-                final int root_location_ID = add.location(
-                        Box.locations,
+                Box.Location l = new Box.Location(
                         0,
-                        0, //dummy
-                        0, //dummy
-                        0, // dummy
-                        0, //dummy
-                        0f,
-                        0f,
-                        0f,
-                        0f,
-                        0f,
-                        0f,
-                        1f,
-                        1f,
-                        1f
+                        0,
+                        0,
+                        0,
+                        0
                 );
+                final int root_location_ID = Box.locations.add(l);
 
                 Box.Camera camera = Box.cameras.atId(0);
                 camera.location_ID = root_location_ID;
                 Mathe.translationXYZ(camera.T,0,0,-8);
                 Mathe.rotationXYZ(camera.R, 0, 0, 0);
         }
+//        public static void createScene() {
+//                final int root_location_ID = add.location(
+//                        Box.locations,
+//                        0,
+//                        0, //dummy
+//                        0, //dummy
+//                        0, // dummy
+//                        0, //dummy
+//                        0f,
+//                        0f,
+//                        0f,
+//                        0f,
+//                        0f,
+//                        0f,
+//                        1f,
+//                        1f,
+//                        1f
+//                );
+//
+//                Box.Camera camera = Box.cameras.atId(0);
+//                camera.location_ID = root_location_ID;
+//                Mathe.translationXYZ(camera.T,0,0,-8);
+//                Mathe.rotationXYZ(camera.R, 0, 0, 0);
+//        }
 }
 

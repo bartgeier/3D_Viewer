@@ -67,7 +67,7 @@ public final class XYZ_Arrows {
 
                 Box.Camera camera = Box.cameras.atId(0);
                 camera.location_ID = root_location_ID;
-                Mathe.translationXYZ(camera.T,0,0,-25);
+                Mathe.translationXYZ(camera.T,0,0,-25); //-25
                 Mathe.rotationXYZ(camera.R, 0, 0, 0);
 
                 add.light(

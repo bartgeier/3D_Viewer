@@ -181,7 +181,7 @@ public class Box {
                 public float far;                 // 300f
                 public float[] T = new float[16]; // translation matrixA
                 public float[] R = new float[16]; // rotation matrixA
-                        public Camera(
+                public Camera(
                         final int location_ID,
                         final float aspectRatio,
                         final float fovyZoomAngle,
@@ -198,4 +198,28 @@ public class Box {
                 }
         }
         public static SparseArray<Camera> cameras = new SparseArray<>(null,2);
+
+        public static class Display {
+                public int width;
+                public int height;
+                public Display( final int width, final int height) {
+                        this.width = width;
+                        this.height = height;
+                }
+        }
+        public static SparseArray<Display> displays = new SparseArray<>(null,2);
+
+        public static class Touch {
+                public float x;
+                public float y;
+                public float dx;
+                public float dy;
+                public Touch (final float x, final float y) {
+                        this.x = x;
+                        this.y = y;
+                        dx = x;
+                        dy = y;
+                }
+        }
+        public static SparseArray<Touch> touchs = new SparseArray<>(null, 20);
 }

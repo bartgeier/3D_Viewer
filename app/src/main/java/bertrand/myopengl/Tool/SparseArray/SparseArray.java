@@ -55,6 +55,31 @@ public class SparseArray<T> {
                 return id;
         }
 
+        public void replaceId(final int id, T data) {
+                if ((indices[id] & 0x80000000) == 0) {
+                        /* id already used */
+                        datas[indices[id]] = data;
+                } else {
+                        /* id is free */
+                        final int nextId = indices[id];
+                        indices[id] = writeIdx;
+                        datas[writeIdx] = data;
+                        dataIds[writeIdx] = id;
+                        writeIdx++;
+                        if (nextFreeId == (id | 0x80000000)) {
+                                nextFreeId = nextId;
+                                return;
+                        }
+                        for (int i = 0; i < id; i++) {
+                                if ((indices[i] & 0x80000000) == 0x80000000
+                                &&  (indices[i] & 0x7FFFFFFF) == id) {
+                                        indices[i] = nextId;
+                                        return;
+                                }
+                        }
+                }
+        }
+
         public void delete(final int id) {
                 if (id >= indices.length || indices[id] < 0){
                         /* not valid id, or id is already free */
@@ -111,34 +136,31 @@ public class SparseArray<T> {
         public T atId(final int id) {
                 if (id >= indices.length || indices[id] < 0) {
                         throw new AssertionError(
-                                "SparseArray.at, " +
+                                "SparseArray.at, id == " + Integer.toString(id) + " " +
                                         "id >= indices.length || indices[id] < 0");
                 }
                 return datas[indices[id]];
         }
 
-
-        ////////////////////////////////////////////////////////////////////////////
-        ////////////////////////////////////////////////////////////////////////////
-
-        /* only for unit test */
+        /*  return index<0 then the id is free and pointet to the next free id */
         public int getIndex(final int id) {
                 return indices[id];
         }
 
+        /* return -1 => now Id exist for this index */
+        public int getId(final int idx) { return dataIds[idx]; }
+
+        ////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////
+
         /* only for unit test */
-        public int getId(final int idx) {
-                return dataIds[idx];
+        public boolean hasId(final int id) {
+                return !(id >= indices.length || id < 0);
         }
 
         /* only for unit test */
         public int getNextFreeId() {
                 return nextFreeId;
-        }
-
-        /* only for unit test */
-        public boolean hasId(final int id) {
-                return !(id >= indices.length || id < 0);
         }
 
         /* only for unit test */

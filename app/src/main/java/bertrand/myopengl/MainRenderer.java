@@ -26,6 +26,7 @@ import bertrand.myopengl.Tool.Mathe;
 import bertrand.myopengl.Tool.Time.DeltaTime;
 import bertrand.myopengl.Tool.Time.StopWatch;
 
+import static java.lang.Math.sqrt;
 import static java.lang.StrictMath.abs;
 
 public final class MainRenderer implements Renderer {
@@ -36,6 +37,7 @@ public final class MainRenderer implements Renderer {
         private DeltaTime deltaTime = new DeltaTime();
         private StopWatch stopWatch = new StopWatch();
         private final int cameraId;
+        private final int displayId;
 
         MainRenderer (Context c, FrameMessageHandler h) {
                 context = c;
@@ -46,6 +48,11 @@ public final class MainRenderer implements Renderer {
                         85f,
                         0.1f,
                         300f
+                ));
+
+                displayId = Box.displays.add( new Box.Display(
+                        1,
+                        1
                 ));
         }
 
@@ -91,7 +98,14 @@ public final class MainRenderer implements Renderer {
                                         ClearScreen.createScene();
                                         break;
                         }
-                        Matrix.perspectiveM(Update.matrix,0, camera.fovyZoomAngle, camera.aspectRatio, camera.near, camera.far);
+                        Matrix.perspectiveM(
+                                Update.matrix,
+                                0,
+                                camera.fovyZoomAngle,
+                                camera.aspectRatio,
+                                camera.near,
+                                camera.far
+                        );
                         Update.gpu_shader_projectionMatrix(
                                 Box.shaders,
                                 Update.matrix
@@ -116,15 +130,24 @@ public final class MainRenderer implements Renderer {
 
         @Override
         public void onSurfaceChanged(GL10 gl, int width, int height) {
-                Box.Camera c = Box.cameras.atId(cameraId);
-                c.aspectRatio = (float)width / height;
-                Matrix.perspectiveM(Update.matrix,0, c.fovyZoomAngle, c.aspectRatio, c.near, c.far);
+                Box.Camera camera = Box.cameras.atId(cameraId);
+                Box.Display display = Box.displays.atId(displayId);
+                display.width = width;
+                display.height = height;
+                camera.aspectRatio = (float)display.width / display.height;
+                Matrix.perspectiveM(
+                        Update.matrix,
+                        0,
+                        camera.fovyZoomAngle,
+                        camera.aspectRatio,
+                        camera.near,
+                        camera.far
+                );
                 Update.gpu_shader_projectionMatrix(Box.shaders, Update.matrix);
         }
 
         @Override
         public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-                Box.Camera c = Box.cameras.atId(cameraId);
                 newExampleIndex = ExampleNames.Index.STALL;
         }
 
@@ -137,38 +160,93 @@ public final class MainRenderer implements Renderer {
         }
 
         public void onDeviceOrientationChanged(final float[] rotationMatrix) {
-                /* rotateM because y pointet to the sky not z */
-                //Mat rix.rotateM(rotationMatrix,0, 90, 1, 0, 0);
                 Box.Camera c = Box.cameras.atId(cameraId);
                 c.R = rotationMatrix;
         }
 
-        public void onTouchScreenScaling(final float scaleFactor) {
-                Box.Camera c = Box.cameras.atId(cameraId);
-                Mathe.Tz(c.T,-Mathe.adjustDistance(Mathe.Tz(c.T),1/scaleFactor,0.01f));
+        //x and y between -1 and +1
+        public void onTouchAdd(final int id, final float x, final float y) {
+                if(id >= Box.touchs.length()) {
+                        return;
+                }
+                Box.Display display = Box.displays.atId(displayId);
+                Box.touchs.replaceId(id,new Box.Touch(x,y));
         }
 
-        public void onTouchScreenMoving(final float dx, final float dy) {
-                Box.Camera camera = Box.cameras.atId(cameraId);
-                float[] vector = new float[4];
-                float[] result = new float[4];
-                vector[0] = dx/10 * (abs(Mathe.Tz(camera.T)) + 1);
-                vector[1] = dy/10 * (abs(Mathe.Tz(camera.T)) + 1);
-                vector[2] = 0;
-                vector[3] = 1;
-                float[] rotMatrix = new float[16];
-                Matrix.transposeM(rotMatrix,0,camera.R,0);
-                Matrix.multiplyMV(
-                        result,
-                        0,
-                        rotMatrix,
-                        0,
-                        vector,
-                        0
-                );
-                Box.Location l = Box.locations.atId(camera.location_ID);
-                Matrix.translateM(l.TF,0,
-                        result[0]/100, result[1]/100, result[2]/100
-                );
+        // x and y between -1 and +1
+        public void onTouchChanged(final int id, final float x, final float y) {
+                if(id >= Box.touchs.length() || Box.touchs.getIndex(id) < 0) {
+                        return;
+                }
+                final Box.Camera camera = Box.cameras.atId(cameraId);
+                Box.Touch touch = Box.touchs.atId(id);
+                float x_ = touch.x;
+                float y_ = touch.y;
+                touch.x = x;
+                touch.y = y;
+                touch.dx = touch.x - x_;
+                touch.dy = touch.y - y_;
+                if(Box.touchs.size() == 1) {
+                        // camera moving in x,y //
+                        // if camera.location_ID == 0 (world root) then moving the hole world //
+                        Box.Location location = Box.locations.atId(camera.location_ID);
+                        float[] vector = new float[4];
+                        float[] result = new float[4];
+                        vector[0] = touch.dx/2 * (abs(Mathe.Tz(camera.T)) + 1f);
+                        vector[1] = touch.dy/2 * (abs(Mathe.Tz(camera.T)) + 1f);
+                        vector[2] = 0;
+                        vector[3] = 1;
+                        float[] rotMatrix = new float[16];
+                        Matrix.transposeM(rotMatrix,0,camera.R,0);
+                        Matrix.multiplyMV(
+                                result,
+                                0,
+                                rotMatrix,
+                                0,
+                                vector,
+                                0
+                        );
+
+                        Matrix.translateM(location.TF,0,
+                                result[0], result[1], result[2]
+                        );
+                } else if (Box.touchs.size() == 2) {
+                        // scale camera distance -z, looks like scaling the hole world //
+                        Box.Touch a;
+                        Box.Touch b;
+                        if (Box.touchs.getIndex(id) == 1) {
+                                a = Box.touchs.at(0);
+                                b = Box.touchs.at(1);
+                        } else {
+                                a = Box.touchs.at(1);
+                                b = Box.touchs.at(0);
+                        }
+                        final float b_lastX = b.x - b.dx;
+                        final float b_lastY = b.y - b.dy;
+                        final float lastGapX = b_lastX-a.x;
+                        final float lastGapY = b_lastY-a.y;
+                        final float lastGap = (float)sqrt(lastGapX * lastGapX + lastGapY * lastGapY);
+                        final float gapX = b.x - a.x;
+                        final float gapY = b.y - a.y;
+                        final float gap = (float) sqrt(gapX * gapX + gapY * gapY);
+                        if( gap > 0) {
+                                final float scaleFactor = lastGap / gap;
+                                Mathe.Tz(
+                                        camera.T,
+                                        -Mathe.adjustDistance(
+                                                Mathe.Tz(camera.T),
+                                                scaleFactor, 0.01f
+                                        )
+                                );
+                        }
+                }
         }
+
+        public void onTouchDelete(final int id) {
+                if(id >= Box.touchs.length()) {
+                        return;
+                }
+                Box.touchs.delete(id);
+        }
+
 }

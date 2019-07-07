@@ -25,7 +25,6 @@ import bertrand.myopengl.DeviceOrientation.DeviceOrientationEvent;
 import bertrand.myopengl.DeviceOrientation.DeviceOrientationListner;
 import bertrand.myopengl.ExampleScenes.ExampleNames;
 import bertrand.myopengl.Tool.TextChooser.TextChooserActivity;
-import bertrand.myopengl.TouchScreen.TouchScreen;
 
 public class MainActivity extends AppCompatActivity implements DeviceOrientationListner {
         public class UI{
@@ -37,7 +36,6 @@ public class MainActivity extends AppCompatActivity implements DeviceOrientation
         private static final int EXAMPLE_ACTIVITY_ID = 1;
         MainSurfaceView mainGLView;
         DeviceOrientation deviceOrientation;
-        TouchScreen touchScreen;
 
         FrameMessageHandler frameMessageHandler = new FrameMessageHandler(new Handler.Callback() {
                 @Override
@@ -86,7 +84,6 @@ public class MainActivity extends AppCompatActivity implements DeviceOrientation
                         mainGLView.setEGLContextClientVersion(2);
                         mainGLView.start(frameMessageHandler);
                         deviceOrientation = new DeviceOrientation(this,this);
-                        touchScreen = new TouchScreen(this);
                 } else {
                         Toast.makeText(
                                 MainActivity.this,
@@ -150,13 +147,33 @@ public class MainActivity extends AppCompatActivity implements DeviceOrientation
 
         @Override
         public boolean onTouchEvent(MotionEvent event) {
-                touchScreen.onTouchEvent(event);
-                if (touchScreen.isScaling) {
-                        mainGLView.setScaleFactor(touchScreen.scaleFactor);
-                } else if (touchScreen.isMoving) {
-                        mainGLView.setMove(touchScreen.deltaX, -touchScreen.deltaY);
+                switch (event.getActionMasked()) {
+                        case MotionEvent.ACTION_DOWN:
+                        case MotionEvent.ACTION_POINTER_DOWN: {
+                                final int pointerIdx = event.getActionIndex();
+                                final int id = event.getPointerId(pointerIdx);
+                                final float x = event.getX(pointerIdx);
+                                final float y = event.getY(pointerIdx);
+                                mainGLView.setTouchAdd(id, x, y);
+                                break;
+                        }
+                        case MotionEvent.ACTION_MOVE: {
+                                for (int i = 0; i < event.getPointerCount(); i++) {
+                                        final int id = event.getPointerId(i);
+                                        final float x = event.getX(i);
+                                        final float y = event.getY(i);
+                                        mainGLView.setTouchChanged(id, x, y);
+                                }
+                                break;
+                        }
+                        case MotionEvent.ACTION_POINTER_UP:
+                        case MotionEvent.ACTION_UP: {
+                                final int pointerIdx = event.getActionIndex();
+                                final int id = event.getPointerId(pointerIdx);
+                                mainGLView.setTouchDelete(id);
+                                break;
+                        }
                 }
                 return true;
         }
-
 }

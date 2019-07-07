@@ -224,6 +224,43 @@ public class test_SparseArray {
 
                 assertTrue(x.isIdFree(4));
                 assertEquals(4 | 0x80000000, x.getIndex(4));
+        }
 
+        @Test
+        public void replaceId_already_used_Id() {
+                @SuppressWarnings("unchecked")
+                SparseArray<Float> x = new SparseArray(0,5);
+
+                int id_0 = x.add(0f);
+                int id_1 = x.add(1.1f);
+                int id_2 = x.add(2.2f);
+                int id_3 = x.add(3.3f);
+                int id_4 = x.add(4.4f);
+                assertEquals(0f, x.atId(id_0), 0.0001);
+                assertEquals(1.1f, x.atId(id_1), 0.0001);
+                assertEquals(2.2f, x.atId(id_2), 0.0001);
+                assertEquals(3.3f, x.atId(id_3), 0.0001);
+                assertEquals(4.4f, x.atId(id_4), 0.0001);
+
+                x.replaceId(id_3,333.3f);
+                assertEquals(333.3f, x.atId(id_3), 0.0001);
+        }
+
+        @Test
+        public void replaceId_free_Id() {
+                @SuppressWarnings("unchecked")
+                SparseArray<Float> x = new SparseArray(0,6);
+
+                int id_3 = 3;
+                x.replaceId(id_3,333.3f);
+                assertEquals(333.3f, x.atId(id_3), 0.0001);
+
+                assertEquals(0 | 0x80000000, x.getNextFreeId());
+                assertEquals(1 | 0x80000000, x.getIndex(0));
+                assertEquals(2 | 0x80000000, x.getIndex(1));
+                assertEquals(4 | 0x80000000, x.getIndex(2));
+                assertEquals(0, x.getIndex(3));
+                assertEquals(5 | 0x80000000, x.getIndex(4));
+                assertEquals(5 | 0x80000000, x.getIndex(5));
         }
 }

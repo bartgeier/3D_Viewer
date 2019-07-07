@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="14.3.0">
-  <zoom_level>9</zoom_level>
+  <zoom_level>10</zoom_level>
   <element>
     <id>UMLClass</id>
     <coordinates>
       <x>0</x>
-      <y>1080</y>
-      <w>954</w>
-      <h>99</h>
+      <y>2090</y>
+      <w>1060</w>
+      <h>120</h>
     </coordinates>
     <panel_attributes>ManActivity
 --
 FrameMessageHandler frameMessageHandler
+boolean onOptionsItemSelected(MenuItem item)
+void onActivityResult(int requestCode, int resultCode, Intent intent)
 void onSensorChanged(DeviceOrientationEvent event)
 boolean onTouchEvent(MotionEvent event)</panel_attributes>
     <additional_attributes/>
@@ -19,10 +21,10 @@ boolean onTouchEvent(MotionEvent event)</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1044</x>
-      <y>918</y>
-      <w>585</w>
-      <h>153</h>
+      <x>1160</x>
+      <y>1910</y>
+      <w>650</w>
+      <h>180</h>
     </coordinates>
     <panel_attributes>MainRenderer
 --
@@ -32,17 +34,18 @@ void onSurfaceCreated(GL10 gl, EGLConfig config);
 void onClearScreen();
 void onNewExample(final int idx);
 void onDeviceOrientationChanged(final float[] rotationMatrix);
-void onTouchScreenScaling(final float scaleFactor)
-void onTouchScreenMoving(final float x, final float y)</panel_attributes>
+void onTouchAdd(final int id, final float x, final float y);
+void onTouchChanged(final int id, final float x, final float y);
+void onTouchDelete(final int id);</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1143</x>
-      <y>1062</y>
-      <w>27</w>
-      <h>81</h>
+      <x>1270</x>
+      <y>2080</y>
+      <w>30</w>
+      <h>90</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
@@ -50,10 +53,10 @@ void onTouchScreenMoving(final float x, final float y)</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1053</x>
-      <y>1125</y>
-      <w>180</w>
-      <h>27</h>
+      <x>1170</x>
+      <y>2150</y>
+      <w>200</w>
+      <h>30</h>
     </coordinates>
     <panel_attributes>ManSurfaceView</panel_attributes>
     <additional_attributes/>
@@ -61,10 +64,10 @@ void onTouchScreenMoving(final float x, final float y)</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>945</x>
-      <y>1125</y>
-      <w>126</w>
-      <h>27</h>
+      <x>1050</x>
+      <y>2150</y>
+      <w>140</w>
+      <h>30</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>120.0;10.0;10.0;10.0</additional_attributes>
@@ -72,10 +75,10 @@ void onTouchScreenMoving(final float x, final float y)</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1413</x>
-      <y>1125</y>
-      <w>90</w>
-      <h>45</h>
+      <x>1570</x>
+      <y>2150</y>
+      <w>100</w>
+      <h>50</h>
     </coordinates>
     <panel_attributes>Android
 Renderer</panel_attributes>
@@ -84,10 +87,10 @@ Renderer</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1449</x>
-      <y>1062</y>
-      <w>27</w>
-      <h>81</h>
+      <x>1610</x>
+      <y>2080</y>
+      <w>30</w>
+      <h>90</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;70.0;10.0;10.0</additional_attributes>
@@ -95,10 +98,10 @@ Renderer</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1116</x>
+      <x>1240</x>
       <y>0</y>
-      <w>234</w>
-      <h>846</h>
+      <w>260</w>
+      <h>1840</h>
     </coordinates>
     <panel_attributes>Box
 --
@@ -108,10 +111,10 @@ Renderer</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1710</x>
-      <y>270</y>
-      <w>234</w>
-      <h>99</h>
+      <x>1900</x>
+      <y>290</y>
+      <w>260</w>
+      <h>110</h>
     </coordinates>
     <panel_attributes>ShaderType.Textured
 --
@@ -124,58 +127,23 @@ static final int a_Normal = 2;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1224</x>
-      <y>837</y>
-      <w>36</w>
-      <h>99</h>
+      <x>1360</x>
+      <y>1830</y>
+      <w>40</w>
+      <h>100</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
 m1=1
 m2=1</panel_attributes>
-    <additional_attributes>10.0;90.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;80.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1800</x>
-      <y>918</y>
-      <w>234</w>
-      <h>189</h>
-    </coordinates>
-    <panel_attributes>Camera
---
-float fovyZoomAngle; 
-float aspectRatio;
-float near;
-float far;
-float[] projectionMatrix;
-Vec3 pos;
-Vec3 rotation;
-float[] translationMatrix;
-float[] rotationMatrix;
-float[] modelMatrix;</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>1620</x>
-      <y>936</y>
-      <w>198</w>
-      <h>36</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
-m1=1
-m2=1</panel_attributes>
-    <additional_attributes>10.0;10.0;200.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>1476</x>
-      <y>72</y>
-      <w>162</w>
-      <h>54</h>
+      <x>1640</x>
+      <y>70</y>
+      <w>180</w>
+      <h>60</h>
     </coordinates>
     <panel_attributes>Box.Background
 --
@@ -186,10 +154,10 @@ Color4f color
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1341</x>
-      <y>72</y>
-      <w>153</w>
-      <h>36</h>
+      <x>1490</x>
+      <y>70</y>
+      <w>170</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
 m1=1
@@ -199,10 +167,10 @@ m2=1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1341</x>
-      <y>144</y>
-      <w>153</w>
-      <h>36</h>
+      <x>1490</x>
+      <y>150</y>
+      <w>170</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-
 m1=1
@@ -212,10 +180,10 @@ m2=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1476</x>
-      <y>144</y>
-      <w>162</w>
-      <h>99</h>
+      <x>1640</x>
+      <y>150</y>
+      <w>180</w>
+      <h>110</h>
     </coordinates>
     <panel_attributes>Box.Light
 --
@@ -227,10 +195,10 @@ Vec3 attenuation;</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1476</x>
-      <y>261</y>
-      <w>198</w>
-      <h>225</h>
+      <x>1640</x>
+      <y>280</y>
+      <w>220</w>
+      <h>250</h>
     </coordinates>
     <panel_attributes>Box.Shader
 --
@@ -252,10 +220,10 @@ final int u_Texture;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1341</x>
-      <y>261</y>
-      <w>153</w>
-      <h>36</h>
+      <x>1490</x>
+      <y>280</y>
+      <w>170</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-
 m1=1
@@ -265,10 +233,10 @@ m2=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1476</x>
-      <y>504</y>
-      <w>162</w>
-      <h>99</h>
+      <x>1640</x>
+      <y>550</y>
+      <w>180</w>
+      <h>110</h>
     </coordinates>
     <panel_attributes>Box.Mesh
 --
@@ -281,10 +249,10 @@ final int indicesCount;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1341</x>
-      <y>504</y>
-      <w>153</w>
-      <h>36</h>
+      <x>1490</x>
+      <y>550</y>
+      <w>170</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-
 m1=1
@@ -294,30 +262,30 @@ m2=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1476</x>
-      <y>621</y>
-      <w>198</w>
-      <h>135</h>
+      <x>1640</x>
+      <y>680</y>
+      <w>240</w>
+      <h>150</h>
     </coordinates>
     <panel_attributes>Box.Location
 --
-final Vec3 position;
-final Vec3 rotation; // degrees
-final Vec3 scale;
-final float[] transformationMatrix;
-final int shader_ID;
-final int vao;
-final int indicesCount;
+public int parentIdx;
+public final float[] TF = new float[16];
+public final float[] MV = new float[16];
+public final int shader_ID;
+public final int vao;
+public final int texId;
+public final int indicesCount;
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1341</x>
-      <y>621</y>
-      <w>153</w>
-      <h>36</h>
+      <x>1490</x>
+      <y>680</y>
+      <w>170</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-
 m1=1
@@ -327,26 +295,27 @@ m2=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1476</x>
-      <y>774</y>
-      <w>162</w>
-      <h>90</h>
+      <x>1640</x>
+      <y>840</y>
+      <w>180</w>
+      <h>120</h>
     </coordinates>
-    <panel_attributes>Box.Periode
+    <panel_attributes>Box.Swing
 --
-final int location_ID;
-final Type type;
-final double period_ms;
-double angle;</panel_attributes>
+public final int location_ID;
+public final float period_ms;
+public float angle;
+public final float amplitude;
+public final float phaseShift;</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1341</x>
-      <y>774</y>
-      <w>153</w>
-      <h>36</h>
+      <x>1490</x>
+      <y>840</y>
+      <w>170</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-
 m1=1
@@ -356,10 +325,10 @@ m2=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1422</x>
-      <y>9</y>
-      <w>261</w>
-      <h>873</h>
+      <x>1580</x>
+      <y>0</y>
+      <w>310</w>
+      <h>1880</h>
     </coordinates>
     <panel_attributes>lt=.
 /*Data - Components*/</panel_attributes>
@@ -368,10 +337,10 @@ m2=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1710</x>
-      <y>378</y>
-      <w>234</w>
-      <h>99</h>
+      <x>1900</x>
+      <y>410</y>
+      <w>260</w>
+      <h>110</h>
     </coordinates>
     <panel_attributes>ShaderType.Colored
 --
@@ -384,10 +353,10 @@ static final int a_Normal = 2;</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>621</x>
-      <y>918</y>
-      <w>306</w>
-      <h>99</h>
+      <x>690</x>
+      <y>1920</y>
+      <w>340</w>
+      <h>110</h>
     </coordinates>
     <panel_attributes>FrameMessageHandler
 --
@@ -400,10 +369,10 @@ void sendMessage_FrameRateUpdate(time);</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>918</x>
-      <y>981</y>
-      <w>144</w>
-      <h>27</h>
+      <x>1020</x>
+      <y>1990</y>
+      <w>160</w>
+      <h>30</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;140.0;10.0</additional_attributes>
@@ -411,10 +380,10 @@ void sendMessage_FrameRateUpdate(time);</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>234</x>
-      <y>1242</y>
-      <w>216</w>
-      <h>72</h>
+      <x>260</x>
+      <y>2280</y>
+      <w>240</w>
+      <h>80</h>
     </coordinates>
     <panel_attributes>DeviceOrientationListner
 --
@@ -428,10 +397,10 @@ DeviceOrientationEvent event
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>324</x>
-      <y>1170</y>
-      <w>27</w>
-      <h>90</h>
+      <x>360</x>
+      <y>2200</y>
+      <w>30</w>
+      <h>100</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;80.0;10.0;10.0</additional_attributes>
@@ -440,9 +409,9 @@ DeviceOrientationEvent event
     <id>UMLClass</id>
     <coordinates>
       <x>0</x>
-      <y>1395</y>
-      <w>450</w>
-      <h>54</h>
+      <y>2450</y>
+      <w>500</w>
+      <h>60</h>
     </coordinates>
     <panel_attributes>DeviceOrientation
 --
@@ -452,10 +421,10 @@ onSensorChanged(SensorEvent event)</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>126</x>
-      <y>1494</y>
-      <w>153</w>
-      <h>45</h>
+      <x>140</x>
+      <y>2560</y>
+      <w>170</w>
+      <h>50</h>
     </coordinates>
     <panel_attributes>Android
 SensorEventListener
@@ -465,10 +434,10 @@ SensorEventListener
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>198</x>
-      <y>1440</y>
-      <w>27</w>
-      <h>72</h>
+      <x>220</x>
+      <y>2500</y>
+      <w>30</w>
+      <h>80</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
@@ -476,10 +445,10 @@ SensorEventListener
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>333</x>
-      <y>1305</y>
-      <w>27</w>
-      <h>108</h>
+      <x>370</x>
+      <y>2350</y>
+      <w>30</w>
+      <h>120</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;100.0</additional_attributes>
@@ -487,10 +456,10 @@ SensorEventListener
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>36</x>
-      <y>1242</y>
-      <w>153</w>
-      <h>108</h>
+      <x>40</x>
+      <y>2280</y>
+      <w>170</w>
+      <h>120</h>
     </coordinates>
     <panel_attributes>DeviceOrientationEvent
 POD
@@ -505,10 +474,10 @@ final float[] rotationMatrix;
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>180</x>
-      <y>1269</y>
-      <w>72</w>
-      <h>27</h>
+      <x>200</x>
+      <y>2310</y>
+      <w>80</w>
+      <h>30</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;60.0;10.0</additional_attributes>
@@ -516,10 +485,10 @@ final float[] rotationMatrix;
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>702</x>
-      <y>810</y>
-      <w>153</w>
-      <h>45</h>
+      <x>780</x>
+      <y>1800</y>
+      <w>170</w>
+      <h>50</h>
     </coordinates>
     <panel_attributes>Android
 Handler
@@ -532,10 +501,10 @@ Handler
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>774</x>
-      <y>846</y>
-      <w>27</w>
-      <h>90</h>
+      <x>860</x>
+      <y>1840</y>
+      <w>30</w>
+      <h>100</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
@@ -543,10 +512,10 @@ Handler
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1089</x>
-      <y>1179</y>
-      <w>126</w>
-      <h>45</h>
+      <x>1210</x>
+      <y>2210</y>
+      <w>140</w>
+      <h>50</h>
     </coordinates>
     <panel_attributes>Android
 GLSurfaceView</panel_attributes>
@@ -555,10 +524,10 @@ GLSurfaceView</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1143</x>
-      <y>1143</y>
-      <w>27</w>
-      <h>54</h>
+      <x>1270</x>
+      <y>2170</y>
+      <w>30</w>
+      <h>60</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;40.0;10.0;10.0</additional_attributes>
@@ -566,21 +535,21 @@ GLSurfaceView</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>774</x>
-      <y>1008</y>
-      <w>27</w>
+      <x>860</x>
+      <y>2020</y>
+      <w>30</w>
       <h>90</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>918</x>
-      <y>1008</y>
-      <w>153</w>
-      <h>135</h>
+      <x>1020</x>
+      <y>2020</y>
+      <w>170</w>
+      <h>150</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;150.0;130.0</additional_attributes>
@@ -588,10 +557,10 @@ GLSurfaceView</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>99</x>
-      <y>1341</y>
-      <w>27</w>
-      <h>72</h>
+      <x>110</x>
+      <y>2390</y>
+      <w>30</w>
+      <h>80</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
@@ -599,10 +568,10 @@ GLSurfaceView</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>99</x>
-      <y>1170</y>
-      <w>27</w>
-      <h>90</h>
+      <x>110</x>
+      <y>2200</y>
+      <w>30</w>
+      <h>100</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>10.0;80.0;10.0;10.0</additional_attributes>
@@ -610,10 +579,10 @@ GLSurfaceView</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>9</x>
-      <y>1170</y>
-      <w>27</w>
-      <h>243</h>
+      <x>10</x>
+      <y>2200</y>
+      <w>30</w>
+      <h>270</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>10.0;250.0;10.0;10.0</additional_attributes>
@@ -621,84 +590,117 @@ GLSurfaceView</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>477</x>
-      <y>1242</y>
-      <w>450</w>
-      <h>144</h>
-    </coordinates>
-    <panel_attributes>TouchScreen
---
-boolean isScaling;
-float scaleFactor;
-
-boolean isMoving;
-float deltaX;
-float deltaY;
-
-void onTouchEvent(MotionEvent event)
-
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>630</x>
-      <y>1404</y>
-      <w>306</w>
-      <h>45</h>
-    </coordinates>
-    <panel_attributes>Android
-ScaleGestureDetector.OnScaleGestureListener
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>774</x>
-      <y>1377</y>
-      <w>27</w>
-      <h>45</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;30.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>693</x>
-      <y>1170</y>
-      <w>27</w>
+      <x>1640</x>
+      <y>980</y>
+      <w>210</w>
       <h>90</h>
     </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;80.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>477</x>
-      <y>1404</y>
-      <w>144</w>
-      <h>45</h>
-    </coordinates>
-    <panel_attributes>Android
-ScaleGestureDetector
-
-
-</panel_attributes>
+    <panel_attributes>Box.Spin
+--
+public int location_ID;
+public float period_ms;
+public float axis_x,axis_y,axis_z;</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>540</x>
-      <y>1377</y>
-      <w>27</w>
-      <h>45</h>
+      <x>1490</x>
+      <y>980</y>
+      <w>170</w>
+      <h>40</h>
     </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;30.0;10.0;10.0</additional_attributes>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m1=1
+m2=0..n</panel_attributes>
+    <additional_attributes>10.0;10.0;150.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1640</x>
+      <y>1090</y>
+      <w>220</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>Box.Camera
+--
+public int location_ID;
+public float aspectRatio;        
+public float fovyZoomAngle;      
+public float near;               
+public float far;                
+public float[] T = new float[16];
+public float[] R = new float[16];</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1490</x>
+      <y>1090</y>
+      <w>170</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m1=1
+m2=0..n</panel_attributes>
+    <additional_attributes>10.0;10.0;150.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1640</x>
+      <y>1260</y>
+      <w>180</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>Box.Display
+--
+public int width;
+public int height;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1490</x>
+      <y>1260</y>
+      <w>170</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m1=1
+m2=0..n</panel_attributes>
+    <additional_attributes>10.0;10.0;150.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1640</x>
+      <y>1360</y>
+      <w>180</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>Box.Touch
+--
+public float x;
+public float y;
+public float dx;
+public float dy;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1490</x>
+      <y>1360</y>
+      <w>170</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m1=1
+m2=0..n</panel_attributes>
+    <additional_attributes>10.0;10.0;150.0;10.0</additional_attributes>
   </element>
 </diagram>

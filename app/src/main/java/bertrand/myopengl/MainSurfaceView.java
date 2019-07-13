@@ -6,6 +6,8 @@ import android.util.AttributeSet;
 import android.view.Display;
 import android.view.WindowManager;
 
+import bertrand.myopengl.Tool.Vec2;
+
 
 public class MainSurfaceView extends GLSurfaceView {
         private MainRenderer renderer;
@@ -61,35 +63,35 @@ public class MainSurfaceView extends GLSurfaceView {
                 });
         }
 
-        public void setTouchAdd(final int id, final float x_, final float y_) {
-                final float y = y_ - getTop();
-                final float x = x_ - getLeft();
-                final int width = getWidth();
-                final int height = getHeight();
-                if (x <  width && y <  height) {
-                        final float glx = 2f*x/width - 1;     //glx between -1 and +1
-                        final float gly = -(2f*y/height - 1); //gly between -1 and +1
+        public void setTouchAdd(final int id, final float x, final float y) {
+                final Vec2 point = new Vec2(x - getLeft(),y - getTop());
+                final Vec2 size = new Vec2(getWidth(), getHeight());
+                if (point.x <  size.x && point.y <  size.y) {
                         queueEvent(new Runnable() {
                                 @Override
                                 public void run() {
-                                        renderer.onTouchAdd(id, glx, gly);
+                                        renderer.onTouchAdd(
+                                                id,
+                                                point,
+                                                size
+                                        );
                                 }
                         });
                 }
         }
 
-        public void setTouchChanged(final int id, final float x_, final  float y_) {
-                final float y = y_ - getTop();
-                final float x = x_ - getLeft();
-                final int width = getWidth();
-                final int height = getHeight();
-                if (x <  width && y <  height) {
-                        final float glx = 2f*x/width - 1;     //glx between -1 and +1
-                        final float gly = -(2f*y/height - 1); //gly between -1 and +1
+        public void setTouchChanged(final int id, final float x, final  float y) {
+                final Vec2 point = new Vec2(x - getLeft(),y - getTop());
+                final Vec2 size = new Vec2(getWidth(), getHeight());
+                if (point.x <  size.x && point.y <  size.y) {
                         queueEvent(new Runnable() {
                                 @Override
                                 public void run() {
-                                        renderer.onTouchChanged(id, glx, gly);
+                                        renderer.onTouchChanged(
+                                                id,
+                                                point,
+                                                size
+                                        );
                                 }
                         });
                 }

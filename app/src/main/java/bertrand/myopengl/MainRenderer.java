@@ -22,9 +22,11 @@ import bertrand.myopengl.ExampleScenes.Test_3;
 import bertrand.myopengl.ExampleScenes.Triangle;
 import bertrand.myopengl.ExampleScenes.Triangle_1;
 import bertrand.myopengl.ExampleScenes.XYZ_Arrows;
+import bertrand.myopengl.Tool.GLMathe;
 import bertrand.myopengl.Tool.Mathe;
 import bertrand.myopengl.Tool.Time.DeltaTime;
 import bertrand.myopengl.Tool.Time.StopWatch;
+import bertrand.myopengl.Tool.Vec2;
 
 import static java.lang.Math.sqrt;
 import static java.lang.StrictMath.abs;
@@ -54,6 +56,11 @@ public final class MainRenderer implements Renderer {
                         1,
                         1
                 ));
+
+                Box.Circle circle = new Box.Circle();
+                circle.center = new Vec2(-0.8f, -0.8f);
+                circle.radius = 0.1f;
+                Box.circleColliders.add(circle);
         }
 
         @Override
@@ -165,35 +172,45 @@ public final class MainRenderer implements Renderer {
         }
 
         //x and y between -1 and +1
-        public void onTouchAdd(final int id, final float x, final float y) {
+        public void onTouchAdd(final int id, final Vec2 point, Vec2 viewSize) {
                 if(id >= Box.touchs.length()) {
                         return;
                 }
                 Box.Display display = Box.displays.atId(displayId);
-                Box.touchs.replaceId(id,new Box.Touch(x,y));
+
+                GLMathe.pixel_to_glCoordinateSystem(point, viewSize);
+                Box.Touch touch = new Box.Touch(point);
+                Box.touchs.replaceId(id,touch);
+
+                Box.Circle ci = Box.circleColliders.at(0);
+                /*
+                if test(ci, touch.point) {
+
+                }
+                */
         }
 
         // x and y between -1 and +1
-        public void onTouchChanged(final int id, final float x, final float y) {
+        public void onTouchChanged(final int id, final Vec2 pixel, Vec2 viewSize) {
                 if(id >= Box.touchs.length() || Box.touchs.getIndex(id) < 0) {
                         return;
                 }
+
                 final Box.Camera camera = Box.cameras.atId(cameraId);
                 Box.Touch touch = Box.touchs.atId(id);
-                float x_ = touch.x;
-                float y_ = touch.y;
-                touch.x = x;
-                touch.y = y;
-                touch.dx = touch.x - x_;
-                touch.dy = touch.y - y_;
+
+                Vec2 temp = touch.point.copy();
+                GLMathe.pixel_to_glCoordinateSystem(touch.point, pixel, viewSize);
+                Vec2.sub(touch.delta, touch.point, temp);
+
                 if(Box.touchs.size() == 1) {
                         // camera moving in x,y //
                         // if camera.location_ID == 0 (world root) then moving the hole world //
                         Box.Location location = Box.locations.atId(camera.location_ID);
                         float[] vector = new float[4];
                         float[] result = new float[4];
-                        vector[0] = touch.dx/2 * (abs(Mathe.Tz(camera.T)) + 1f);
-                        vector[1] = touch.dy/2 * (abs(Mathe.Tz(camera.T)) + 1f);
+                        vector[0] = touch.delta.x/2 * (abs(Mathe.Tz(camera.T)) + 1f);
+                        vector[1] = touch.delta.y/2 * (abs(Mathe.Tz(camera.T)) + 1f);
                         vector[2] = 0;
                         vector[3] = 1;
                         float[] rotMatrix = new float[16];
@@ -221,16 +238,13 @@ public final class MainRenderer implements Renderer {
                                 a = Box.touchs.at(1);
                                 b = Box.touchs.at(0);
                         }
-                        final float b_lastX = b.x - b.dx;
-                        final float b_lastY = b.y - b.dy;
-                        final float lastGapX = b_lastX-a.x;
-                        final float lastGapY = b_lastY-a.y;
-                        final float lastGap = (float)sqrt(lastGapX * lastGapX + lastGapY * lastGapY);
-                        final float gapX = b.x - a.x;
-                        final float gapY = b.y - a.y;
-                        final float gap = (float) sqrt(gapX * gapX + gapY * gapY);
-                        if( gap > 0) {
-                                final float scaleFactor = lastGap / gap;
+                        // a doesn't change //
+                        Vec2 lastPoint  = Vec2.sub(b.point, b.delta);
+                        Vec2 lastGap = Vec2.sub(lastPoint, a.point);
+                        Vec2 gap = Vec2.sub(b.point, a.point);
+                        float length = gap.length();
+                        if( length > 0) {
+                                final float scaleFactor = lastGap.length() / length;
                                 Mathe.Tz(
                                         camera.T,
                                         -Mathe.adjustDistance(
@@ -239,6 +253,7 @@ public final class MainRenderer implements Renderer {
                                         )
                                 );
                         }
+
                 }
         }
 

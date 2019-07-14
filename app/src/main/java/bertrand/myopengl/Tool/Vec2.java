@@ -9,9 +9,9 @@ public class Vec2 {
                 x = 0;
                 y = 0;
         }
-        public Vec2(float ix, float iy) {
-                x = ix;
-                y = iy;
+        public Vec2(float x, float y) {
+                this.x = x;
+                this.y = y;
         }
 
         public void copy(final Vec2 v) {

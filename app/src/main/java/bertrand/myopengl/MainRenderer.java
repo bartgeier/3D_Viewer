@@ -22,11 +22,14 @@ import bertrand.myopengl.ExampleScenes.Test_3;
 import bertrand.myopengl.ExampleScenes.Triangle;
 import bertrand.myopengl.ExampleScenes.Triangle_1;
 import bertrand.myopengl.ExampleScenes.XYZ_Arrows;
+import bertrand.myopengl.Tool.Circle;
+import bertrand.myopengl.Tool.Color4f;
 import bertrand.myopengl.Tool.GLMathe;
 import bertrand.myopengl.Tool.Mathe;
 import bertrand.myopengl.Tool.Time.DeltaTime;
 import bertrand.myopengl.Tool.Time.StopWatch;
 import bertrand.myopengl.Tool.Vec2;
+import bertrand.myopengl.Tool.Tst;
 
 import static java.lang.Math.sqrt;
 import static java.lang.StrictMath.abs;
@@ -57,9 +60,7 @@ public final class MainRenderer implements Renderer {
                         1
                 ));
 
-                Box.Circle circle = new Box.Circle();
-                circle.center = new Vec2(-0.8f, -0.8f);
-                circle.radius = 0.1f;
+                Circle circle = new Circle(-0.8f, -0.8f, 0.2f);
                 Box.circleColliders.add(circle);
         }
 
@@ -182,12 +183,21 @@ public final class MainRenderer implements Renderer {
                 Box.Touch touch = new Box.Touch(point);
                 Box.touchs.replaceId(id,touch);
 
-                Box.Circle ci = Box.circleColliders.at(0);
-                /*
-                if test(ci, touch.point) {
+                Circle ci = Box.circleColliders.at(0);
+
+                if (Tst.subset(ci, touch.point)) {
+                        if (Box.backGround.color.b == 0f) {
+                                Box.backGround.color.r = 0.8f;
+                                Box.backGround.color.g = 0.8f;
+                                Box.backGround.color.b = 0.8f;
+                        } else {
+                                Box.backGround.color.r = 1f;
+                                Box.backGround.color.g = 0.4f;
+                                Box.backGround.color.b = 0;
+                        }
 
                 }
-                */
+
         }
 
         // x and y between -1 and +1

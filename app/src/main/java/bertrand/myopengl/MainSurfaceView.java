@@ -63,10 +63,11 @@ public class MainSurfaceView extends GLSurfaceView {
                 });
         }
 
+        // screen 720 x 1280,  surfaceView 720 x 1168 //
         public void setTouchAdd(final int id, final float x, final float y) {
                 final Vec2 point = new Vec2(x - getLeft(),y - getTop());
                 final Vec2 size = new Vec2(getWidth(), getHeight());
-                if (point.x <  size.x && point.y <  size.y) {
+                if (point.x <= getRight() && point.y <= getBottom()) {
                         queueEvent(new Runnable() {
                                 @Override
                                 public void run() {
@@ -83,7 +84,7 @@ public class MainSurfaceView extends GLSurfaceView {
         public void setTouchChanged(final int id, final float x, final  float y) {
                 final Vec2 point = new Vec2(x - getLeft(),y - getTop());
                 final Vec2 size = new Vec2(getWidth(), getHeight());
-                if (point.x <  size.x && point.y <  size.y) {
+                if (point.x <= getRight() && point.y <= getBottom()) {
                         queueEvent(new Runnable() {
                                 @Override
                                 public void run() {

@@ -5,6 +5,7 @@ import android.opengl.Matrix;
 
 import org.jetbrains.annotations.NotNull;
 
+import bertrand.myopengl.Tool.Circle;
 import bertrand.myopengl.Tool.Color4f;
 import bertrand.myopengl.Tool.Vec2;
 import bertrand.myopengl.Tool.Vec3;
@@ -234,10 +235,7 @@ public class Box {
         }
         public static SparseArray<Touch> touchs = new SparseArray<>(null, 20);
 
-        public static class Circle {
-                public Vec2 center;
-                public float radius;
-        }
+
         public static SparseArray<Circle> circleColliders =
                 new SparseArray<>(null, 10);
 }

@@ -61,6 +61,32 @@ public class Load {
                 return meshes.add(mesh); //return SparseArray-ID
         }
 
+        public static int texturedQuad(
+                @NotNull final SparseArray<Box.Mesh> meshes,
+                @NotNull final Bitmap bitmap
+        ) {
+                final int[] indices = {0, 1, 2, 0, 3, 1};
+                final float[] positions = {
+                        -1, -1, 0,  //0
+                        +1, +1, 0,  //1
+                        -1, +1, 0,  //2
+                        +1, -1, 0   //3
+                };
+                int vao = GPU.createVertexArrayObject();
+                int[] vbos = new int[4];
+                vbos[0] = GPU.loadIndecisBuffer(Arr.allocateBuffer(indices));
+                vbos[1] = GPU.loadAttribute(ShaderType.Textured.a_Position, 3, Arr.allocateBuffer(positions));
+                int texId = GPU.loadTextureLinear(bitmap);
+                GPU.vertexArray0();
+
+                Box.Mesh mesh = new Box.Mesh(
+                        vao,
+                        vbos,
+                        texId,
+                        indices.length
+                );
+                return meshes.add(mesh); //return SparseArray-ID
+        }
 
         public static int coloredShader(
                 @NotNull final SparseArray<Box.Shader> shaders,
@@ -133,6 +159,48 @@ public class Load {
 
                 Box.Shader sProg = new Box.Shader(
                         ShaderType.Textured.shader_type_ID,
+                        programID,
+                        vertexID,
+                        fragmentID,
+                        u_ModelViewMatrix,
+                        u_ProjectionMatrix,
+                        u_Light_AmbientIntens,
+                        u_Light_Color,
+                        u_Light_DiffuseIntens,
+                        u_Light_Direction,
+                        u_MatSpecularIntensity,
+                        u_Shininess,
+                        u_Texture
+                );
+                return shaders.add(sProg); //return SparseArray-ID //sProg.shader_type_ID;
+        }
+
+        public static int quadShader(
+                @NotNull final SparseArray<Box.Shader> shaders,
+                @NotNull final String vertexShaderCode,
+                @NotNull final String fragmentShaderCode
+        ) {
+                final int vertexID = GPU.loadShader(GLES.GL_VERTEX_SHADER, vertexShaderCode);
+                final int fragmentID = GPU.loadShader(GLES.GL_FRAGMENT_SHADER, fragmentShaderCode);
+                final int programID = GPU.createShaderProgram(vertexID, fragmentID);
+
+                GPU.attributeLocation(programID, ShaderType.Quad.a_Position, "a_Position");
+                GPU.linkProgram(programID);
+
+                final int u_ModelViewMatrix = GPU.uniformLocation(programID, "u_ModelViewMatrix");
+                final int u_ProjectionMatrix = GPU.uniformLocation(programID, "u_ProjectionMatrix");
+
+                final int u_Light_AmbientIntens = GPU.uniformLocation(programID, "u_Light.AmbientIntensity");
+                final int u_Light_Color = GPU.uniformLocation(programID, "u_Light.Color");
+                final int u_Light_DiffuseIntens = GPU.uniformLocation(programID, "u_Light.DiffuseIntensity");
+                final int u_Light_Direction = GPU.uniformLocation(programID, "u_Light.Direction");
+
+                final int u_MatSpecularIntensity = GPU.uniformLocation(programID, "u_MatSpecularIntensity");
+                final int u_Shininess = GPU.uniformLocation(programID, "u_Shininess");
+                final int u_Texture = GPU.uniformLocation(programID, "u_Texture");
+
+                Box.Shader sProg = new Box.Shader(
+                        ShaderType.Quad.shader_type_ID,
                         programID,
                         vertexID,
                         fragmentID,

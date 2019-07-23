@@ -5,6 +5,8 @@ import android.opengl.Matrix;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Vector;
+
 import bertrand.myopengl.Tool.Circle;
 import bertrand.myopengl.Tool.Color4f;
 import bertrand.myopengl.Tool.Vec2;
@@ -83,7 +85,8 @@ public class Box {
                         this.u_Texture = u_Texture;
                 }
         }
-        public static SparseArray<Shader> shaders = new SparseArray<>(null,50);
+        public static SparseArray<Shader> shaders = new SparseArray<>(null,5);
+        public static SparseArray<Shader> guiShaders = new SparseArray<>(null,5);
 
 
         public static class Mesh{
@@ -131,6 +134,7 @@ public class Box {
                 }
         }
         public static SparseArray<Location> locations = new SparseArray<>(null,1000);
+        public static SparseArray<Location> guiLocations = new SparseArray<>(null,10);
 
         public static class Swing {
                 public final int location_ID;
@@ -211,20 +215,9 @@ public class Box {
         }
         public static SparseArray<Display> displays = new SparseArray<>(null,2);
 
-        /*
-        public static class Touch {
-                public float x;
-                public float y;
-                public float dx;
-                public float dy;
-                public Touch (final float x, final float y) {
-                        this.x = x;
-                        this.y = y;
-                        dx = x;
-                        dy = y;
-                }
-        }
-        */
+
+
+
         public static class Touch {
                 public Vec2 point = new Vec2();
                 public Vec2 delta = new Vec2();
@@ -235,7 +228,19 @@ public class Box {
         }
         public static SparseArray<Touch> touchs = new SparseArray<>(null, 20);
 
-
-        public static SparseArray<Circle> circleColliders =
+        public static class CircleCollider {
+                public int location_ID;
+                public float radius;
+                public CircleCollider(int location_ID, float radius) {
+                        this.location_ID = location_ID;
+                        this.radius = radius;
+                }
+        }
+        public static SparseArray<CircleCollider> circleColliders =
                 new SparseArray<>(null, 10);
+
+       // public static int[] touchDetections =  new int[10];
+        public static Vector<Integer> touchDetections = new Vector<Integer>();
+
+
 }

@@ -16,12 +16,15 @@ public final class ClearScreen {
                 }
                 Box.cameras.at(0).location_ID = 0;
                 CleanUp.locations(Box.locations);
+                CleanUp.locations(Box.guiLocations);
+                Box.circleColliders.clear();
                 CleanUp.meshes(Box.meshes);
                 CleanUp.swings(Box.swings);
                 CleanUp.spins(Box.spin);
                 CleanUp.lights(Box.lights);
                 CleanUp.backGroundColor(Box.backGround);
                 CleanUp.shaders(Box.shaders);
+                CleanUp.shaders(Box.guiShaders);
 
         }
 

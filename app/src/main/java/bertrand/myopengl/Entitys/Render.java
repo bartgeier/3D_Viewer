@@ -114,4 +114,56 @@ public class Render {
                 }
         }
 
+        public static void guis(
+                @NotNull final float[] parentModelViewMatrix,
+                @NotNull final SparseArray<Box.Location> locations,
+                @NotNull final SparseArray<Box.Shader> shaders
+        ) {
+                if (locations.size() == 0) {
+                        return;
+                }
+                Box.Shader shader = null;
+                int lastShader_id = -1;
+
+                final Box.Location root = locations.at(0);
+                Matrix.multiplyMM(
+                        root.MV,
+                        0,
+                        parentModelViewMatrix,
+                        0,
+                        root.TF,
+                        0
+                );
+
+
+                for (int i = 1; i < locations.size(); i++) {
+                        final Box.Location l = locations.at(i);
+                        Matrix.multiplyMM(
+                                l.MV,
+                                0,
+                                locations.at(l.parentIdx).MV,
+                                0,
+                                l.TF,
+                                0
+                        );
+
+                        if (l.shader_ID != lastShader_id) {
+                                lastShader_id = l.shader_ID;
+                                shader = shaders.atId(l.shader_ID);
+                                GPU.useProgram(shader.programID);
+                                switch (shader.shader_type_ID) {
+                                        case ShaderType.Quad.shader_type_ID:
+                                                GPU.loadInt(shader.u_Texture, 0);
+                                                break;
+                                        default:
+                                                break;
+                                }
+                        }
+                        GPU.selectTexture(l.texId);
+                        GPU.loadMatrix(shader.u_ModelViewMatrix, l.MV);
+                        GPU.render(l.vao, l.indicesCount);
+                }
+        }
+
+
 }

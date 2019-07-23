@@ -23,6 +23,7 @@ import bertrand.myopengl.ExampleScenes.Triangle;
 import bertrand.myopengl.ExampleScenes.Triangle_1;
 import bertrand.myopengl.ExampleScenes.XYZ_Arrows;
 import bertrand.myopengl.Tool.Circle;
+import bertrand.myopengl.Tool.Collision.Gui;
 import bertrand.myopengl.Tool.Color4f;
 import bertrand.myopengl.Tool.GLMathe;
 import bertrand.myopengl.Tool.Mathe;
@@ -60,8 +61,8 @@ public final class MainRenderer implements Renderer {
                         1
                 ));
 
-                Circle circle = new Circle(-0.8f, -0.8f, 0.2f);
-                Box.circleColliders.add(circle);
+               // Circle circle = new Circle(-0.8f, -0.8f, 0.1f);
+               // Box.circleColliders.add(circle);
         }
 
         @Override
@@ -118,6 +119,12 @@ public final class MainRenderer implements Renderer {
                                 Box.shaders,
                                 Update.matrix
                         );
+                        Matrix.setIdentityM(Update.matrix, 0);
+                        Matrix.scaleM(Update.matrix, 0,  1, camera.aspectRatio, 1);
+                        Update.gpu_shader_projectionMatrix(
+                                Box.guiShaders,
+                                Update.matrix
+                        );
                         lastExampleIndex = newExampleIndex;
 
                 }
@@ -134,6 +141,9 @@ public final class MainRenderer implements Renderer {
                 Matrix.multiplyMM(Render.matrixB,0,Render.matrixA,0,Render.matrixC,0);
 
                 Render.entitys(Render.matrixB, Box.lights, Box.locations, Box.shaders);
+
+                Matrix.setIdentityM(Render.matrixA,0);
+                Render.guis(Render.matrixA, Box.guiLocations, Box.guiShaders);
         }
 
         @Override
@@ -177,15 +187,16 @@ public final class MainRenderer implements Renderer {
                 if(id >= Box.touchs.length()) {
                         return;
                 }
+                final Box.Camera camera = Box.cameras.atId(cameraId);
                 Box.Display display = Box.displays.atId(displayId);
 
                 GLMathe.pixel_to_glCoordinateSystem(point, viewSize);
                 Box.Touch touch = new Box.Touch(point);
                 Box.touchs.replaceId(id,touch);
 
-                Circle ci = Box.circleColliders.at(0);
-
-                if (Tst.subset(ci, touch.point)) {
+                Vec2 p = new Vec2(touch.point.x,touch.point.y / camera.aspectRatio);
+                Gui.circleCollision(Box.touchDetections, Box.circleColliders, Box.guiLocations, p);
+                if (Box.touchDetections.size() > 0) {
                         if (Box.backGround.color.b == 0f) {
                                 Box.backGround.color.r = 0.8f;
                                 Box.backGround.color.g = 0.8f;
@@ -197,6 +208,23 @@ public final class MainRenderer implements Renderer {
                         }
 
                 }
+                /*
+                if (Box.circleColliders.size() > 0) {
+                        Circle ci = Box.circleColliders.at(0)
+                        Vec2 p = new Vec2(touch.point.x,touch.point.y / camera.aspectRatio);
+                        if (Tst.subset(ci, p)) {
+                                if (Box.backGround.color.b == 0f) {
+                                        Box.backGround.color.r = 0.8f;
+                                        Box.backGround.color.g = 0.8f;
+                                        Box.backGround.color.b = 0.8f;
+                                } else {
+                                        Box.backGround.color.r = 1f;
+                                        Box.backGround.color.g = 0.4f;
+                                        Box.backGround.color.b = 0;
+                                }
+                        }
+                }
+                */
 
         }
 

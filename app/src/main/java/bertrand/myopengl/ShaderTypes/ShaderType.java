@@ -13,4 +13,8 @@ public class ShaderType {
                 public static final int a_TexCoord = 1;
                 public static final int a_Normal = 2;
         }
+        public static final class Quad {
+                public static final int shader_type_ID = 2;
+                public static final int a_Position = 0;
+        }
 }

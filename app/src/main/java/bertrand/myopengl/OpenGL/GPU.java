@@ -67,7 +67,6 @@ public class GPU {
         public static int loadTexture(final Bitmap bitmap) {
                 final int texID = GPU.generateTextureID();
                 GLES.glBindTexture(GLES.GL_TEXTURE_2D, texID);
-
                 GLES.glTexParameteri( // Set filtering
                         GLES.GL_TEXTURE_2D,
                         GLES.GL_TEXTURE_MIN_FILTER,
@@ -78,11 +77,27 @@ public class GPU {
                         GLES.GL_TEXTURE_MAG_FILTER,
                         GLES.GL_NEAREST
                 );
-
                 GLUtils.texImage2D(GLES.GL_TEXTURE_2D, 0, bitmap, 0);
-
                 GLES.glActiveTexture(GLES.GL_TEXTURE0);
+                bitmap.recycle();
+                return texID;
+        }
 
+        public static int loadTextureLinear(final Bitmap bitmap) {
+                final int texID = GPU.generateTextureID();
+                GLES.glBindTexture(GLES.GL_TEXTURE_2D, texID);
+                GLES.glTexParameteri( // Set filtering
+                        GLES.GL_TEXTURE_2D,
+                        GLES.GL_TEXTURE_MIN_FILTER,
+                        GLES.GL_LINEAR
+                );
+                GLES.glTexParameteri( // Set filtering
+                        GLES.GL_TEXTURE_2D,
+                        GLES.GL_TEXTURE_MAG_FILTER,
+                        GLES.GL_LINEAR
+                );
+                GLUtils.texImage2D(GLES.GL_TEXTURE_2D, 0, bitmap, 0);
+                GLES.glActiveTexture(GLES.GL_TEXTURE0);
                 bitmap.recycle();
                 return texID;
         }
@@ -168,6 +183,12 @@ public class GPU {
                 GLES.glClear(GLES.GL_COLOR_BUFFER_BIT |GLES.GL_DEPTH_BUFFER_BIT);
                 GLES.glEnable(GLES.GL_CULL_FACE);
                 //GLES.glCullFace(GLES.GL_FRONT_AND_BACK);
+                GLES.glEnable(GLES.GL_BLEND);
+                //GLES.glBlendFunc(GLES.GL_SRC_ALPHA, GLES.GL_ONE_MINUS_SRC_ALPHA);
+                GLES.glBlendFunc(GLES.GL_ONE, GLES.GL_ONE_MINUS_SRC_ALPHA);
+                GLES.glBlendEquation(GLES.GL_FUNC_ADD);
+
+
         }
 
         private static int generateVBO() {

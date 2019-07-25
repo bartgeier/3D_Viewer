@@ -195,7 +195,7 @@ public final class MainRenderer implements Renderer {
                 Box.touchs.replaceId(id,touch);
 
                 Vec2 p = new Vec2(touch.point.x,touch.point.y / camera.aspectRatio);
-                Gui.circleCollision(Box.touchDetections, Box.circleColliders, Box.guiLocations, p);
+                Gui.circleCollision(Box.touchDetections, Box.circleColliders, Box.guiLocations, p); //add touch id
                 if (Box.touchDetections.size() > 0) {
                         if (Box.backGround.color.b == 0f) {
                                 Box.backGround.color.r = 0.8f;

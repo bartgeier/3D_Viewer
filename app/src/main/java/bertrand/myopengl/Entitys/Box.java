@@ -92,21 +92,29 @@ public class Box {
         public static class Mesh{
                 public final int vao;
                 public final int[] vbos;
-                public final int texId;
+                //public final int texId;
                 public final int indicesCount;
                 public Mesh(
                         final int vao,
                         @NotNull final int[] vbos,
-                        final int texId,
+                       // final int texId,
                         final int indicesCount
                 ) {
                         this.vao = vao;
                         this.vbos = vbos;
-                        this.texId = texId;
+                        //this.texId = texId;
                         this.indicesCount = indicesCount;
                 }
         }
         public static SparseArray<Mesh> meshes = new SparseArray<>(null,50);
+
+        public static class Texture {
+                public final int texNo;
+                public Texture(final int texId) {
+                        this.texNo = texId;
+                }
+        }
+        public static SparseArray<Texture> textures =  new SparseArray<>(null,50);
 
 
         public static class Location {
@@ -115,7 +123,7 @@ public class Box {
                 public final float[] MV = new float[16]; // model view matrix
                 public final int shader_ID;
                 public final int vao;
-                public final int texId;
+                public int texId;
                 public final int indicesCount;
                 public Location(
                         int parentIdx,
@@ -134,7 +142,6 @@ public class Box {
                 }
         }
         public static SparseArray<Location> locations = new SparseArray<>(null,1000);
-        public static SparseArray<Location> guiLocations = new SparseArray<>(null,10);
 
         public static class Swing {
                 public final int location_ID;
@@ -216,8 +223,8 @@ public class Box {
         public static SparseArray<Display> displays = new SparseArray<>(null,2);
 
 
-
-
+/////////////////////////////////////////////////////////////////////////////////////////////
+        //touchs parallel to platform container for finger touchs
         public static class Touch {
                 public Vec2 point = new Vec2();
                 public Vec2 delta = new Vec2();
@@ -225,22 +232,78 @@ public class Box {
                         this.point.copy(p);
                         this.delta.copy(p);
                 }
+                public Touch (final Vec2 p, final Vec2 d) {
+                        this.point.copy(p);
+                        this.delta.copy(d);
+                }
         }
         public static SparseArray<Touch> touchs = new SparseArray<>(null, 20);
 
+/////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////
+        //GUI
+        public static class Tab {
+                public int layer;
+                public int tabAction_ID;
+                public int guiLocation_ID;
+                public Tab(int layer, int tabAction_ID, int guiLocation_ID) {
+                        this.layer = layer;
+                        this.tabAction_ID = tabAction_ID;
+                        this.guiLocation_ID = guiLocation_ID;
+                }
+        }
+
         public static class CircleCollider {
-                public int location_ID;
+                public Tab tab;
                 public float radius;
-                public CircleCollider(int location_ID, float radius) {
-                        this.location_ID = location_ID;
+                public CircleCollider(Tab tab, float radius) {
+                        this.tab = tab;
                         this.radius = radius;
                 }
         }
         public static SparseArray<CircleCollider> circleColliders =
                 new SparseArray<>(null, 10);
 
+        public static Vector<Tab> tabs = new Vector<>(20,20);
+
+        public static class TabAction {
+                public interface Function_IF {
+                        void f(Tab tab);
+                }
+                public interface Change_IF {
+                        void f(Tab tab, Touch guiTouch);
+                }
+                public int texNo_press;
+                public int texNo_release;
+                public int texNo_hover;
+                public Function_IF press;
+                public Function_IF release;
+                public Change_IF change;
+                public Function_IF entry;
+                public Function_IF exit;
+                public TabAction(
+                        int texNo_press, int texNo_release, int texNo_hover,
+                        Function_IF press, Function_IF release, Change_IF change,
+                        Function_IF entry, Function_IF exit
+                ) {
+                        this.texNo_press = texNo_press;
+                        this.texNo_release = texNo_release;
+                        this.texNo_hover = texNo_hover;
+                        this.press = press;
+                        this.release = release;
+                        this.change = change;
+                        this.entry = entry;
+                        this.exit = exit;
+                }
+        }
+        public static SparseArray<TabAction> tabActions = new SparseArray<>(null,20);
+
        // public static int[] touchDetections =  new int[10];
-        public static Vector<Integer> touchDetections = new Vector<Integer>();
+        public static class PressedLocation{
+
+       }
+
+        public static SparseArray<Location> guiLocations = new SparseArray<>(null,10);
 
 
 }

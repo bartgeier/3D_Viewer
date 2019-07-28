@@ -44,25 +44,27 @@ public final class Rocket {
                 ModelData obj = OBJParser.transform(
                         asset.open("Rocket/rocket_obj.obj")
                 );
-
-                Bitmap bitmap = BitmapFactory.decodeStream(
-                        asset.open("Rocket/rocket_png.png")
-                );
-
                 final int mesh_ID = Load.texturedModel(
                         Box.meshes,
-                        bitmap,
                         obj.getIndices(),
                         obj.getVertices(),
                         obj.getTextureCoords(),
                         obj.getNormals()
                 );
 
+                Bitmap bitmap = BitmapFactory.decodeStream(
+                        asset.open("Rocket/rocket_png.png")
+                );
+                int texture_ID = Load.texture(
+                        Box.textures,
+                        bitmap
+                );
+
                 Box.Location l = new Box.Location(
                         0,
                         shaderProgram_ID,
                         Box.meshes.atId(mesh_ID).vao,
-                        Box.meshes.atId(mesh_ID).texId,
+                        Box.textures.atId(texture_ID).texNo,
                         Box.meshes.atId(mesh_ID).indicesCount
                 );
                 Box.locations.add(l);

@@ -44,11 +44,14 @@ public final class LowPoly_Islands {
 
                         final int mesh_ID = Load.texturedModel(
                                 Box.meshes,
-                                bitmap,
                                 obj.getIndices(),
                                 obj.getVertices(),
                                 obj.getTextureCoords(),
                                 obj.getNormals()
+                        );
+                        final int texture_ID = Load.texture(
+                                Box.textures,
+                                bitmap
                         );
                 }
                 Hierarchy hierarchy = new Hierarchy();
@@ -64,7 +67,7 @@ public final class LowPoly_Islands {
                                 d.parent_idx,
                                 shaderProgram_ID,
                                 Box.meshes.at(d.model_idx).vao,
-                                Box.meshes.at(d.model_idx).texId,
+                                Box.textures.at(d.model_idx).texNo,
                                 Box.meshes.at(d.model_idx).indicesCount
                         );
                         Matrix.translateM(l.TF,0,d.x, d.y, d.z);

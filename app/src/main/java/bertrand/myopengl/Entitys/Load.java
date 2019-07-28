@@ -29,15 +29,64 @@ public class Load {
                 Box.Mesh mesh = new Box.Mesh(
                         vao,
                         vbos,
-                        0,
                         indices.length
                 );
                 return meshes.add(mesh); //return SparseArray-ID
         }
 
+/*
+        public static int coloredModel(
+                        @NotNull final SparseArray<Box.Mesh> meshes,
+                        @NotNull final int[] indices,
+                        @NotNull final float[] positions,
+                        @NotNull final float[] colors,
+                        @NotNull final float[] normals
+                ) {
+                        int vao = GPU.createVertexArrayObject();
+                        int[] vbos = new int[4];
+                        vbos[0] = GPU.loadIndecisBuffer(Arr.allocateBuffer(indices));
+                        vbos[1] = GPU.loadAttribute(ShaderType.Colored.a_Position, 3, Arr.allocateBuffer(positions));
+                        vbos[2] = GPU.loadAttribute(ShaderType.Colored.a_Color, 4, Arr.allocateBuffer(colors));
+                        vbos[3] = GPU.loadAttribute(ShaderType.Colored.a_Normal, 3, Arr.allocateBuffer(normals));
+                        GPU.vertexArray0();
+
+                        Box.Mesh mesh = new Box.Mesh(
+                                vao,
+                                vbos,
+                                0,
+                                indices.length
+                        );
+                        return meshes.add(mesh); //return SparseArray-ID
+                }
+
+                public static int texturedModel(
+                        @NotNull final SparseArray<Box.Mesh> meshes,
+                        @NotNull final Bitmap bitmap,
+                        @NotNull final int[] indices,
+                        @NotNull final float[] positions,
+                        @NotNull final float[] texCoords,
+                        @NotNull final float[] normals
+                ) {
+                        int vao = GPU.createVertexArrayObject();
+                        int[] vbos = new int[4];
+                        vbos[0] = GPU.loadIndecisBuffer(Arr.allocateBuffer(indices));
+                        vbos[1] = GPU.loadAttribute(ShaderType.Textured.a_Position, 3, Arr.allocateBuffer(positions));
+                        vbos[2] = GPU.loadAttribute(ShaderType.Textured.a_TexCoord, 2, Arr.allocateBuffer(texCoords));
+                        vbos[3] = GPU.loadAttribute(ShaderType.Textured.a_Normal, 3, Arr.allocateBuffer(normals));
+                        int texId = GPU.loadTexture(bitmap);
+                        GPU.vertexArray0();
+
+                        Box.Mesh mesh = new Box.Mesh(
+                                vao,
+                                vbos,
+                                texId,
+                                indices.length
+                        );
+                        return meshes.add(mesh); //return SparseArray-ID
+                }
+        */
         public static int texturedModel(
                 @NotNull final SparseArray<Box.Mesh> meshes,
-                @NotNull final Bitmap bitmap,
                 @NotNull final int[] indices,
                 @NotNull final float[] positions,
                 @NotNull final float[] texCoords,
@@ -49,22 +98,17 @@ public class Load {
                 vbos[1] = GPU.loadAttribute(ShaderType.Textured.a_Position, 3, Arr.allocateBuffer(positions));
                 vbos[2] = GPU.loadAttribute(ShaderType.Textured.a_TexCoord, 2, Arr.allocateBuffer(texCoords));
                 vbos[3] = GPU.loadAttribute(ShaderType.Textured.a_Normal, 3, Arr.allocateBuffer(normals));
-                int texId = GPU.loadTexture(bitmap);
                 GPU.vertexArray0();
 
                 Box.Mesh mesh = new Box.Mesh(
                         vao,
                         vbos,
-                        texId,
                         indices.length
                 );
                 return meshes.add(mesh); //return SparseArray-ID
         }
 
-        public static int texturedQuad(
-                @NotNull final SparseArray<Box.Mesh> meshes,
-                @NotNull final Bitmap bitmap
-        ) {
+        public static int texturedQuad(@NotNull final SparseArray<Box.Mesh> meshes) {
                 final int[] indices = {0, 1, 2, 0, 3, 1};
                 final float[] positions = {
                         -1, -1, 0,  //0
@@ -76,16 +120,36 @@ public class Load {
                 int[] vbos = new int[4];
                 vbos[0] = GPU.loadIndecisBuffer(Arr.allocateBuffer(indices));
                 vbos[1] = GPU.loadAttribute(ShaderType.Textured.a_Position, 3, Arr.allocateBuffer(positions));
-                int texId = GPU.loadTextureLinear(bitmap);
                 GPU.vertexArray0();
 
                 Box.Mesh mesh = new Box.Mesh(
                         vao,
                         vbos,
-                        texId,
                         indices.length
                 );
                 return meshes.add(mesh); //return SparseArray-ID
+        }
+
+        public static int texture(
+                @NotNull final SparseArray<Box.Texture> textures,
+                @NotNull final Bitmap bitmap
+        ) {
+                int texNo = GPU.loadTexture(bitmap);
+                Box.Texture texture = new Box.Texture(
+                        texNo
+                );
+                return textures.add(texture);
+        }
+
+        public static int textureLinear(
+                @NotNull final SparseArray<Box.Texture> textures,
+                @NotNull final Bitmap bitmap
+        ) {
+                int texNo = GPU.loadTextureLinear(bitmap);
+                Box.Texture texture = new Box.Texture(
+                        texNo
+                );
+                return textures.add(texture);
         }
 
         public static int coloredShader(

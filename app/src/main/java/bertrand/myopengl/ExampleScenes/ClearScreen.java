@@ -19,6 +19,7 @@ public final class ClearScreen {
                 CleanUp.locations(Box.guiLocations);
                 Box.circleColliders.clear();
                 CleanUp.meshes(Box.meshes);
+                CleanUp.textures(Box.textures);
                 CleanUp.swings(Box.swings);
                 CleanUp.spins(Box.spin);
                 CleanUp.lights(Box.lights);

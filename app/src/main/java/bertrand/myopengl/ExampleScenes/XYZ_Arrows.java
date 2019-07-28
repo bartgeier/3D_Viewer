@@ -42,17 +42,21 @@ public final class XYZ_Arrows {
                         asset.open("XYZ_Arrows/XYZ_Arrows.obj")
                 );
 
-                Bitmap bitmap = BitmapFactory.decodeStream(
-                        asset.open("XYZ_Arrows/XYZ_Arrows.png")
-                );
-
                 int mesh_ID = Load.texturedModel(
                         Box.meshes,
-                        bitmap,
                         obj.getIndices(),
                         obj.getVertices(),
                         obj.getTextureCoords(),
                         obj.getNormals()
+                );
+
+                Bitmap bitmap = BitmapFactory.decodeStream(
+                        asset.open("XYZ_Arrows/XYZ_Arrows.png")
+                );
+
+                int texture_ID = Load.texture(
+                        Box.textures,
+                        bitmap
                 );
 
                 Box.locations.add(
@@ -60,7 +64,7 @@ public final class XYZ_Arrows {
                                 0,
                                 shaderProgram_ID,
                                 Box.meshes.atId(mesh_ID).vao,
-                                Box.meshes.atId(mesh_ID).texId,
+                                Box.textures.atId(mesh_ID).texNo,
                                 Box.meshes.atId(mesh_ID).indicesCount
                         )
                 );

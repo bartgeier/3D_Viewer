@@ -32,7 +32,7 @@ public class CleanUp {
                 }
                 shaders.clear();
         }
-
+/*
         public static void meshes(
                 @NotNull final SparseArray<Box.Mesh> meshes
         ) {
@@ -44,6 +44,27 @@ public class CleanUp {
                         GPU.deleteVertexArrayObject(meshes.at(i).vao);
                 }
                 meshes.clear();
+        }
+*/
+
+        public static void meshes(
+                @NotNull final SparseArray<Box.Mesh> meshes
+        ) {
+                for (int i = 0; i < meshes.size(); i++) {
+                        GPU.deleteVBOs(meshes.at(i).vbos);
+                        GPU.deleteVertexArrayObject(meshes.at(i).vao);
+                }
+                meshes.clear();
+        }
+
+
+        public static void textures(
+                @NotNull final SparseArray<Box.Texture> textures
+        ) {
+                for (int i = 0; i < textures.size(); i++) {
+                                GPU.deleteTextureID(textures.at(i).texNo);
+                }
+                textures.clear();
         }
 
         public static void locations(@NotNull final SparseArray<Box.Location> locations) {

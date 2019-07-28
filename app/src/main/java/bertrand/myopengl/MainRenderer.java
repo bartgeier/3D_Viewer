@@ -4,6 +4,10 @@ import android.content.Context;
 import android.opengl.GLSurfaceView.Renderer;
 import android.opengl.Matrix;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Vector;
+
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
@@ -27,6 +31,7 @@ import bertrand.myopengl.Tool.Collision.Gui;
 import bertrand.myopengl.Tool.Color4f;
 import bertrand.myopengl.Tool.GLMathe;
 import bertrand.myopengl.Tool.Mathe;
+import bertrand.myopengl.Tool.SparseArray.SparseArray;
 import bertrand.myopengl.Tool.Time.DeltaTime;
 import bertrand.myopengl.Tool.Time.StopWatch;
 import bertrand.myopengl.Tool.Vec2;
@@ -194,38 +199,12 @@ public final class MainRenderer implements Renderer {
                 Box.Touch touch = new Box.Touch(point);
                 Box.touchs.replaceId(id,touch);
 
-                Vec2 p = new Vec2(touch.point.x,touch.point.y / camera.aspectRatio);
-                Gui.circleCollision(Box.touchDetections, Box.circleColliders, Box.guiLocations, p); //add touch id
-                if (Box.touchDetections.size() > 0) {
-                        if (Box.backGround.color.b == 0f) {
-                                Box.backGround.color.r = 0.8f;
-                                Box.backGround.color.g = 0.8f;
-                                Box.backGround.color.b = 0.8f;
-                        } else {
-                                Box.backGround.color.r = 1f;
-                                Box.backGround.color.g = 0.4f;
-                                Box.backGround.color.b = 0;
-                        }
-
-                }
-                /*
-                if (Box.circleColliders.size() > 0) {
-                        Circle ci = Box.circleColliders.at(0)
-                        Vec2 p = new Vec2(touch.point.x,touch.point.y / camera.aspectRatio);
-                        if (Tst.subset(ci, p)) {
-                                if (Box.backGround.color.b == 0f) {
-                                        Box.backGround.color.r = 0.8f;
-                                        Box.backGround.color.g = 0.8f;
-                                        Box.backGround.color.b = 0.8f;
-                                } else {
-                                        Box.backGround.color.r = 1f;
-                                        Box.backGround.color.g = 0.4f;
-                                        Box.backGround.color.b = 0;
-                                }
-                        }
-                }
-                */
-
+                final Vec2 p = new Vec2(touch.point.x,touch.point.y / camera.aspectRatio);
+                Box.tabs.clear();
+                Gui.circleCollision(Box.tabs, Box.circleColliders, Box.guiLocations, p);
+                Gui.reduseTabActions(Box.tabs, 0);
+                Gui.excutePressTabAction(Box.guiLocations, Box.tabActions, Box.tabs);
+                Box.tabs.clear();
         }
 
         // x and y between -1 and +1
@@ -233,13 +212,29 @@ public final class MainRenderer implements Renderer {
                 if(id >= Box.touchs.length() || Box.touchs.getIndex(id) < 0) {
                         return;
                 }
-
                 final Box.Camera camera = Box.cameras.atId(cameraId);
-                Box.Touch touch = Box.touchs.atId(id);
-
-                Vec2 temp = touch.point.copy();
+                final Box.Touch touch = Box.touchs.atId(id);
+                final Vec2 last = touch.point.copy();
                 GLMathe.pixel_to_glCoordinateSystem(touch.point, pixel, viewSize);
-                Vec2.sub(touch.delta, touch.point, temp);
+                Vec2.sub(touch.delta, touch.point, last);
+
+                final Box.Touch guiTouch = new Box.Touch(touch.point, touch.delta);
+                guiTouch.point.y = guiTouch.point.y / camera.aspectRatio;
+                guiTouch.delta.y = guiTouch.delta.y / camera.aspectRatio;
+                //guiTouch in normalized pixel coordinates
+                Vec2.sub(last, guiTouch.point, guiTouch.delta);
+
+                Box.tabs.clear();
+
+                Gui.circleCollision(Box.tabs, Box.circleColliders, Box.guiLocations, last);
+                Gui.reduseTabActions(Box.tabs, 0);
+                Gui.noTabActionOnIdx(Box.tabs,0);
+                Gui.circleCollision(Box.tabs, Box.circleColliders, Box.guiLocations, guiTouch.point);
+                Gui.reduseTabActions(Box.tabs, 1);
+                Gui.noTabActionOnIdx(Box.tabs,1);
+                Gui.excuteChangeTabAction(Box.guiLocations, Box.tabActions, Box.tabs, guiTouch);
+
+                Box.tabs.clear();
 
                 if(Box.touchs.size() == 1) {
                         // camera moving in x,y //
@@ -299,6 +294,14 @@ public final class MainRenderer implements Renderer {
                 if(id >= Box.touchs.length()) {
                         return;
                 }
+                final Box.Camera camera = Box.cameras.atId(cameraId);
+                final Box.Touch touch = Box.touchs.atId(id);
+                final Vec2 p = new Vec2(touch.point.x,touch.point.y / camera.aspectRatio);
+                Box.tabs.clear();
+                Gui.circleCollision(Box.tabs, Box.circleColliders, Box.guiLocations, p);
+                Gui.reduseTabActions(Box.tabs, 0);
+                Gui.excuteReleaseTabAction(Box.guiLocations, Box.tabActions, Box.tabs);
+                Box.tabs.clear();
                 Box.touchs.delete(id);
         }
 

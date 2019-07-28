@@ -61,7 +61,7 @@ public final class Triangle  {
                                 0,
                                 shaderProgram_ID,
                                 Box.meshes.atId(mesh_ID).vao,
-                                Box.meshes.atId(mesh_ID).texId,
+                                0,
                                 Box.meshes.atId(mesh_ID).indicesCount
                         )
                 );

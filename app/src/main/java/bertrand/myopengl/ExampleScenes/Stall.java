@@ -47,10 +47,6 @@ public final class Stall {
                         asset.open("Stall/stall.obj")
                 );
 
-                Bitmap bitmap = BitmapFactory.decodeStream(
-                        asset.open("Stall/stall.png")
-                );
-
                 final Vec3 offset = Positions.offset(obj.getVertices());
                 final float[] translationMatrix = new float[16];
                 Matrix.setIdentityM(translationMatrix, 0);
@@ -68,21 +64,32 @@ public final class Stall {
 
                 final int mesh_ID = Load.texturedModel(
                         Box.meshes,
-                        bitmap,
                         obj.getIndices(),
                         positions,
                         obj.getTextureCoords(),
                         normals
                 );
+
+                Bitmap bitmap = BitmapFactory.decodeStream(
+                        asset.open("Stall/stall.png")
+                );
+
+                int texture_ID = Load.texture(
+                        Box.textures,
+                        bitmap
+                );
+
                 Box.locations.add(
                         new Box.Location(
                                 0,
                                 shaderProgram_ID,
                                 Box.meshes.atId(mesh_ID).vao,
-                                Box.meshes.atId(mesh_ID).texId,
+                                Box.textures.atId(texture_ID).texNo,
                                 Box.meshes.atId(mesh_ID).indicesCount
                         )
                 );
+
+
 
                 add.light(
                         Box.lights,

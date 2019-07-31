@@ -21,15 +21,22 @@ public class Gui {
         ) {
                 final int idx = tabs.size();
                 for (int i = 0; i < circleColliders.size(); i++) {
-                        final Box.Tab t = circleColliders.at(i).tab;
-                        final Box.Location  loc = guiLocations.atId(t.guiLocation_ID);
+                        final int loc_id = circleColliders.at(i).guiLocation_ID;
+                        final Box.Location  loc = guiLocations.atId(loc_id);
                         final Circle ci = new Circle(
                                 Mathe.Tx(loc.MV),
                                 Mathe.Ty(loc.MV),
                                 circleColliders.at(i).radius
                         );
                         if (Tst.subset(ci,touchPoint)) {
-                                tabs.insertElementAt(t,idx);
+                                tabs.insertElementAt(
+                                        new Box.Tab(
+                                                circleColliders.at(i).layer,
+                                                circleColliders.at(i).tabAction_ID,
+                                                circleColliders.at(i).entity_ID
+                                        ),
+                                        idx
+                                );
                         }
                 }
         }
@@ -67,11 +74,8 @@ public class Gui {
                 @NotNull final Vector<Box.Tab> tabs
         ) {
                 for (Box.Tab  tab: tabs) {
-                        Box.Location guiLocation = guiLocations.atId(tab.guiLocation_ID);
-                        Box.TabAction action = actions.atId(tab.tabAction_ID);
-                        guiLocation.texId = action.texNo_press;
                         Box.TabAction.Function_IF x =  actions.atId(tab.tabAction_ID).press;
-                        x.f(tab);
+                        x.f(tab.entity_ID);
                 }
         }
 
@@ -81,13 +85,8 @@ public class Gui {
                 @NotNull final Vector<Box.Tab> tabs
         ) {
                 for (Box.Tab  tab: tabs) {
-                        Box.Location guiLocation = guiLocations.atId(tab.guiLocation_ID);
-                        Box.TabAction action = actions.atId(tab.tabAction_ID);
-                        if (guiLocation.texId == action.texNo_press) {
-                                Box.TabAction.Function_IF x = actions.atId(tab.tabAction_ID).release;
-                                x.f(tab);
-                        }
-                        guiLocation.texId = action.texNo_release;
+                        Box.TabAction.Function_IF x = actions.atId(tab.tabAction_ID).release;
+                        x.f(tab.entity_ID);
                 }
         }
 
@@ -101,30 +100,19 @@ public class Gui {
                         throw new AssertionError(
                                 "Gui.excuteChangeTabAction, tabs.size() != 2");
                 }
-                Box.Location guiLocation;
-                Box.TabAction action;
-                Box.TabAction.Function_IF x;
+                Box.TabAction.Change_IF x;
                 Box.Tab  last =  tabs.get(0);
                 Box.Tab  actual =  tabs.get(1);
                 if ( last.layer < actual.layer) {
-                        // collider entry //
-                        guiLocation = guiLocations.atId(actual.guiLocation_ID);
-                        action = actions.atId(actual.tabAction_ID);
-                        guiLocation.texId = action.texNo_hover;
-                        x =  action.entry;
-                        x.f(actual);
+                        x =  actions.atId(actual.tabAction_ID).entry;
+                        x.f(actual.entity_ID, touch.delta);
                 } else if ( last.layer > actual.layer) {
-                        // collider exit //
-                        guiLocation = guiLocations.atId(last.guiLocation_ID);
-                        action = actions.atId(last.tabAction_ID);
-                        guiLocation.texId = action.texNo_release;
-                        x =  action.exit;
-                        x.f(last);
+                        x =  actions.atId(actual.tabAction_ID).exit;
+                        x.f(last.entity_ID, touch.delta);
                 } else {
                         if (actual.layer != 0) {
-                                action = actions.atId(actual.tabAction_ID);
-                                Box.TabAction.Change_IF change = action.change;
-                                change.f(actual, touch);
+                                x = actions.atId(actual.tabAction_ID).change;
+                                x.f(actual.entity_ID, touch.delta);
                         }
                 }
 

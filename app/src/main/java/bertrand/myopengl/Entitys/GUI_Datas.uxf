@@ -28,166 +28,90 @@ fontsize=10
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>663</x>
-      <y>78</y>
-      <w>273</w>
-      <h>156</h>
-    </coordinates>
-    <panel_attributes>&lt;&lt;Vector&gt;&gt;
-CircleCollider
---
-Tab tab
-float radius
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>962</x>
-      <y>78</y>
-      <w>273</w>
-      <h>156</h>
-    </coordinates>
-    <panel_attributes>&lt;&lt;Vector&gt;&gt;
-QuadCollider
---
-Tab tab
-Vec2 corner[x,y]
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>1248</x>
-      <y>78</y>
-      <w>273</w>
+      <x>624</x>
+      <y>377</y>
+      <w>156</w>
       <h>169</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Vector&gt;&gt;
-RectangleCollider
+quadColliders
 --
-Tab tab
+int entity_ID
+--
+int layer
+--
+int guiLocation_ID
+Vec2 corner[x,y]
+--
+int tabAction_ID</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>793</x>
+      <y>377</y>
+      <w>182</w>
+      <h>169</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Vector&gt;&gt;
+rectangleColliders
+--
+int entity_ID
+--
+int layer
+--
+int guiLocation_ID
 Vec2 corner_min[x,y]
 Vec2 corner_max[x,y]
-</panel_attributes>
+--
+int tabAction_ID</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>351</x>
-      <y>78</y>
-      <w>273</w>
-      <h>156</h>
-    </coordinates>
-    <panel_attributes>&lt;&lt;Vector&gt;&gt;
-AnimatedCircleCollider
---
-Tab tab
-float radius
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>247</x>
-      <y>598</y>
-      <w>338</w>
-      <h>208</h>
-    </coordinates>
-    <panel_attributes>&lt;&lt;Vector&gt;&gt;
-TabAction
---
-int texNo_press
-int texNo_release
-int texNo_hover
-function press(Tab tab)
-function release(Tab tab)
-function change(Tab tab, Touch guiTouch)
-function entry(Tab tab)
-function exit(Tab tab)
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>481</x>
-      <y>221</y>
-      <w>39</w>
-      <h>156</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;100.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>780</x>
-      <y>221</y>
-      <w>39</w>
-      <h>156</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;100.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>1079</x>
-      <y>221</y>
-      <w>39</w>
-      <h>156</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;100.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>1209</x>
-      <y>234</y>
+      <x>416</x>
+      <y>377</y>
       <w>195</w>
-      <h>143</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;90.0;130.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>52</x>
-      <y>78</y>
-      <w>273</w>
-      <h>156</h>
+      <h>169</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Vector&gt;&gt;
-MoveCircleCollider
+circleColliders
 --
-Tab tab
+int entity_ID
+--
+int layer
+--
+int guiLocation_ID
 float radius
+--
+int tabAction_ID
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
-    <id>Relation</id>
+    <id>UMLClass</id>
     <coordinates>
-      <x>169</x>
-      <y>221</y>
-      <w>130</w>
-      <h>156</h>
+      <x>897</x>
+      <y>117</y>
+      <w>182</w>
+      <h>104</h>
     </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>80.0;100.0;10.0;10.0</additional_attributes>
+    <panel_attributes>&lt;&lt;Vector&gt;&gt;
+textures
+--
+int texNo
+
+
+</panel_attributes>
+    <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>234</x>
-      <y>1066</y>
+      <x>299</x>
+      <y>1365</y>
       <w>273</w>
       <h>117</h>
     </coordinates>
@@ -203,17 +127,57 @@ int location_ID
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>234</x>
-      <y>351</y>
-      <w>1027</w>
-      <h>117</h>
+      <x>169</x>
+      <y>390</y>
+      <w>182</w>
+      <h>104</h>
     </coordinates>
-    <panel_attributes>&lt;&lt;Struct&gt;&gt;
-/*Tap */
+    <panel_attributes>&lt;&lt;Vector&gt;&gt;
+Tap
 --
 int layer
 int tabAction_ID
+int entity_ID
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>520</x>
+      <y>598</y>
+      <w>338</w>
+      <h>156</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Vector&gt;&gt;
+tabActions
+--
+function press(int entity_ID)
+--
+function release(int entity_ID)
+--
+function entry(int entity_ID, Vec2 delta)
+function change(int entity_ID, Vec2 delta)
+function exit(int entity_ID,  Vec2 delta)
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>416</x>
+      <y>117</y>
+      <w>182</w>
+      <h>143</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Vector&gt;&gt;
+Entity Button
+--
+boolean pressed
 int guiLocation_ID
+int texturePress_ID
+int textureRelease_ID
+int textureHover_ID
 
 </panel_attributes>
     <additional_attributes/>
@@ -221,12 +185,57 @@ int guiLocation_ID
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>390</x>
-      <y>455</y>
-      <w>39</w>
-      <h>169</h>
+      <x>520</x>
+      <y>533</y>
+      <w>65</w>
+      <h>91</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;110.0;10.0;10.0</additional_attributes>
+    <additional_attributes>30.0;50.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>689</x>
+      <y>533</y>
+      <w>39</w>
+      <h>91</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;50.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>793</x>
+      <y>533</y>
+      <w>104</w>
+      <h>91</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;50.0;60.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>585</x>
+      <y>156</y>
+      <w>338</w>
+      <h>39</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>240.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>481</x>
+      <y>247</y>
+      <w>91</w>
+      <h>156</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+entity_ID</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;100.0</additional_attributes>
   </element>
 </diagram>

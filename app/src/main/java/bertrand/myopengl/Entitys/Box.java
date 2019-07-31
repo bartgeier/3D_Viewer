@@ -242,30 +242,91 @@ public class Box {
 /////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////
         //GUI
+        public static class CircleButton {
+                public boolean pressed;
+                public int guiLocation_ID;
+                public int texturePress_ID;
+                public int textureRelease_ID;
+                public int textureHover_ID;
+
+                public CircleButton(
+                        final boolean pressed,
+                        final int guiLocation_ID,
+                        final int texturePress_ID,
+                        final int textureRelease_ID,
+                        final int textureHover_ID
+                ) {
+                        this.pressed = pressed;
+                        this.guiLocation_ID = guiLocation_ID;
+                        this.texturePress_ID = texturePress_ID;
+                        this.textureRelease_ID = textureRelease_ID;
+                        this.textureHover_ID = textureHover_ID;
+                }
+        }
+        public static SparseArray<CircleButton> circleButtons =
+                new SparseArray<>(null, 10);
+
         public static class Tab {
                 public int layer;
                 public int tabAction_ID;
-                public int guiLocation_ID;
-                public Tab(int layer, int tabAction_ID, int guiLocation_ID) {
+                public int entity_ID;
+                public Tab(int layer, int tabAction_ID, int entity_ID) {
                         this.layer = layer;
                         this.tabAction_ID = tabAction_ID;
-                        this.guiLocation_ID = guiLocation_ID;
+                        this.entity_ID = entity_ID;
                 }
         }
+        public static Vector<Tab> tabs = new Vector<>(20,20);
 
         public static class CircleCollider {
-                public Tab tab;
+                public int entity_ID;
+                public int layer;
+                public int guiLocation_ID;
                 public float radius;
-                public CircleCollider(Tab tab, float radius) {
-                        this.tab = tab;
+                public int tabAction_ID;
+                public CircleCollider(
+                        final int entity_ID,
+                        final int layer,
+                        final int guiLocation_ID, float radius,
+                        final int tabAction_ID
+                ) {
+                        this.entity_ID = entity_ID;
+                        this.layer = layer;
+                        this.guiLocation_ID = guiLocation_ID;
                         this.radius = radius;
+                        this.tabAction_ID = tabAction_ID;
                 }
         }
         public static SparseArray<CircleCollider> circleColliders =
                 new SparseArray<>(null, 10);
 
-        public static Vector<Tab> tabs = new Vector<>(20,20);
 
+
+        public static class TabAction {
+                public interface Function_IF {
+                        void f(int entity_ID);
+                }
+                public interface Change_IF {
+                        void f(int entity_ID, Vec2 delta);
+                }
+                public Function_IF press;
+                public Function_IF release;
+                public Change_IF entry;
+                public Change_IF change;
+                public Change_IF exit;
+                public TabAction(
+                        Function_IF press, Function_IF release,
+                        Change_IF entry,  Change_IF change, Change_IF exit
+                ) {
+                        this.press = press;
+                        this.release = release;
+                        this.change = change;
+                        this.entry = entry;
+                        this.exit = exit;
+                }
+        }
+
+/*
         public static class TabAction {
                 public interface Function_IF {
                         void f(Tab tab);
@@ -296,12 +357,9 @@ public class Box {
                         this.exit = exit;
                 }
         }
+*/
         public static SparseArray<TabAction> tabActions = new SparseArray<>(null,20);
 
-       // public static int[] touchDetections =  new int[10];
-        public static class PressedLocation{
-
-       }
 
         public static SparseArray<Location> guiLocations = new SparseArray<>(null,10);
 

@@ -11,6 +11,8 @@ import bertrand.myopengl.Tool.SparseArray.SparseArray;
 import bertrand.myopengl.Tool.Tst;
 import bertrand.myopengl.Tool.Vec2;
 
+import static bertrand.myopengl.Entitys.Box.guiLocations;
+
 
 public class Gui {
         static public void circleCollision(

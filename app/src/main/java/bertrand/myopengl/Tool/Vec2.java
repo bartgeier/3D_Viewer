@@ -48,6 +48,12 @@ public class Vec2 {
                 y += b.y;
         }
 
+        // c = a - b;
+        public static void add(Vec2 c, Vec2 a, Vec2 b) {
+                c.x = a.x + b.x;
+                c.y = a.y + b.y;
+        }
+
         public void sMult(final float scalar) {
                 x *= scalar;
                 y *= scalar;

@@ -224,6 +224,7 @@ public final class MainRenderer implements Renderer {
                 //guiTouch in normalized pixel coordinates
                 Vec2.sub(last, guiTouch.point, guiTouch.delta);
 
+
                 Box.tabs.clear();
 
                 Gui.circleCollision(Box.tabs, Box.circleColliders, Box.guiLocations, last);
@@ -297,6 +298,7 @@ public final class MainRenderer implements Renderer {
                 final Box.Camera camera = Box.cameras.atId(cameraId);
                 final Box.Touch touch = Box.touchs.atId(id);
                 final Vec2 p = new Vec2(touch.point.x,touch.point.y / camera.aspectRatio);
+
                 Box.tabs.clear();
                 Gui.circleCollision(Box.tabs, Box.circleColliders, Box.guiLocations, p);
                 Gui.reduseTabActions(Box.tabs, 0);

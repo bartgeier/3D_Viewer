@@ -1,6 +1,7 @@
 package bertrand.myopengl.Tool;
 
 import static java.lang.StrictMath.abs;
+import static java.lang.StrictMath.rint;
 
 public class Tst {
 

@@ -18,6 +18,7 @@ import bertrand.myopengl.Tool.OBJ_FILE.ModelData;
 import bertrand.myopengl.Tool.OBJ_FILE.OBJParser;
 import bertrand.myopengl.Tool.Positions;
 import bertrand.myopengl.Tool.Str;
+import bertrand.myopengl.Tool.Tst;
 import bertrand.myopengl.Tool.Vec2;
 import bertrand.myopengl.Tool.Vec3;
 
@@ -40,6 +41,7 @@ public final class Test_3 {
                 guiLocation.texId = Box.textures.atId(ciButton.textureRelease_ID).texNo;
                 boolean x = ciButton.pressed;
                 ciButton.pressed = false;
+                ciButton.drag.sub(ciButton.drag);//set zero
                 return x;
         }
 
@@ -71,6 +73,7 @@ public final class Test_3 {
                 public void f(int circleButton_ID, Vec2 delta) {
                 }
         };
+/*
         public static class Change implements Box.TabAction.Change_IF {
                 @Override
                 public void f(int circleButton_ID, Vec2 delta) {
@@ -95,6 +98,85 @@ public final class Test_3 {
                         }
                 }
         };
+*/
+        public static class Change implements Box.TabAction.Change_IF {
+                @Override
+                public void f(int circleButton_ID, Vec2 delta) {
+                        Box.CircleButton ciButton = Box.circleButtons.atId(circleButton_ID);
+                        Box.Location guiLocation = guiLocations.atId(ciButton.guiLocation_ID);
+                        if(Vec2.length(ciButton.drag) > 0.05) {
+                                ciButton.pressed = false;
+
+                                float[] matrixA = new float[16];
+                                float[] matrixB = new float[16];
+                                Matrix.setIdentityM(matrixA,0);
+                                Matrix.translateM(matrixA, 0, delta.x, delta.y, 0f);
+
+                                Matrix.multiplyMM(
+                                        matrixB,0,
+                                        matrixA,0,
+                                        guiLocation.TF,0
+                                );
+                                guiLocation.TF = matrixB;
+
+                                Matrix.multiplyMM(
+                                        matrixB,0,
+                                        matrixA,0,
+                                        guiLocation.MV,0
+                                );
+                                guiLocation.MV = matrixB;
+
+                                /*
+                                Matrix.scaleM(guiLocation.TF, 0, 1 / (normal * 128), 1 / (normal * 128f), 1.0f);
+                                Matrix.translateM(guiLocation.TF, 0, delta.x, delta.y, 0f);
+                                Matrix.scaleM(guiLocation.TF, 0, normal * 128, normal * 128f, 1.0f);
+                                */
+                        } else if (ciButton.pressed) {
+                                ciButton.drag.add(delta);
+
+                        }
+                }
+        };
+
+
+        public static class Exit implements Box.TabAction.Change_IF {
+                @Override
+                public void f(int circleButton_ID, Vec2 delta) {
+                        Box.CircleButton ciButton = Box.circleButtons.atId(circleButton_ID);
+                        Box.Location guiLocation = guiLocations.atId(ciButton.guiLocation_ID);
+                        if(Vec2.length(ciButton.drag) > 0.05) {
+                                ciButton.pressed = false;
+
+                                float[] matrixA = new float[16];
+                                float[] matrixB = new float[16];
+                                Matrix.setIdentityM(matrixA,0);
+                                Matrix.translateM(matrixA, 0, delta.x, delta.y, 0f);
+
+                                Matrix.multiplyMM (
+                                        matrixB,0,
+                                        matrixA,0,
+                                        guiLocation.TF,0
+                                );
+                                guiLocation.TF = matrixB;
+
+                                Matrix.multiplyMM(
+                                        matrixB,0,
+                                        matrixA,0,
+                                        guiLocation.MV,0
+                                );
+                                guiLocation.MV = matrixB;
+
+/*
+                                Matrix.scaleM(guiLocation.TF, 0, 1 / (normal * 128), 1 / (normal * 128f), 1.0f);
+                                Matrix.translateM(guiLocation.TF, 0, delta.x, delta.y, 0f);
+                                Matrix.scaleM(guiLocation.TF, 0, normal * 128, normal * 128f, 1.0f);
+                                */
+                        } else if (ciButton.pressed) {
+                                button_release(circleButton_ID);
+                        }
+                }
+        };
+
         static Press press = new Press();
         static Release release = new Release();
         static Change change = new Change();
@@ -171,6 +253,7 @@ public final class Test_3 {
                 circleCollider.entity_ID = Box.circleButtons.add(
                         new Box.CircleButton(
                                 false,
+                              new Vec2(0,0),
                               //  collider_id,
                                 guiLocation_id,
                                 press_texture_ID,

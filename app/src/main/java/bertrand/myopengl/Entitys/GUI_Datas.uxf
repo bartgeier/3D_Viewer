@@ -28,7 +28,7 @@ fontsize=10
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>624</x>
+      <x>676</x>
       <y>377</y>
       <w>156</w>
       <h>169</h>
@@ -49,7 +49,7 @@ int tabAction_ID</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>793</x>
+      <x>845</x>
       <y>377</y>
       <w>182</w>
       <h>169</h>
@@ -71,7 +71,7 @@ int tabAction_ID</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>416</x>
+      <x>468</x>
       <y>377</y>
       <w>195</w>
       <h>169</h>
@@ -93,7 +93,7 @@ int tabAction_ID
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>897</x>
+      <x>949</x>
       <y>117</y>
       <w>182</w>
       <h>104</h>
@@ -110,7 +110,7 @@ int texNo
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>299</x>
+      <x>351</x>
       <y>1365</y>
       <w>273</w>
       <h>117</h>
@@ -127,8 +127,8 @@ int location_ID
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>169</x>
-      <y>390</y>
+      <x>91</x>
+      <y>156</y>
       <w>182</w>
       <h>104</h>
     </coordinates>
@@ -144,7 +144,7 @@ int entity_ID
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>520</x>
+      <x>572</x>
       <y>598</y>
       <w>338</w>
       <h>156</h>
@@ -156,16 +156,16 @@ function press(int entity_ID)
 --
 function release(int entity_ID)
 --
-function entry(int entity_ID, Vec2 delta)
-function change(int entity_ID, Vec2 delta)
-function exit(int entity_ID,  Vec2 delta)
+function entry(int entity_ID, Vec2 contact, Vec2 delta)
+function change(int entity_ID, Vec2 contact, Vec2 delta)
+function exit(int entity_ID, Vec2 contact, Vec2 delta)
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>416</x>
+      <x>468</x>
       <y>117</y>
       <w>182</w>
       <h>143</h>
@@ -174,6 +174,7 @@ function exit(int entity_ID,  Vec2 delta)
 Entity Button
 --
 boolean pressed
+Vec2 drag
 int guiLocation_ID
 int texturePress_ID
 int textureRelease_ID
@@ -185,7 +186,7 @@ int textureHover_ID
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>520</x>
+      <x>572</x>
       <y>533</y>
       <w>65</w>
       <h>91</h>
@@ -196,7 +197,7 @@ int textureHover_ID
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>689</x>
+      <x>741</x>
       <y>533</y>
       <w>39</w>
       <h>91</h>
@@ -207,7 +208,7 @@ int textureHover_ID
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>793</x>
+      <x>845</x>
       <y>533</y>
       <w>104</w>
       <h>91</h>
@@ -218,7 +219,7 @@ int textureHover_ID
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>585</x>
+      <x>637</x>
       <y>156</y>
       <w>338</w>
       <h>39</h>
@@ -229,7 +230,7 @@ int textureHover_ID
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>481</x>
+      <x>533</x>
       <y>247</y>
       <w>91</w>
       <h>156</h>

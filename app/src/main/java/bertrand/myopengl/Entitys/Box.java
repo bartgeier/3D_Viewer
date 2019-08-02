@@ -119,8 +119,8 @@ public class Box {
 
         public static class Location {
                 public int parentIdx;
-                public final float[] TF = new float[16]; // transformation matrix
-                public final float[] MV = new float[16]; // model view matrix
+                public float[] TF = new float[16]; // transformation matrix
+                public float[] MV = new float[16]; // model view matrix
                 public final int shader_ID;
                 public final int vao;
                 public int texId;
@@ -244,19 +244,21 @@ public class Box {
         //GUI
         public static class CircleButton {
                 public boolean pressed;
+                public Vec2 drag;
                 public int guiLocation_ID;
                 public int texturePress_ID;
                 public int textureRelease_ID;
                 public int textureHover_ID;
-
                 public CircleButton(
                         final boolean pressed,
+                        final Vec2 drag,
                         final int guiLocation_ID,
                         final int texturePress_ID,
                         final int textureRelease_ID,
                         final int textureHover_ID
                 ) {
                         this.pressed = pressed;
+                        this.drag = drag;
                         this.guiLocation_ID = guiLocation_ID;
                         this.texturePress_ID = texturePress_ID;
                         this.textureRelease_ID = textureRelease_ID;

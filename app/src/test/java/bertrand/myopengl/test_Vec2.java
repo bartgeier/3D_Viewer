@@ -67,6 +67,17 @@ public class test_Vec2 {
         }
 
         @Test
+        public void add_1() {
+                Vec2 a = new Vec2(11,23);
+                Vec2 b = new Vec2(3,6);
+                Vec2 c = new Vec2(0,0);
+                Vec2.add(c, a, b);
+                assertEquals(14, c.x, 0.0001);
+                assertEquals(29, c.y, 0.0001);
+        }
+
+
+        @Test
         public void sMult_0() {
                 Vec2 a = new Vec2(11,23);
                 a.sMult(5);

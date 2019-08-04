@@ -229,7 +229,7 @@ public final class Cube_swarm {
                                         period_ms,
                                         x_axis, y_axis, z_axis
                                 );
-                                Box.spin.add(spin);
+                                Box.spins.add(spin);
                         }
                         add.light(
                                 Box.lights,

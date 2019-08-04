@@ -4,10 +4,6 @@ import android.content.Context;
 import android.opengl.GLSurfaceView.Renderer;
 import android.opengl.Matrix;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.util.Vector;
-
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
@@ -26,18 +22,13 @@ import bertrand.myopengl.ExampleScenes.Test_3;
 import bertrand.myopengl.ExampleScenes.Triangle;
 import bertrand.myopengl.ExampleScenes.Triangle_1;
 import bertrand.myopengl.ExampleScenes.XYZ_Arrows;
-import bertrand.myopengl.Tool.Circle;
-import bertrand.myopengl.Tool.Collision.Gui;
-import bertrand.myopengl.Tool.Color4f;
+import bertrand.myopengl.Tool.Gui.Gui;
 import bertrand.myopengl.Tool.GLMathe;
 import bertrand.myopengl.Tool.Mathe;
-import bertrand.myopengl.Tool.SparseArray.SparseArray;
 import bertrand.myopengl.Tool.Time.DeltaTime;
 import bertrand.myopengl.Tool.Time.StopWatch;
 import bertrand.myopengl.Tool.Vec2;
-import bertrand.myopengl.Tool.Tst;
 
-import static java.lang.Math.sqrt;
 import static java.lang.StrictMath.abs;
 
 public final class MainRenderer implements Renderer {
@@ -134,7 +125,7 @@ public final class MainRenderer implements Renderer {
 
                 }
                 Update.swings(Box.locations, Box.swings, dt);
-                Update.spins(Box.locations, Box.spin, dt);
+                Update.spins(Box.locations, Box.spins, dt);
 
                 frameMessageHandler.sendMessage_FrameRateUpdate(stopWatch.avarage_ns(10));
                 stopWatch.start_ns();

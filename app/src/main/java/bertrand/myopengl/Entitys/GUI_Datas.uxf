@@ -28,7 +28,7 @@ fontsize=10
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>676</x>
+      <x>663</x>
       <y>377</y>
       <w>156</w>
       <h>169</h>
@@ -49,7 +49,7 @@ int tabAction_ID</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>845</x>
+      <x>832</x>
       <y>377</y>
       <w>182</w>
       <h>169</h>
@@ -71,7 +71,7 @@ int tabAction_ID</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>468</x>
+      <x>455</x>
       <y>377</y>
       <w>195</w>
       <h>169</h>
@@ -93,7 +93,7 @@ int tabAction_ID
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>949</x>
+      <x>936</x>
       <y>117</y>
       <w>182</w>
       <h>104</h>
@@ -110,7 +110,7 @@ int texNo
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>351</x>
+      <x>338</x>
       <y>1365</y>
       <w>273</w>
       <h>117</h>
@@ -127,7 +127,7 @@ int location_ID
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>91</x>
+      <x>78</x>
       <y>156</y>
       <w>182</w>
       <h>104</h>
@@ -144,7 +144,7 @@ int entity_ID
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>572</x>
+      <x>559</x>
       <y>598</y>
       <w>338</w>
       <h>156</h>
@@ -165,17 +165,19 @@ function exit(int entity_ID, Vec2 contact, Vec2 delta)
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>468</x>
-      <y>117</y>
+      <x>455</x>
+      <y>91</y>
       <w>182</w>
-      <h>143</h>
+      <h>195</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Vector&gt;&gt;
 Entity Button
 --
 boolean pressed
 Vec2 drag
+int collider_ID
 int guiLocation_ID
+int mesh_ID
 int texturePress_ID
 int textureRelease_ID
 int textureHover_ID
@@ -186,7 +188,7 @@ int textureHover_ID
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>572</x>
+      <x>559</x>
       <y>533</y>
       <w>65</w>
       <h>91</h>
@@ -197,7 +199,7 @@ int textureHover_ID
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>741</x>
+      <x>728</x>
       <y>533</y>
       <w>39</w>
       <h>91</h>
@@ -208,7 +210,7 @@ int textureHover_ID
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>845</x>
+      <x>832</x>
       <y>533</y>
       <w>104</w>
       <h>91</h>
@@ -219,7 +221,7 @@ int textureHover_ID
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>637</x>
+      <x>624</x>
       <y>156</y>
       <w>338</w>
       <h>39</h>
@@ -230,13 +232,24 @@ int textureHover_ID
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>533</x>
-      <y>247</y>
+      <x>572</x>
+      <y>273</y>
       <w>91</w>
-      <h>156</h>
+      <h>130</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 entity_ID</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;100.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>481</x>
+      <y>273</y>
+      <w>39</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;80.0;10.0;10.0</additional_attributes>
   </element>
 </diagram>

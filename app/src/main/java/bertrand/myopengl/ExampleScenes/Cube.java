@@ -158,7 +158,7 @@ public final class Cube {
                 );
 
                 Box.Spin spin = new Box.Spin(location_ID, 2000,0,0,1);
-                Box.spin.add(spin);
+                Box.spins.add(spin);
 
                 add.light(
                         Box.lights,

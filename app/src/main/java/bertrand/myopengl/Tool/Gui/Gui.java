@@ -1,4 +1,4 @@
-package bertrand.myopengl.Tool.Collision;
+package bertrand.myopengl.Tool.Gui;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -10,8 +10,6 @@ import bertrand.myopengl.Tool.Mathe;
 import bertrand.myopengl.Tool.SparseArray.SparseArray;
 import bertrand.myopengl.Tool.Tst;
 import bertrand.myopengl.Tool.Vec2;
-
-import static bertrand.myopengl.Entitys.Box.guiLocations;
 
 
 public class Gui {

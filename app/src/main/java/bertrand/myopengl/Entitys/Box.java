@@ -7,7 +7,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Vector;
 
-import bertrand.myopengl.Tool.Circle;
 import bertrand.myopengl.Tool.Color4f;
 import bertrand.myopengl.Tool.Vec2;
 import bertrand.myopengl.Tool.Vec3;
@@ -183,7 +182,7 @@ public class Box {
                         this.axis_z = axis_z;
                 }
         }
-        public static SparseArray<Spin> spin = new SparseArray<>(null,1000);
+        public static SparseArray<Spin> spins = new SparseArray<>(null,1000);
 
 
         public static class Camera {
@@ -242,30 +241,36 @@ public class Box {
 /////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////
         //GUI
-        public static class CircleButton {
+        public static class DragButton {
                 public boolean pressed;
                 public Vec2 drag;
+                public int collider_ID;
                 public int guiLocation_ID;
+                public int mesh_ID; //unitQuad_mesh_ID
                 public int texturePress_ID;
                 public int textureRelease_ID;
                 public int textureHover_ID;
-                public CircleButton(
+                public DragButton(
                         final boolean pressed,
                         final Vec2 drag,
+                        final int collider_ID,
                         final int guiLocation_ID,
+                        final int mesh_ID,
                         final int texturePress_ID,
                         final int textureRelease_ID,
                         final int textureHover_ID
                 ) {
                         this.pressed = pressed;
                         this.drag = drag;
+                        this.collider_ID = collider_ID;
                         this.guiLocation_ID = guiLocation_ID;
+                        this.mesh_ID = mesh_ID;
                         this.texturePress_ID = texturePress_ID;
                         this.textureRelease_ID = textureRelease_ID;
                         this.textureHover_ID = textureHover_ID;
                 }
         }
-        public static SparseArray<CircleButton> circleButtons =
+        public static SparseArray<DragButton> dragButtons =
                 new SparseArray<>(null, 10);
 
         public static class Tab {
@@ -328,38 +333,6 @@ public class Box {
                 }
         }
 
-/*
-        public static class TabAction {
-                public interface Function_IF {
-                        void f(Tab tab);
-                }
-                public interface Change_IF {
-                        void f(Tab tab, Touch guiTouch);
-                }
-                public int texNo_press;
-                public int texNo_release;
-                public int texNo_hover;
-                public Function_IF press;
-                public Function_IF release;
-                public Change_IF change;
-                public Function_IF entry;
-                public Function_IF exit;
-                public TabAction(
-                        int texNo_press, int texNo_release, int texNo_hover,
-                        Function_IF press, Function_IF release, Change_IF change,
-                        Function_IF entry, Function_IF exit
-                ) {
-                        this.texNo_press = texNo_press;
-                        this.texNo_release = texNo_release;
-                        this.texNo_hover = texNo_hover;
-                        this.press = press;
-                        this.release = release;
-                        this.change = change;
-                        this.entry = entry;
-                        this.exit = exit;
-                }
-        }
-*/
         public static SparseArray<TabAction> tabActions = new SparseArray<>(null,20);
 
 

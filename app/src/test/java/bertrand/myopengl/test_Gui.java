@@ -1,12 +1,11 @@
 package bertrand.myopengl;
 
-import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 
 import java.util.Vector;
 
 import bertrand.myopengl.Entitys.Box;
-import bertrand.myopengl.Tool.Collision.Gui;
+import bertrand.myopengl.Tool.Gui.Gui;
 
 import static org.junit.Assert.assertEquals;
 

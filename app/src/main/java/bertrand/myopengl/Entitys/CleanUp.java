@@ -12,10 +12,6 @@ public class CleanUp {
                 backGround.color = new Color4f(0.8f,0.8f,0.8f);
         }
 
-        public static void lights(@NotNull final SparseArray<Box.Light> lights) {
-                lights.clear();
-        }
-
         public static void cameras(@NotNull final SparseArray<Box.Camera> cameras) {
                 cameras.clear();
         }
@@ -32,20 +28,6 @@ public class CleanUp {
                 }
                 shaders.clear();
         }
-/*
-        public static void meshes(
-                @NotNull final SparseArray<Box.Mesh> meshes
-        ) {
-                for (int i = 0; i < meshes.size(); i++) {
-                        if (meshes.at(i).texId != 0) {
-                                GPU.deleteTextureID(meshes.at(i).texId);
-                        }
-                        GPU.deleteVBOs(meshes.at(i).vbos);
-                        GPU.deleteVertexArrayObject(meshes.at(i).vao);
-                }
-                meshes.clear();
-        }
-*/
 
         public static void meshes(
                 @NotNull final SparseArray<Box.Mesh> meshes
@@ -56,7 +38,6 @@ public class CleanUp {
                 }
                 meshes.clear();
         }
-
 
         public static void textures(
                 @NotNull final SparseArray<Box.Texture> textures
@@ -65,17 +46,5 @@ public class CleanUp {
                                 GPU.deleteTextureID(textures.at(i).texNo);
                 }
                 textures.clear();
-        }
-
-        public static void locations(@NotNull final SparseArray<Box.Location> locations) {
-                locations.clear();
-        }
-
-        public static void swings(@NotNull final SparseArray<Box.Swing> swings) {
-                swings.clear();
-        }
-
-        public static void spins(@NotNull final SparseArray<Box.Spin> spins) {
-                spins.clear();
         }
 }

@@ -28,13 +28,13 @@ fontsize=10
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>663</x>
-      <y>377</y>
-      <w>156</w>
+      <x>572</x>
+      <y>585</y>
+      <w>208</w>
       <h>169</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Vector&gt;&gt;
-quadColliders
+not coded yet =&gt;quadColliders
 --
 int entity_ID
 --
@@ -49,13 +49,13 @@ int tabAction_ID</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>832</x>
-      <y>377</y>
-      <w>182</w>
+      <x>806</x>
+      <y>585</y>
+      <w>234</w>
       <h>169</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Vector&gt;&gt;
-rectangleColliders
+not coded yet =&gt; rectangleColliders
 --
 int entity_ID
 --
@@ -71,8 +71,8 @@ int tabAction_ID</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>455</x>
-      <y>377</y>
+      <x>364</x>
+      <y>585</y>
       <w>195</w>
       <h>169</h>
     </coordinates>
@@ -93,8 +93,8 @@ int tabAction_ID
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>936</x>
-      <y>117</y>
+      <x>845</x>
+      <y>325</y>
       <w>182</w>
       <h>104</h>
     </coordinates>
@@ -110,8 +110,8 @@ int texNo
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>338</x>
-      <y>1365</y>
+      <x>247</x>
+      <y>1573</y>
       <w>273</w>
       <h>117</h>
     </coordinates>
@@ -128,7 +128,7 @@ int location_ID
     <id>UMLClass</id>
     <coordinates>
       <x>78</x>
-      <y>156</y>
+      <y>793</y>
       <w>182</w>
       <h>104</h>
     </coordinates>
@@ -144,8 +144,8 @@ int entity_ID
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>559</x>
-      <y>598</y>
+      <x>468</x>
+      <y>806</y>
       <w>338</w>
       <h>156</h>
     </coordinates>
@@ -165,16 +165,16 @@ function exit(int entity_ID, Vec2 contact, Vec2 delta)
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>455</x>
-      <y>91</y>
+      <x>364</x>
+      <y>273</y>
       <w>182</w>
-      <h>195</h>
+      <h>182</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Vector&gt;&gt;
-Entity Button
+dragButtons
 --
-boolean pressed
-Vec2 drag
+int state_ID
+int tabAction_ID
 int collider_ID
 int guiLocation_ID
 int mesh_ID
@@ -188,8 +188,8 @@ int textureHover_ID
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>559</x>
-      <y>533</y>
+      <x>468</x>
+      <y>741</y>
       <w>65</w>
       <h>91</h>
     </coordinates>
@@ -199,8 +199,8 @@ int textureHover_ID
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>728</x>
-      <y>533</y>
+      <x>637</x>
+      <y>741</y>
       <w>39</w>
       <h>91</h>
     </coordinates>
@@ -210,19 +210,19 @@ int textureHover_ID
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>832</x>
-      <y>533</y>
-      <w>104</w>
+      <x>741</x>
+      <y>741</y>
+      <w>169</w>
       <h>91</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;50.0;60.0;10.0</additional_attributes>
+    <additional_attributes>10.0;50.0;110.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>624</x>
-      <y>156</y>
+      <x>533</x>
+      <y>364</y>
       <w>338</w>
       <h>39</h>
     </coordinates>
@@ -232,24 +232,112 @@ int textureHover_ID
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>572</x>
-      <y>273</y>
+      <x>481</x>
+      <y>442</y>
       <w>91</w>
-      <h>130</h>
+      <h>169</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 entity_ID</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;110.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>481</x>
-      <y>273</y>
-      <w>39</w>
-      <h>130</h>
+      <x>390</x>
+      <y>442</y>
+      <w>104</w>
+      <h>169</h>
     </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;80.0;10.0;10.0</additional_attributes>
+    <panel_attributes>lt=&lt;-
+collider_ID</panel_attributes>
+    <additional_attributes>10.0;110.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>273</x>
+      <y>0</y>
+      <w>234</w>
+      <h>156</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Vector&gt;&gt;
+dragStates
+--
+bool pressed
+Vec2 drag
+Vec2 posA
+Vec2 posB
+int guiLocation_ID
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>377</x>
+      <y>143</y>
+      <w>91</w>
+      <h>156</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+state_ID</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;100.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>572</x>
+      <y>0</y>
+      <w>234</w>
+      <h>156</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Vector&gt;&gt;
+buttonStates
+--
+bool pressed
+function anime
+function action
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>26</x>
+      <y>260</y>
+      <w>234</w>
+      <h>91</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Vector&gt;&gt;
+userActions
+--
+function actionA
+function actionB
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>247</x>
+      <y>273</y>
+      <w>143</w>
+      <h>52</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+action_ID</panel_attributes>
+    <additional_attributes>10.0;20.0;90.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>312</x>
+      <y>442</y>
+      <w>182</w>
+      <h>403</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>120.0;290.0;10.0;290.0;10.0;40.0;40.0;10.0</additional_attributes>
   </element>
 </diagram>

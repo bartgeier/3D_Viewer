@@ -18,10 +18,11 @@ import bertrand.myopengl.ExampleScenes.ExampleNames;
 import bertrand.myopengl.ExampleScenes.LowPoly_Islands;
 import bertrand.myopengl.ExampleScenes.Stall;
 import bertrand.myopengl.ExampleScenes.Rocket;
-import bertrand.myopengl.ExampleScenes.Test_3;
+import bertrand.myopengl.ExampleScenes.Drag_Button;
 import bertrand.myopengl.ExampleScenes.Triangle;
 import bertrand.myopengl.ExampleScenes.Triangle_1;
 import bertrand.myopengl.ExampleScenes.XYZ_Arrows;
+import bertrand.myopengl.Tool.Gui.CircleDragButton;
 import bertrand.myopengl.Tool.Gui.Gui;
 import bertrand.myopengl.Tool.GLMathe;
 import bertrand.myopengl.Tool.Mathe;
@@ -96,8 +97,8 @@ public final class MainRenderer implements Renderer {
                                 case XYZ_Arrows:
                                         XYZ_Arrows.createScene(context.getAssets());
                                         break;
-                                case TEST_3:
-                                        Test_3.createScene(context.getAssets());
+                                case DRAG_BUTTON:
+                                        Drag_Button.createScene(context.getAssets());
                                         break;
                                 default:
                                         ClearScreen.createScene();
@@ -126,6 +127,7 @@ public final class MainRenderer implements Renderer {
                 }
                 Update.swings(Box.locations, Box.swings, dt);
                 Update.spins(Box.locations, Box.spins, dt);
+                CircleDragButton.animation(Box.guiLocations,Box.dragStates);
 
                 frameMessageHandler.sendMessage_FrameRateUpdate(stopWatch.avarage_ns(10));
                 stopWatch.start_ns();
@@ -175,7 +177,19 @@ public final class MainRenderer implements Renderer {
 
         public void onDeviceOrientationChanged(final float[] rotationMatrix) {
                 Box.Camera c = Box.cameras.atId(cameraId);
-                c.R = rotationMatrix;
+                if (c.enableRot) {
+                        System.arraycopy(
+                                rotationMatrix, 0,
+                                c.R, 0,
+                                16
+                        );
+                } else {
+                        System.arraycopy(
+                                rotationMatrix, 0,
+                                c.R_Offset, 0,
+                                16
+                        );
+                }
         }
 
         //x and y between -1 and +1
@@ -217,7 +231,6 @@ public final class MainRenderer implements Renderer {
 
 
                 Box.tabs.clear();
-
                 Gui.circleCollision(Box.tabs, Box.circleColliders, Box.guiLocations, last);
                 Gui.reduseTabActions(Box.tabs, 0);
                 Gui.noTabActionOnIdx(Box.tabs,0);
@@ -226,6 +239,14 @@ public final class MainRenderer implements Renderer {
                 Gui.noTabActionOnIdx(Box.tabs,1);
                 Gui.excuteChangeTabAction(Box.guiLocations, Box.tabActions, Box.tabs, guiTouch);
 
+                Matrix.setIdentityM(Render.matrixA,0);
+                Render.update_gui(Render.matrixA, Box.guiLocations);
+                if (Box.tabs.size() >= 2 &&
+                   (Box.tabs.get(0).layer != 0 || Box.tabs.get(1).layer != 0)
+                ) {
+                        Box.tabs.clear();
+                        return;
+                }
                 Box.tabs.clear();
 
                 if(Box.touchs.size() == 1) {

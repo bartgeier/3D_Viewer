@@ -2,38 +2,47 @@ package bertrand.myopengl.Tool.Gui;
 
 import android.opengl.Matrix;
 
+import org.jetbrains.annotations.NotNull;
+
 import bertrand.myopengl.Entitys.Box;
+import bertrand.myopengl.Tool.Mathe;
+import bertrand.myopengl.Tool.SparseArray.SparseArray;
 import bertrand.myopengl.Tool.Vec2;
+
 
 public class CircleDragButton {
         // Collider callback functions //
         public static class Press implements Box.TabAction.Function_IF {
                 @Override
-                public void f(int button_ID) {
-                        Box.DragButton x = Box.dragButtons.atId(button_ID);
+                public void f(int dragButton_ID) {
+                        Box.DragButton x = Box.dragButtons.atId(dragButton_ID);
+                        Box.DragState state = Box.dragStates.atId(x.state_ID);
                         Box.Location guiLocation = Box.guiLocations.atId(x.guiLocation_ID);
                         guiLocation.texId = Box.textures.atId(x.texturePress_ID).texNo;
-                        x.pressed = true;
+                        state.pressed = true;
                 }
         }
         public static class Release implements Box.TabAction.Function_IF {
                 @Override
                 public void f(int dragButton_ID) {
                         Box.DragButton x = Box.dragButtons.atId(dragButton_ID);
+                        Box.DragState state = Box.dragStates.atId(x.state_ID);
+                        Box.UserAction userAction = Box.userActions.atId(x.userAction_ID);
                         Box.Location guiLocation = Box.guiLocations.atId(x.guiLocation_ID);
                         guiLocation.texId = Box.textures.atId(x.textureRelease_ID).texNo;
-                        final boolean pressed = x.pressed;
-                        x.pressed = false;
-                        x.drag.sub(x.drag);//set zero
+                        final boolean pressed = state.pressed;
+                        state.pressed = false;
+                        state.drag.sub(state.drag);//set zero
                         if (pressed) {
-                                if (Box.backGround.color.b == 0f) {
-                                        Box.backGround.color.r = 0.8f;
-                                        Box.backGround.color.g = 0.8f;
-                                        Box.backGround.color.b = 0.8f;
+                                Vec2 pos = new Vec2(
+                                        Mathe.Tx(guiLocation.TF),Mathe.Ty(guiLocation.TF)
+                                );
+                                Vec2 a = Vec2.sub(state.posA, pos);
+                                Vec2 b = Vec2.sub(state.posB, pos);
+                                if (a.length() == 0) {
+                                        userAction.actionA.f();
                                 } else {
-                                        Box.backGround.color.r = 1f;
-                                        Box.backGround.color.g = 0.4f;
-                                        Box.backGround.color.b = 0;
+                                        userAction.actionB.f();
                                 }
                         }
                 }
@@ -49,9 +58,10 @@ public class CircleDragButton {
                 @Override
                 public void f(int dragButton_ID, Vec2 delta) {
                         Box.DragButton x = Box.dragButtons.atId(dragButton_ID);
+                        Box.DragState state = Box.dragStates.atId(x.state_ID);
                         Box.Location guiLocation = Box.guiLocations.atId(x.guiLocation_ID);
-                        if(Vec2.length(x.drag) > 0.05) {
-                                x.pressed = false;
+                        if(Vec2.length(state.drag) > 0.05) {
+                                state.pressed = false;
                                 Matrix.setIdentityM(matrixA,0);
                                 Matrix.translateM(matrixA, 0, delta.x, delta.y, 0f);
                                 Matrix.multiplyMM(
@@ -64,18 +74,8 @@ public class CircleDragButton {
                                         guiLocation.TF, 0,
                                         16
                                 );
-                                Matrix.multiplyMM(
-                                        matrixB,0,
-                                        matrixA,0,
-                                        guiLocation.MV,0
-                                );
-                                System.arraycopy(
-                                        matrixB, 0,
-                                        guiLocation.MV, 0,
-                                        16
-                                );
-                        } else if (x.pressed) {
-                                x.drag.add(delta);
+                        } else if (state.pressed) {
+                                state.drag.add(delta);
                         }
                 }
         }
@@ -83,13 +83,14 @@ public class CircleDragButton {
                 @Override
                 public void f(int dragButton_ID, Vec2 delta) {
                         Box.DragButton x = Box.dragButtons.atId(dragButton_ID);
-                        if(Vec2.length(x.drag) > 0.05) {
+                        Box.DragState state = Box.dragStates.atId(x.state_ID);
+                        if(Vec2.length(state.drag) > 0.05) {
                                 change.f(dragButton_ID, delta);
-                        } else if (x.pressed) {
+                        } else if (state.pressed) {
                                 Box.Location guiLocation = Box.guiLocations.atId(x.guiLocation_ID);
                                 guiLocation.texId = Box.textures.atId(x.textureRelease_ID).texNo;
-                                x.pressed = false;
-                                x.drag.sub(x.drag);//set zero
+                                state.pressed = false;
+                                state.drag.sub(state.drag);//set zero
                         }
                 }
         }
@@ -110,7 +111,11 @@ public class CircleDragButton {
                 final int shaderProgram_ID,
                 final int unitQuad_mesh_ID,
                 final float quadSize,      //128fPixel
-                final float colliderRadius //72.0fPixel
+                final float colliderRadius, //72.0fPixel
+                final Vec2 posA,
+                final Vec2 posB,
+                final Box.UserAction.Function_IF actionA,
+                final Box.UserAction.Function_IF actionB
         ) {
                 Box.Location  guiLocation = new Box.Location(
                         parent_guiLocation_ID,
@@ -119,7 +124,8 @@ public class CircleDragButton {
                         Box.textures.atId(release_texture_ID).texNo,
                         Box.meshes.atId(unitQuad_mesh_ID).indicesCount
                 );
-                Matrix.translateM(guiLocation.TF,0, -0.7f, -0.7f/aspectRatio,0f);
+                //Matrix.translateM(guiLocation.TF,0, -0.7f, -0.7f/aspectRatio,0f);
+                Matrix.translateM(guiLocation.TF,0, posA.x, posA.y,0f);
                 Matrix.scaleM(guiLocation.TF,0, quadSize, quadSize,1.0f);
                 int guiLocation_id = Box.guiLocations.add(guiLocation);
 
@@ -137,12 +143,26 @@ public class CircleDragButton {
                 );
                 int collider_id = Box.circleColliders.add(circleCollider);
 
+
+                Box.DragState dragState = new Box.DragState(
+                        false,
+                        new Vec2(0,0), //drag
+                        posA,
+                        posB,
+                        guiLocation_id
+                );
+                int state_id = Box.dragStates.add(dragState);
+
+                Box.UserAction userAction = new Box.UserAction(actionA, actionB);
+                int userAction_id = Box.userActions.add(userAction);
+
                 final int dragButton_ID = Box.dragButtons.add(
                         new Box.DragButton(
-                                false,
-                                new Vec2(0,0),
-                                  collider_id,
+                                state_id,
+                                tabAction_ID,
+                                collider_id,
                                 guiLocation_id,
+                                userAction_id,
                                 unitQuad_mesh_ID,
                                 press_texture_ID,
                                 release_texture_ID,
@@ -151,6 +171,44 @@ public class CircleDragButton {
                 );
                 circleCollider.entity_ID = dragButton_ID;
                 return dragButton_ID;
+        }
+
+        public static void animation(
+                @NotNull final SparseArray<Box.Location> locations,
+                @NotNull SparseArray<Box.DragState> dragStates
+        ) {
+                for (int idx = 0; idx < dragStates.size(); idx++) {
+                        final Box.DragState state = dragStates.at(idx);
+                        Box.Location l = locations.atId(state.guiLocation_ID);
+                        Vec2 pos = new Vec2(Mathe.Tx(l.TF),Mathe.Ty(l.TF));
+
+                        float[] matrixA = new float[16];
+                        float[] matrixB = new float[16];
+                        Matrix.setIdentityM(matrixA,0);
+
+                        if(Vec2.length(state.drag) == 0 && !state.pressed) {
+                                /* animate */
+                                Vec2 a = Vec2.sub(state.posA, pos);
+                                Vec2 b = Vec2.sub(state.posB, pos);
+                                if (a.length() <= b.length()) {
+                                        /* moving to posA */
+                                        Matrix.translateM(matrixA, 0, a.x, a.y, 0f);
+                                } else {
+                                        /* moving to posB */
+                                        Matrix.translateM(matrixA, 0, b.x, b.y, 0f);
+                                }
+                                Matrix.multiplyMM(
+                                        matrixB,0,
+                                        matrixA,0,
+                                        l.TF,0
+                                );
+                                System.arraycopy(
+                                        matrixB, 0,
+                                        l.TF, 0,
+                                        16
+                                );
+                        }
+                }
         }
 
         // todo Esperimentel not use yet //

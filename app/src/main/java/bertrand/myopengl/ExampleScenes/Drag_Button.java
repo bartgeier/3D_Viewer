@@ -13,8 +13,41 @@ import bertrand.myopengl.Entitys.add;
 import bertrand.myopengl.Tool.Gui.CircleDragButton;
 import bertrand.myopengl.Tool.Mathe;
 import bertrand.myopengl.Tool.Str;
+import bertrand.myopengl.Tool.Vec2;
 
-public final class Test_3 {
+public final class Drag_Button {
+        public static class BlackAction implements Box.UserAction.Function_IF {
+                @Override
+                public void f() {
+                        if (Box.backGround.color.b != 0.8f) {
+                                Box.backGround.color.r = 0.8f;
+                                Box.backGround.color.g = 0.8f;
+                                Box.backGround.color.b = 0.8f;
+                        } else {
+                                Box.backGround.color.r = 0f;
+                                Box.backGround.color.g = 0f;
+                                Box.backGround.color.b = 0f ;
+                        }
+                }
+        }
+        public static class OrangeAction implements Box.UserAction.Function_IF {
+                @Override
+                public void f() {
+                        if (Box.backGround.color.b != 0.8f) {
+                                Box.backGround.color.r = 0.8f;
+                                Box.backGround.color.g = 0.8f;
+                                Box.backGround.color.b = 0.8f;
+                        } else {
+                                Box.backGround.color.r = 1f;
+                                Box.backGround.color.g = 0.4f;
+                                Box.backGround.color.b = 0;
+                        }
+                }
+        }
+        private static BlackAction black_action = new BlackAction();
+        private static OrangeAction orange_action = new OrangeAction();
+
+
         public static void createScene(@NotNull AssetManager asset) {
         try {
                 Box.Camera camera = Box.cameras.atId(0);
@@ -63,7 +96,11 @@ public final class Test_3 {
                         shaderProgram_ID,
                         mesh_ID,
                         normal*128, //128Pixel
-                        normal*72 //72Pixel
+                        normal*72, //72Pixel
+                        new Vec2(-0.7f,-0.7f/camera.aspectRatio), //posA
+                        new Vec2(0.7f,-0.7f/camera.aspectRatio),  //posB
+                        black_action,
+                        orange_action
                 );
 
                 //////////// 3D /////////////

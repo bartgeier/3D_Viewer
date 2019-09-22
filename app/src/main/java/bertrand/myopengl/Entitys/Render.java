@@ -114,6 +114,38 @@ public class Render {
                 }
         }
 
+
+        public static void update_gui(
+                @NotNull final float[] parentModelViewMatrix,
+                @NotNull final SparseArray<Box.Location> locations
+        ) {
+                if (locations.size() == 0) {
+                        return;
+                }
+
+                final Box.Location root = locations.at(0);
+                Matrix.multiplyMM(
+                        root.MV,
+                        0,
+                        parentModelViewMatrix,
+                        0,
+                        root.TF,
+                        0
+                );
+
+                for (int i = 1; i < locations.size(); i++) {
+                        final Box.Location l = locations.at(i);
+                        Matrix.multiplyMM(
+                                l.MV,
+                                0,
+                                locations.at(l.parentIdx).MV,
+                                0,
+                                l.TF,
+                                0
+                        );
+                }
+        }
+
         public static void guis(
                 @NotNull final float[] parentModelViewMatrix,
                 @NotNull final SparseArray<Box.Location> locations,

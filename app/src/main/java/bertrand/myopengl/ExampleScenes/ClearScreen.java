@@ -20,6 +20,7 @@ public final class ClearScreen {
                 Box.tabActions.clear();
                 Box.guiLocations.clear();
                 Box.dragButtons.clear();
+                Box.dragStates.clear();
                 Box.tabs.clear();
 
                 CleanUp.meshes(Box.meshes);

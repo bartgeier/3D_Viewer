@@ -191,8 +191,10 @@ public class Box {
                 public float fovyZoomAngle;       // 85f degrees
                 public float near;                // 0.1f always bigger then 0
                 public float far;                 // 300f
-                public float[] T = new float[16]; // translation matrixA
-                public float[] R = new float[16]; // rotation matrixA
+                public float[] T = new float[16]; // translation matrix
+                public float[] R = new float[16]; // rotation matrix
+                public float[] R_Offset = new float[16]; // rotation offset matrix
+                public boolean enableRot = true;
                 public Camera(
                         final int location_ID,
                         final float aspectRatio,
@@ -207,6 +209,7 @@ public class Box {
                         this.far = far;
                         Matrix.setIdentityM(this.T, 0);
                         Matrix.setIdentityM(this.R, 0);
+                        Matrix.setIdentityM(this.R_Offset, 0);
                 }
         }
         public static SparseArray<Camera> cameras = new SparseArray<>(null,2);
@@ -242,28 +245,31 @@ public class Box {
 /////////////////////////////////////////////////////////////////////////////////////////////
         //GUI
         public static class DragButton {
-                public boolean pressed;
-                public Vec2 drag;
+                public int state_ID;
+                public int tabAction_ID;
                 public int collider_ID;
                 public int guiLocation_ID;
+                public int userAction_ID;
                 public int mesh_ID; //unitQuad_mesh_ID
                 public int texturePress_ID;
                 public int textureRelease_ID;
                 public int textureHover_ID;
                 public DragButton(
-                        final boolean pressed,
-                        final Vec2 drag,
+                        final int state_ID,
+                        final int tabAction_ID,
                         final int collider_ID,
                         final int guiLocation_ID,
+                        final int userAction_ID,
                         final int mesh_ID,
                         final int texturePress_ID,
                         final int textureRelease_ID,
                         final int textureHover_ID
                 ) {
-                        this.pressed = pressed;
-                        this.drag = drag;
+                        this.state_ID = state_ID;
+                        this.tabAction_ID = tabAction_ID;
                         this.collider_ID = collider_ID;
                         this.guiLocation_ID = guiLocation_ID;
+                        this.userAction_ID = userAction_ID;
                         this.mesh_ID = mesh_ID;
                         this.texturePress_ID = texturePress_ID;
                         this.textureRelease_ID = textureRelease_ID;
@@ -272,6 +278,48 @@ public class Box {
         }
         public static SparseArray<DragButton> dragButtons =
                 new SparseArray<>(null, 10);
+
+        public static class DragState {
+                public boolean pressed;
+                public Vec2 drag;
+                public Vec2 posA;
+                public Vec2 posB;
+                public int guiLocation_ID;
+                public DragState(
+                        final boolean pressed,
+                        final Vec2 drag,
+                        final Vec2 posA,
+                        final Vec2 posB,
+                        final int guiLocation_ID
+                ) {
+                        this.pressed = pressed;
+                        this.drag = drag;
+                        this.posA = posA;
+                        this.posB = posB;
+                        this.guiLocation_ID = guiLocation_ID;
+                }
+        }
+        public static SparseArray<DragState> dragStates =
+                new SparseArray<> (null,10);
+
+
+
+
+        public static class UserAction {
+                public interface Function_IF {
+                        void f();
+                }
+                public Function_IF actionA;
+                public Function_IF actionB;
+                public UserAction( Function_IF actionA, Function_IF actionB) {
+                        this.actionA = actionA;
+                        this.actionB = actionB;
+                }
+        }
+        public static SparseArray<UserAction> userActions =
+                new SparseArray<> (null,10);
+
+
 
         public static class Tab {
                 public int layer;

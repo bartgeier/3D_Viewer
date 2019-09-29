@@ -1,19 +1,34 @@
 package bertrand.myopengl.ExampleScenes;
 
+import android.opengl.Matrix;
+
 import bertrand.myopengl.Entitys.Box;
 import bertrand.myopengl.Entitys.CleanUp;
 import bertrand.myopengl.Tool.Mathe;
 
 public final class ClearScreen {
         public static void cleanUp(){
+                /*
+                Box.cameras.clear();
+                Box.cameras.add( new Box.Camera(
+                        0, //root
+                        1f,
+                        85f,
+                        0.1f,
+                        300f
+                ));
+                 */
+
+
                 Box.Camera camera = Box.cameras.atId(0);
                 Mathe.translationXYZ(camera.T,0,0,0);
                 Mathe.rotationXYZ(camera.R, 0, 0, 0);
+                Matrix.setIdentityM(camera.R_Offset, 0);
+                camera.enableRot = true;
                 while (Box.cameras.size()>1) {
                         Box.cameras.delete(Box.cameras.size()-1);
                 }
-
-                Box.cameras.at(0).location_ID = 0;
+                camera.location_ID = 0;
                 Box.locations.clear();
 
                 Box.circleColliders.clear();

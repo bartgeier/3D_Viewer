@@ -28,8 +28,8 @@ fontsize=10
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>572</x>
-      <y>585</y>
+      <x>715</x>
+      <y>611</y>
       <w>208</w>
       <h>169</h>
     </coordinates>
@@ -49,8 +49,8 @@ int tabAction_ID</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>806</x>
-      <y>585</y>
+      <x>949</x>
+      <y>611</y>
       <w>234</w>
       <h>169</h>
     </coordinates>
@@ -71,8 +71,8 @@ int tabAction_ID</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>364</x>
-      <y>585</y>
+      <x>507</x>
+      <y>611</y>
       <w>195</w>
       <h>169</h>
     </coordinates>
@@ -93,8 +93,8 @@ int tabAction_ID
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>845</x>
-      <y>325</y>
+      <x>988</x>
+      <y>351</y>
       <w>182</w>
       <h>104</h>
     </coordinates>
@@ -110,8 +110,8 @@ int texNo
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>247</x>
-      <y>1573</y>
+      <x>390</x>
+      <y>1599</y>
       <w>273</w>
       <h>117</h>
     </coordinates>
@@ -127,8 +127,8 @@ int location_ID
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>78</x>
-      <y>793</y>
+      <x>221</x>
+      <y>819</y>
       <w>182</w>
       <h>104</h>
     </coordinates>
@@ -144,8 +144,8 @@ int entity_ID
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>468</x>
-      <y>806</y>
+      <x>611</x>
+      <y>832</y>
       <w>338</w>
       <h>156</h>
     </coordinates>
@@ -165,8 +165,8 @@ function exit(int entity_ID, Vec2 contact, Vec2 delta)
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>364</x>
-      <y>273</y>
+      <x>507</x>
+      <y>299</y>
       <w>182</w>
       <h>182</h>
     </coordinates>
@@ -188,8 +188,8 @@ int textureHover_ID
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>468</x>
-      <y>741</y>
+      <x>611</x>
+      <y>767</y>
       <w>65</w>
       <h>91</h>
     </coordinates>
@@ -199,8 +199,8 @@ int textureHover_ID
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>637</x>
-      <y>741</y>
+      <x>780</x>
+      <y>767</y>
       <w>39</w>
       <h>91</h>
     </coordinates>
@@ -210,8 +210,8 @@ int textureHover_ID
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>741</x>
-      <y>741</y>
+      <x>884</x>
+      <y>767</y>
       <w>169</w>
       <h>91</h>
     </coordinates>
@@ -221,8 +221,8 @@ int textureHover_ID
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>533</x>
-      <y>364</y>
+      <x>676</x>
+      <y>390</y>
       <w>338</w>
       <h>39</h>
     </coordinates>
@@ -232,8 +232,8 @@ int textureHover_ID
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>481</x>
-      <y>442</y>
+      <x>624</x>
+      <y>468</y>
       <w>91</w>
       <h>169</h>
     </coordinates>
@@ -244,8 +244,8 @@ entity_ID</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>390</x>
-      <y>442</y>
+      <x>533</x>
+      <y>468</y>
       <w>104</w>
       <h>169</h>
     </coordinates>
@@ -256,8 +256,8 @@ collider_ID</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>273</x>
-      <y>0</y>
+      <x>416</x>
+      <y>26</y>
       <w>234</w>
       <h>156</h>
     </coordinates>
@@ -268,6 +268,7 @@ bool pressed
 Vec2 drag
 Vec2 posA
 Vec2 posB
+boolean A
 int guiLocation_ID
 </panel_attributes>
     <additional_attributes/>
@@ -275,8 +276,8 @@ int guiLocation_ID
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>377</x>
-      <y>143</y>
+      <x>520</x>
+      <y>169</y>
       <w>91</w>
       <h>156</h>
     </coordinates>
@@ -287,8 +288,8 @@ state_ID</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>572</x>
-      <y>0</y>
+      <x>715</x>
+      <y>26</y>
       <w>234</w>
       <h>156</h>
     </coordinates>
@@ -304,24 +305,26 @@ function action
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>26</x>
-      <y>260</y>
+      <x>169</x>
+      <y>286</y>
       <w>234</w>
-      <h>91</h>
+      <h>130</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Vector&gt;&gt;
 userActions
 --
 function actionA
 function actionB
+function actionAB
+function actionBA
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>247</x>
-      <y>273</y>
+      <x>390</x>
+      <y>299</y>
       <w>143</w>
       <h>52</h>
     </coordinates>
@@ -332,8 +335,8 @@ action_ID</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>312</x>
-      <y>442</y>
+      <x>455</x>
+      <y>468</y>
       <w>182</w>
       <h>403</h>
     </coordinates>

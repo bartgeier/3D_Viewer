@@ -39,12 +39,13 @@ public final class MainRenderer implements Renderer {
         private ExampleNames.Index newExampleIndex = ExampleNames.Index.CLEAR_SCREEN;
         private DeltaTime deltaTime = new DeltaTime();
         private StopWatch stopWatch = new StopWatch();
-        private final int cameraId;
+        private final int cameraId ;
         private final int displayId;
 
         MainRenderer (Context c, FrameMessageHandler h) {
                 context = c;
                 frameMessageHandler = h;
+
                 cameraId = Box.cameras.add( new Box.Camera(
                         0, //root
                         1f,
@@ -52,6 +53,7 @@ public final class MainRenderer implements Renderer {
                         0.1f,
                         300f
                 ));
+                //ClearScreen.cleanUp();
 
                 displayId = Box.displays.add( new Box.Display(
                         1,

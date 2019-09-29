@@ -21,16 +21,20 @@ import bertrand.myopengl.Tool.Str;
 import bertrand.myopengl.Tool.Vec2;
 import bertrand.myopengl.Tool.Vec3;
 
+
 public final class Stall {
         static float[] tempMatrixA = new float[16];
         static float[] tempMatrixB = new float[16];
         static float[] delta = new float[16];
-        public static class BlackAction implements Box.UserAction.Function_IF {
+        public static class A_Action implements Box.UserAction.Function_IF {
                 @Override
                 public void f() {
+                        /* freeze_unFreeze_action */
                         Box.Camera camera = Box.cameras.atId(0);
-                        Box.Location location = Box.locations.atId(1);
+                        Box.Location cameraLocation = Box.locations.atId(camera.location_ID);
+                        Box.Location gohstLocation = Box.locations.atId(1);
                         if (!camera.enableRot) {
+                                /* unfreeze */
                                 camera.enableRot = true;
                                 Matrix.invertM(
                                         tempMatrixA,0,
@@ -42,60 +46,95 @@ public final class Stall {
                                         tempMatrixB,0
                                 );
                                 System.arraycopy(
-                                        location.TF, 0,
+                                        gohstLocation.TF, 0,
                                         tempMatrixA, 0,
                                         16
                                 );
                                 Matrix.multiplyMM(
-                                        location.TF,0,
+                                        gohstLocation.TF,0,
                                         delta,0,
                                         tempMatrixA, 0
 
                                 );
+                                float[] vector = new float[4];
+                                vector[0] = Mathe.Tx(cameraLocation.TF);
+                                vector[1] = Mathe.Ty(cameraLocation.TF);
+                                vector[2] = Mathe.Tz(cameraLocation.TF);
+                                vector[3] = Mathe.Tw(cameraLocation.TF);
+                                float[] vectorb = new float[4];
+                                Matrix.multiplyMV(
+                                        vectorb,0,
+                                        delta,0,
+                                        vector,0);
+                                Mathe.Tx(cameraLocation.TF, vectorb[0]);
+                                Mathe.Ty(cameraLocation.TF, vectorb[1]);
+                                Mathe.Tz(cameraLocation.TF, vectorb[2]);
+                                Mathe.Tw(cameraLocation.TF, vectorb[3]);
+                                //gray
+                                Box.backGround.color.r = 0.8f;
+                                Box.backGround.color.g = 0.8f;
+                                Box.backGround.color.b = 0.8f;
+
                         } else {
+                                /* freeze */
                                 camera.enableRot = false;
                                 System.arraycopy(
                                         camera.R, 0,
                                         tempMatrixB, 0,
                                         16
                                 );
-                        }
-                        if (Box.backGround.color.b != 0.8f) {
-                                Box.backGround.color.r = 0.8f;
-                                Box.backGround.color.g = 0.8f;
-                                Box.backGround.color.b = 0.8f;
-                        } else {
-                                Box.backGround.color.r = 0f;
+                                //red
+                                Box.backGround.color.r = 1f;
                                 Box.backGround.color.g = 0f;
                                 Box.backGround.color.b = 0f ;
                         }
                 }
         }
-        public static class OrangeAction implements Box.UserAction.Function_IF {
+        public static class B_Action implements Box.UserAction.Function_IF {
                 @Override
                 public void f() {
+                        /* moveToA_action moves Button to PosA and relative modus */
                         Box.Camera camera = Box.cameras.atId(0);
-                        Box.Location location = Box.locations.atId(1);
-                        if (!camera.enableRot) {
-                                Matrix.setIdentityM(camera.R_Offset, 0);
-                                Matrix.setIdentityM(location.TF, 0);
-                                camera.enableRot = true;
-                        } else {
-                                camera.enableRot = false;
-                        }
-                        if (Box.backGround.color.b != 0.8f) {
-                                Box.backGround.color.r = 0.8f;
-                                Box.backGround.color.g = 0.8f;
-                                Box.backGround.color.b = 0.8f;
-                        } else {
-                                Box.backGround.color.r = 1f;
-                                Box.backGround.color.g = 0.4f;
-                                Box.backGround.color.b = 0;
-                        }
+                        Box.DragState dragState = Box.dragStates.atId(0);
+                        dragState.A = true;
+                        camera.enableRot = true;
+                        freeze_unFreeze_action.f();
                 }
         }
-        private static BlackAction black_action = new BlackAction();
-        private static OrangeAction orange_action = new OrangeAction();
+
+
+        public static class AB_Action implements Box.UserAction.Function_IF {
+                @Override
+                public void f() {
+                        /* reset_action */
+                        Box.Camera camera = Box.cameras.atId(0);
+                        Box.Location location = Box.locations.atId(1);
+                        Matrix.setIdentityM(camera.R_Offset, 0);
+                        Matrix.setIdentityM(location.TF, 0);
+                        camera.enableRot = true;
+                        //gray
+                        Box.backGround.color.r = 0.8f;
+                        Box.backGround.color.g = 0.8f;
+                        Box.backGround.color.b = 0.8f;
+                }
+        }
+
+
+
+        public static class BA_Action implements Box.UserAction.Function_IF {
+                @Override
+                public void f() {
+                        /* freeze_action */
+                        Box.Camera camera = Box.cameras.atId(0);
+                        camera.enableRot = true;
+                        freeze_unFreeze_action.f();
+
+                }
+        }
+        private static A_Action freeze_unFreeze_action = new A_Action();
+        private static B_Action moveToA_action = new B_Action();
+        private static AB_Action reset_action = new AB_Action();
+        private static BA_Action freeze_action = new BA_Action();
 
         public static void createScene(@NotNull AssetManager asset) {
         try {
@@ -241,32 +280,13 @@ public final class Stall {
                                 normal*72, //72Pixel
                                 new Vec2(-0.7f,-0.7f/camera.aspectRatio), //posA
                                 new Vec2(0.7f,-0.7f/camera.aspectRatio),  //posB
-                                black_action,
-                                orange_action
+                                false,
+                                freeze_unFreeze_action,
+                                moveToA_action,
+                                reset_action,
+                                freeze_action
                         );
 
-                        //////////// 3D /////////////
-                        /*
-                        Box.Location root3D = new Box.Location(
-                                0,
-                                0,
-                                0,
-                                0,
-                                0
-                        );
-                        final int root_location_ID = Box.locations.add(root3D);
-
-                        camera.location_ID = root_location_ID;
-                        Mathe.translationXYZ(camera.T,0,0,-8);
-                        Mathe.rotationXYZ(camera.R, 0, 0, 0);
-
-                        add.light(
-                                Box.lights,
-                                0f,-0.5f,-1f,
-                                1,1,1
-                        );
-                        add.backGroundColor(Box.backGround,0.8f,0.8f,0.8f);
-                        */
 
                 } catch (IOException e) {
                         e.printStackTrace();

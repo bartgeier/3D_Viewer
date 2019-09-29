@@ -207,6 +207,7 @@ public class Box {
                         this.fovyZoomAngle = fovyZoomAngle;
                         this.near = near;
                         this.far = far;
+                        this.enableRot = true;
                         Matrix.setIdentityM(this.T, 0);
                         Matrix.setIdentityM(this.R, 0);
                         Matrix.setIdentityM(this.R_Offset, 0);
@@ -284,18 +285,21 @@ public class Box {
                 public Vec2 drag;
                 public Vec2 posA;
                 public Vec2 posB;
+                public boolean A;
                 public int guiLocation_ID;
                 public DragState(
                         final boolean pressed,
                         final Vec2 drag,
                         final Vec2 posA,
                         final Vec2 posB,
+                        final boolean A,
                         final int guiLocation_ID
                 ) {
                         this.pressed = pressed;
                         this.drag = drag;
                         this.posA = posA;
                         this.posB = posB;
+                        this.A = A;
                         this.guiLocation_ID = guiLocation_ID;
                 }
         }
@@ -311,9 +315,18 @@ public class Box {
                 }
                 public Function_IF actionA;
                 public Function_IF actionB;
-                public UserAction( Function_IF actionA, Function_IF actionB) {
+                public Function_IF actionAB;
+                public Function_IF actionBA;
+                public UserAction(
+                        Function_IF actionA,
+                        Function_IF actionB,
+                        Function_IF actionAB,
+                        Function_IF actionBA
+                ) {
                         this.actionA = actionA;
                         this.actionB = actionB;
+                        this.actionAB = actionAB;
+                        this.actionBA = actionBA;
                 }
         }
         public static SparseArray<UserAction> userActions =

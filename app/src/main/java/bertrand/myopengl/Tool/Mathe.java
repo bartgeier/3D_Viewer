@@ -95,8 +95,16 @@ public class Mathe {
                 return translationMatrix[12];
         }
 
+        public static void Tx(final float translationMatrix[], final float x) {
+                translationMatrix[12] = x;
+        }
+
         public static float Ty(final float translationMatrix[]) {
                 return translationMatrix[13];
+        }
+
+        public static void Ty(final float translationMatrix[], final float y) {
+                translationMatrix[13] = y;
         }
 
         public static float Tz(final float translationMatrix[]) {
@@ -105,6 +113,14 @@ public class Mathe {
 
         public static void Tz(final float translationMatrix[], final float z) {
                 translationMatrix[14] = z;
+        }
+
+        public static float Tw(final float translationMatrix[]) {
+                return translationMatrix[15];
+        }
+
+        public static void Tw(final float translationMatrix[], final float w) {
+                translationMatrix[15] = w;
         }
 
         public static void translationXYZ(

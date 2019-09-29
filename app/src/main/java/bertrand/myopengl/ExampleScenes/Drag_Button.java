@@ -16,36 +16,44 @@ import bertrand.myopengl.Tool.Str;
 import bertrand.myopengl.Tool.Vec2;
 
 public final class Drag_Button {
-        public static class BlackAction implements Box.UserAction.Function_IF {
+        public static class AAction implements Box.UserAction.Function_IF {
                 @Override
                 public void f() {
-                        if (Box.backGround.color.b != 0.8f) {
-                                Box.backGround.color.r = 0.8f;
-                                Box.backGround.color.g = 0.8f;
-                                Box.backGround.color.b = 0.8f;
-                        } else {
-                                Box.backGround.color.r = 0f;
-                                Box.backGround.color.g = 0f;
-                                Box.backGround.color.b = 0f ;
-                        }
+                        Box.backGround.color.r = 0f;
+                        Box.backGround.color.g = 0f;
+                        Box.backGround.color.b = 1f;
                 }
         }
-        public static class OrangeAction implements Box.UserAction.Function_IF {
+        public static class BAction implements Box.UserAction.Function_IF {
                 @Override
                 public void f() {
-                        if (Box.backGround.color.b != 0.8f) {
-                                Box.backGround.color.r = 0.8f;
-                                Box.backGround.color.g = 0.8f;
-                                Box.backGround.color.b = 0.8f;
-                        } else {
-                                Box.backGround.color.r = 1f;
-                                Box.backGround.color.g = 0.4f;
-                                Box.backGround.color.b = 0;
-                        }
+                        Box.backGround.color.r = 1f;
+                        Box.backGround.color.g = 1f;
+                        Box.backGround.color.b = 0f;
                 }
         }
-        private static BlackAction black_action = new BlackAction();
-        private static OrangeAction orange_action = new OrangeAction();
+        public static class ABAction implements Box.UserAction.Function_IF {
+                @Override
+                public void f() {
+                        Box.backGround.color.r = 0f;
+                        Box.backGround.color.g = 1f;
+                        Box.backGround.color.b = 0;
+                }
+        }
+        public static class BAAction implements Box.UserAction.Function_IF {
+                @Override
+                public void f() {
+                        Box.backGround.color.r = 1f;
+                        Box.backGround.color.g = 0f;
+                        Box.backGround.color.b = 0f;
+
+                }
+        }
+        private static AAction black_action = new AAction();
+        private static BAction orange_action = new BAction();
+        private static ABAction ab_action = new ABAction();
+        private static BAAction ba_action = new BAAction();
+
 
 
         public static void createScene(@NotNull AssetManager asset) {
@@ -99,8 +107,11 @@ public final class Drag_Button {
                         normal*72, //72Pixel
                         new Vec2(-0.7f,-0.7f/camera.aspectRatio), //posA
                         new Vec2(0.7f,-0.7f/camera.aspectRatio),  //posB
+                        true,
                         black_action,
-                        orange_action
+                        orange_action,
+                        ab_action,
+                        ba_action
                 );
 
                 //////////// 3D /////////////

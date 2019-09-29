@@ -38,12 +38,27 @@ public class CircleDragButton {
                                         Mathe.Tx(guiLocation.TF),Mathe.Ty(guiLocation.TF)
                                 );
                                 Vec2 a = Vec2.sub(state.posA, pos);
-                                Vec2 b = Vec2.sub(state.posB, pos);
                                 if (a.length() == 0) {
                                         userAction.actionA.f();
                                 } else {
                                         userAction.actionB.f();
                                 }
+                        } else {
+                                /* animate */
+                                Vec2 pos = new Vec2(Mathe.Tx(guiLocation.TF),Mathe.Ty(guiLocation.TF));
+                                Vec2 a = Vec2.sub(state.posA, pos);
+                                Vec2 b = Vec2.sub(state.posB, pos);
+                                if (a.length() <= b.length() && !state.A) {
+                                        /* moving to posA */
+                                        state.A = true;
+                                        userAction.actionBA.f();
+
+                                } else if (a.length() > b.length() && state.A){
+                                        /* moving to posB */
+                                        state.A = false;
+                                        userAction.actionAB.f();
+                                }
+
                         }
                 }
         }
@@ -69,6 +84,7 @@ public class CircleDragButton {
                                         matrixA,0,
                                         guiLocation.TF,0
                                 );
+                                /* because guiLocation.TF is scaled */
                                 System.arraycopy(
                                         matrixB, 0,
                                         guiLocation.TF, 0,
@@ -114,8 +130,11 @@ public class CircleDragButton {
                 final float colliderRadius, //72.0fPixel
                 final Vec2 posA,
                 final Vec2 posB,
+                final boolean A,
                 final Box.UserAction.Function_IF actionA,
-                final Box.UserAction.Function_IF actionB
+                final Box.UserAction.Function_IF actionB,
+                final Box.UserAction.Function_IF actionAB,
+                final Box.UserAction.Function_IF actionBA
         ) {
                 Box.Location  guiLocation = new Box.Location(
                         parent_guiLocation_ID,
@@ -149,11 +168,12 @@ public class CircleDragButton {
                         new Vec2(0,0), //drag
                         posA,
                         posB,
+                        A,
                         guiLocation_id
                 );
                 int state_id = Box.dragStates.add(dragState);
 
-                Box.UserAction userAction = new Box.UserAction(actionA, actionB);
+                Box.UserAction userAction = new Box.UserAction(actionA, actionB, actionAB, actionBA);
                 int userAction_id = Box.userActions.add(userAction);
 
                 final int dragButton_ID = Box.dragButtons.add(
@@ -190,7 +210,7 @@ public class CircleDragButton {
                                 /* animate */
                                 Vec2 a = Vec2.sub(state.posA, pos);
                                 Vec2 b = Vec2.sub(state.posB, pos);
-                                if (a.length() <= b.length()) {
+                                if (state.A) {
                                         /* moving to posA */
                                         Matrix.translateM(matrixA, 0, a.x, a.y, 0f);
                                 } else {

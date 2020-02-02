@@ -1,4 +1,4 @@
-package bertrand.myopengl;
+package bertrand.myopengl; dfg
 
 import android.content.Context;
 import android.opengl.GLSurfaceView.Renderer;
